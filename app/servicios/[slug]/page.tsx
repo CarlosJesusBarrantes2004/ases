@@ -7,18 +7,22 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-type Params = {
-  slug: string;
-};
+interface ServicePageProps {
+  params: Promise<{ slug: string }>;
+}
 
+// Generamos metadatos dinámicos para cada página de servicio
 export async function generateMetadata({
   params,
-}: {
-  params: Params;
-}): Promise<Metadata> {
-  const service = services.find((s) => s.slug === params.slug);
+}: ServicePageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const service = services.find((s) => s.slug === slug);
 
-  if (!service) return { title: "Servicio no encontrado | Grupo Ases" };
+  if (!service) {
+    return {
+      title: "Servicio no encontrado | Grupo Ases",
+    };
+  }
 
   return {
     title: `${service.title} | Grupo Ases`,
@@ -26,12 +30,16 @@ export async function generateMetadata({
   };
 }
 
-export async function generateStaticParams(): Promise<Array<{ slug: string }>> {
-  return services.map((s) => ({ slug: s.slug }));
+// Generamos rutas estáticas para cada servicio
+export async function generateStaticParams() {
+  return services.map((service) => ({
+    slug: service.slug,
+  }));
 }
 
-function ServicioPage({ params }: { params: Params }) {
-  const service = services.find((s) => s.slug === params.slug);
+async function ServicioPage({ params }: ServicePageProps) {
+  const { slug } = await params;
+  const service = services.find((s) => s.slug === slug);
 
   if (!service) notFound();
 
