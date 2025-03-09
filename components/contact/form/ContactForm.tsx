@@ -250,7 +250,7 @@ function ContactForm() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className={`flex items-center justify-center px-6 py-3 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 transition-colors duration-300 ${
+                  className={`flex items-center justify-center px-6 py-3 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 hover:cursor-pointer transition-colors duration-300 ${
                     isSubmitting ? "opacity-70 cursor-not-allowed" : ""
                   }`}
                 >

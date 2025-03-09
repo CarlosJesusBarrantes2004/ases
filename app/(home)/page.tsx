@@ -1,7 +1,7 @@
 import ContactForm from "@/components/contact/form/ContactForm";
 import AboutSection from "@/components/home/AboutSection";
 import Banner from "@/components/home/Banner";
-import ServicesSection from "@/components/home/ServicesSection";
+import ServicesSection from "@/components/services/ServicesSection";
 
 function HomePage() {
   return (
