@@ -7,16 +7,14 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-interface ServicioPageProps {
-  params: {
-    slug: string;
-  };
-}
+type Params = {
+  slug: string;
+};
 
 export async function generateMetadata({
   params,
 }: {
-  params: { slug: string };
+  params: Params;
 }): Promise<Metadata> {
   const service = services.find((s) => s.slug === params.slug);
 
@@ -28,11 +26,11 @@ export async function generateMetadata({
   };
 }
 
-export async function generateStaticParams() {
+export async function generateStaticParams(): Promise<Array<{ slug: string }>> {
   return services.map((s) => ({ slug: s.slug }));
 }
 
-function ServicioPage({ params }: ServicioPageProps) {
+function ServicioPage({ params }: { params: Params }) {
   const service = services.find((s) => s.slug === params.slug);
 
   if (!service) notFound();
