@@ -15,7 +15,9 @@ interface ServicioPageProps {
 
 export async function generateMetadata({
   params,
-}: ServicioPageProps): Promise<Metadata> {
+}: {
+  params: { slug: string };
+}): Promise<Metadata> {
   const service = services.find((s) => s.slug === params.slug);
 
   if (!service) return { title: "Servicio no encontrado | Grupo Ases" };
