@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 
-function Banner() {
+function HomeBanner() {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const slides = [
@@ -107,7 +107,7 @@ function Banner() {
           <button
             key={index}
             onClick={() => setCurrentSlide(index)}
-            className={`w-3 h-3 rounded-full transition-all duration-300 ${
+            className={`w-3 h-3 rounded-full transition-all duration-300 hover:cursor-pointer ${
               currentSlide === index ? "bg-white w-8" : "bg-white bg-opacity-50"
             }`}
             aria-label={`Go to slide ${index + 1}`}
@@ -118,4 +118,4 @@ function Banner() {
   );
 }
 
-export default Banner;
+export default HomeBanner;

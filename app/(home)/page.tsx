@@ -1,12 +1,12 @@
 import ContactForm from "@/components/contact/form/ContactForm";
 import AboutSection from "@/components/home/AboutSection";
-import Banner from "@/components/home/Banner";
+import HomeBanner from "@/components/home/HomeBanner";
 import ServicesSection from "@/components/services/ServicesSection";
 
 function HomePage() {
   return (
     <div className="flex flex-col min-h-screen">
-      <Banner></Banner>
+      <HomeBanner></HomeBanner>
       <AboutSection></AboutSection>
       <ServicesSection></ServicesSection>
       <div className="bg-gray-50 py-20">
