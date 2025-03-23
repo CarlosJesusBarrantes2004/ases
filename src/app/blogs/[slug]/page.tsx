@@ -5,7 +5,7 @@ interface BlogPageProps {
 async function BlogPage({ params }: BlogPageProps) {
   const { slug } = await params;
 
-  return <div>BlogPage</div>;
+  return <div>BlogPage: {slug}</div>;
 }
 
 export default BlogPage;
