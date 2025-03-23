@@ -74,6 +74,7 @@ function ContactForm() {
       });
       reset();
     } catch (error) {
+      console.log(error);
       setSubmitStatus({
         success: false,
         message: "Ha ocurrido un error. Por favor, inténtalo de nuevo.",
