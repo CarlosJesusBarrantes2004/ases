@@ -6,9 +6,14 @@ export const contactSchema = z.object({
   fullName: z.string().min(2, { message: "El nombre es obligatorio" }),
   email: z.string().email({ message: "Ingrese un correo electrónico válido" }),
   phone: z.string().optional(),
-  typeService: z.enum(SERVICE_TYPES, {
-    required_error: "Por favor seleccione un servicio",
-  }),
+  typeService: z.preprocess(
+    (val) => (val === "" ? undefined : val),
+    z
+      .enum(SERVICE_TYPES, {
+        required_error: "Por favor seleccione un servicio",
+      })
+      .optional()
+  ),
   message: z
     .string()
     .min(10, { message: "El mensaje debe tener al menos 10 caracteres" })
@@ -21,6 +26,6 @@ export type ContactFormDefaultValues = {
   fullName: string;
   email: string;
   phone: string;
-  typeService: "" | z.infer<typeof contactSchema>["typeService"];
+  typeService: (typeof SERVICE_TYPES)[number] | undefined;
   message: string;
 };

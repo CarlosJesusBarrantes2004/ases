@@ -26,7 +26,7 @@ function ContactForm() {
     fullName: "",
     email: "",
     phone: "",
-    typeService: "", // Ahora esto es válido gracias al tipo personalizado
+    typeService: undefined,
     message: "",
   };
 
@@ -38,7 +38,7 @@ function ContactForm() {
     watch,
   } = useForm<ContactFormType>({
     resolver: zodResolver(contactSchema),
-    defaultValues: defaultValues as any,
+    defaultValues,
   });
 
   const [submitStatus, setSubmitStatus] = useState({
