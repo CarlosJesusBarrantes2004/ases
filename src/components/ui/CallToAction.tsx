@@ -1,6 +1,13 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 function CallToAction() {
+  const path = usePathname();
+
+  if (path === "/contacto") return null;
+
   return (
     <section className="py-16 bg-gray-dark text-white">
       <div className="container mx-auto px-4 text-center">

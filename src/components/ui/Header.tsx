@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { ChevronDown, Menu, X } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -11,6 +12,9 @@ function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const servicesRef = useRef(null);
   const digitalServicesRef = useRef(null);
+  const path = usePathname();
+
+  console.log(path);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -56,7 +60,11 @@ function Header() {
           <Link
             href={"/"}
             className={`transition-colors duration-300 hover:text-red-primary ${
-              isScrolled ? "text-black-soft" : "text-white"
+              path === "/"
+                ? "text-red-primary"
+                : isScrolled
+                ? "text-black-soft"
+                : "text-white"
             }`}
           >
             Inicio
@@ -64,7 +72,11 @@ function Header() {
           <Link
             href={"/conocenos"}
             className={`transition-colors duration-300 hover:text-red-primary ${
-              isScrolled ? "text-black-soft" : "text-white"
+              path === "/conocenos"
+                ? "text-red-primary"
+                : isScrolled
+                ? "text-black-soft"
+                : "text-white"
             }`}
           >
             Conócenos
@@ -74,7 +86,11 @@ function Header() {
           <div className="relative group">
             <div
               className={`flex items-center space-x-1 cursor-pointer transition-colors duration-300 hover:text-red-primary ${
-                isScrolled ? "text-black-soft" : "text-white"
+                path === "/servicios"
+                  ? "text-red-primary"
+                  : isScrolled
+                  ? "text-black-soft"
+                  : "text-white"
               }`}
             >
               <Link href={"/servicios"}>Servicios</Link>
@@ -145,7 +161,11 @@ function Header() {
           <Link
             href={"/contacto"}
             className={`transition-colors duration-300 hover:text-red-primary ${
-              isScrolled ? "text-black-soft" : "text-white"
+              path === "/contacto"
+                ? "text-red-primary"
+                : isScrolled
+                ? "text-black-soft"
+                : "text-white"
             }`}
           >
             Contáctanos

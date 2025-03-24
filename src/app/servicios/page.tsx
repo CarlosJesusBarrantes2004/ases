@@ -1,6 +1,7 @@
-import CallToAction from "@/components/services/CallToAction";
 import HeroSection from "@/components/services/HeroSection";
 import ListServices from "@/components/services/ListServices";
+import ServicesTable from "@/components/services/ServicesTable";
+import UseCasesSection from "@/components/services/UseCasesSection";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -16,7 +17,8 @@ function ServicesPage() {
     <>
       <HeroSection></HeroSection>
       <ListServices></ListServices>
-      <CallToAction></CallToAction>
+      <ServicesTable></ServicesTable>
+      <UseCasesSection></UseCasesSection>
     </>
   );
 }

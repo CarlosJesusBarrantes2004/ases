@@ -4,6 +4,7 @@ import Header from "@/components/ui/Header";
 import Footer from "@/components/ui/Footer";
 import "./globals.css";
 import BtnWhatsapp from "@/components/ui/BtnWhatsapp";
+import CallToAction from "@/components/ui/CallToAction";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -50,7 +51,10 @@ export default function RootLayout({
       <body className={inter.className}>
         <div className="flex flex-col min-h-screen">
           <Header></Header>
-          <main className="flex-grow">{children}</main>
+          <main className="flex-grow">
+            {children}
+            <CallToAction></CallToAction>
+          </main>
           <Footer></Footer>
           <BtnWhatsapp></BtnWhatsapp>
         </div>

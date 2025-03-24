@@ -25,7 +25,7 @@ function HeroSection() {
           <div className="mt-10 md:mt-0 md:w-1/2 animate-fade-in">
             <div className="relative overflow-hidden rounded-3xl shadow-2xl">
               <Image
-                src={"/images/background.jpg"}
+                src={"/images/home-bg.jpg"}
                 alt="Servicios profesionales"
                 width={800}
                 height={600}

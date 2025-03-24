@@ -1,5 +1,4 @@
 import BenefitsSection from "@/components/home/BenefitsSection";
-import CallToAction from "@/components/home/CallToAction";
 import Contact from "@/components/home/Contact";
 import Faq from "@/components/home/Faq";
 import HeroSection from "@/components/home/HeroSection";
@@ -24,7 +23,6 @@ function HomePage() {
       <BenefitsSection></BenefitsSection>
       <Faq></Faq>
       <Contact></Contact>
-      <CallToAction></CallToAction>
     </>
   );
 }
