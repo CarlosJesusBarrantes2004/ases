@@ -172,7 +172,7 @@ function UseCasesSection() {
                           {useCase.icon}
                         </div>
                         <p className="text-white font-medium">
-                          "{useCase.text}"
+                          &quot;{useCase.text}&quot;
                         </p>
                       </div>
                       <div className="flex pl-6 ml-1 border-l-2 border-red-primary">
