@@ -14,8 +14,6 @@ function Header() {
   const digitalServicesRef = useRef(null);
   const path = usePathname();
 
-  console.log(path);
-
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 10) {
@@ -28,6 +26,8 @@ function Header() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  if (path.includes("/servicios/")) return null;
 
   return (
     <header
