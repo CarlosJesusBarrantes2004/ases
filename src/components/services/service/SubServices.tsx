@@ -14,7 +14,11 @@ function SubServices({ service, subServices }: SubServicesProps) {
       <div className="container mx-auto px-4">
         <div className="text-center mb-12 md:mb-16">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
-            Nuestros Servicios Digitales
+            {service === "contabilidad"
+              ? "Nuestros servicios de Contabilidad"
+              : service === "asesoria-juridica"
+              ? "Nuestros servicios de Asesoría Jurídica"
+              : "Nuestros Servicios Digitales"}
           </h2>
           <div className="w-24 h-1 bg-red-primary mx-auto mb-6"></div>
         </div>

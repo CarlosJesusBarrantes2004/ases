@@ -1,17 +1,16 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { ChevronDown, Menu, X } from "lucide-react";
 import { usePathname } from "next/navigation";
+import { navigationLinks } from "@/data";
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
-  const [isDigitalServicesOpen, setIsDigitalServicesOpen] = useState(false);
+  const [isServiceOpen, setIsServiceOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const servicesRef = useRef(null);
-  const digitalServicesRef = useRef(null);
   const path = usePathname();
 
   useEffect(() => {
@@ -27,6 +26,12 @@ function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    setIsMenuOpen(false);
+    setIsServicesOpen(false);
+    setIsServiceOpen(false);
+  }, [path]);
+
   if (path.includes("/servicios/")) return null;
 
   return (
@@ -35,9 +40,9 @@ function Header() {
         isScrolled || isMenuOpen ? "bg-white shadow-md" : "bg-transparent"
       }`}
     >
-      <div className="container mx-auto px-4 py-3 md:py-4 flex justify-between items-center">
+      <div className="container mx-auto px-4 py-3 md:px-6 md:py-5 flex justify-between items-center">
         <Link href={"/"} className="flex items-center space-x-2">
-          <div className="font-bold text-xl">
+          <div className="font-bold text-xl md:text-2xl lg:text-xl">
             <span
               className={`transition-colors duration-300 ${
                 isScrolled || isMenuOpen ? "text-red-primary" : "text-white"
@@ -54,122 +59,83 @@ function Header() {
             </span>
           </div>
         </Link>
-
-        {/* Navegación Desktop */}
-        <nav className="hidden md:flex items-center space-x-8">
-          <Link
-            href={"/"}
-            className={`transition-colors duration-300 hover:text-red-primary ${
-              path === "/"
-                ? "text-red-primary"
-                : isScrolled
-                ? "text-black-soft"
-                : "text-white"
-            }`}
-          >
-            Inicio
-          </Link>
-          <Link
-            href={"/conocenos"}
-            className={`transition-colors duration-300 hover:text-red-primary ${
-              path === "/conocenos"
-                ? "text-red-primary"
-                : isScrolled
-                ? "text-black-soft"
-                : "text-white"
-            }`}
-          >
-            Conócenos
-          </Link>
-
-          {/* Servicios con menú desplegable */}
-          <div className="relative group">
-            <div
-              className={`flex items-center space-x-1 cursor-pointer transition-colors duration-300 hover:text-red-primary ${
-                path === "/servicios"
-                  ? "text-red-primary"
-                  : isScrolled
-                  ? "text-black-soft"
-                  : "text-white"
-              }`}
-            >
-              <Link href={"/servicios"}>Servicios</Link>
-              <ChevronDown size={16}></ChevronDown>
-            </div>
-
-            {/* Menú desplegable de Servicios (desktop) */}
-            <div className="absolute left-0 mt-2 w-52 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 bg-white shadow-lg rounded-md z-50">
-              <ul className="py-1">
-                <li>
-                  <Link
-                    href={"/servicios/contabilidad"}
-                    className="block px-4 py-1 text-black-soft hover:text-red-primary hover:bg-gray-50 transition-all duration-300"
-                  >
-                    Contabilidad
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href={"/servicios/asesoria-juridica"}
-                    className="block px-4 py-1 text-black-soft hover:text-red-primary hover:bg-gray-50 transition-all duration-300"
-                  >
-                    Asesoría Jurídica
-                  </Link>
-                </li>
-                <li className="relative group/digital">
-                  <div className="flex items-center justify-between px-4 py-1 text-black-soft hover:text-red-primary hover:bg-gray-50 transition-all duration-300 cursor-pointer">
-                    <Link href={"/servicios/digitales"}>
-                      Servicios Digitales
-                    </Link>
-                    <ChevronDown size={16}></ChevronDown>
-                  </div>
-
-                  {/* Submenú de Servicios Digitales (desktop) */}
-                  <div className="absolute left-full top-0 w-52 opacity-0 invisible group-hover/digital:opacity-100 group-hover/digital:visible transition-all duration-300 bg-white shadow-lg rounded-md border border-gray-light">
-                    <ul className="py-1">
-                      <li>
-                        <Link
-                          href={"/servicios/digitales/marketing"}
-                          className="block px-4 py-1 text-black-soft hover:text-red-primary hover:bg-gray-50 transition-all duration-300"
+        {/* Navegación en PC/Laptop */}
+        <nav className="hidden lg:flex items-center space-x-8">
+          {navigationLinks.map((item) => {
+            return item.subLinks ? (
+              <div key={item.name} className="relative group">
+                <div
+                  className={`flex items-center space-x-1 cursor-pointer transition-colors duration-300 hover:text-red-primary ${
+                    path === item.href
+                      ? "text-red-primary"
+                      : isScrolled
+                      ? "text-black-soft"
+                      : "text-white"
+                  }`}
+                >
+                  <Link href={item.href}>{item.name}</Link>
+                  <ChevronDown size={16}></ChevronDown>
+                </div>
+                {/* Menú desplegable de Servicios (desktop) */}
+                <div className="absolute border left-0 mt-2 w-52 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 bg-white shadow-lg rounded-md z-50">
+                  <ul className="py-1">
+                    {item.subLinks.map((item) => {
+                      return item.categories ? (
+                        <li
+                          key={item.name}
+                          className={`relative group/subitem`}
                         >
-                          Marketing Digital
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          href={"/servicios/digitales/diseño-web"}
-                          className="block px-4 py-1 text-black-soft hover:text-red-primary hover:bg-gray-50 transition-all duration-300"
-                        >
-                          Diseño Web
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          href={"/servicios/digitales/desarrollo"}
-                          className="block px-4 py-1 text-black-soft hover:text-red-primary hover:bg-gray-50 transition-all duration-300"
-                        >
-                          Desarrollo de Sistemas
-                        </Link>
-                      </li>
-                    </ul>
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <Link
-            href={"/contacto"}
-            className={`transition-colors duration-300 hover:text-red-primary ${
-              path === "/contacto"
-                ? "text-red-primary"
-                : isScrolled
-                ? "text-black-soft"
-                : "text-white"
-            }`}
-          >
-            Contáctanos
-          </Link>
+                          <div className="flex items-center justify-between px-4 py-1 text-black-soft hover:text-red-primary hover:bg-gray-50 transition-all duration-300 cursor-pointer">
+                            <Link href={item.href}>{item.name}</Link>
+                            <ChevronDown size={16}></ChevronDown>
+                          </div>
+                          <div
+                            className={`absolute left-full top-0 w-52 opacity-0 invisible group-hover/subitem:opacity-100 group-hover/subitem:visible transition-all duration-300 bg-white shadow-lg rounded-md border border-gray-light`}
+                          >
+                            <ul className="py-1">
+                              {item.categories.map((item) => (
+                                <li key={item.name}>
+                                  <Link
+                                    href={item.href}
+                                    className="block px-4 py-1 text-black-soft hover:text-red-primary hover:bg-gray-50 transition-all duration-300"
+                                  >
+                                    {item.name}
+                                  </Link>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        </li>
+                      ) : (
+                        <li key={item.name}>
+                          <Link
+                            href={item.href}
+                            className="block px-4 py-1 text-black-soft hover:text-red-primary hover:bg-gray-50 transition-all duration-300"
+                          >
+                            {item.name}
+                          </Link>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              </div>
+            ) : (
+              <Link
+                key={item.name}
+                href={item.href}
+                className={`transition-colors duration-300 hover:text-red-primary ${
+                  path === item.href
+                    ? "text-red-primary"
+                    : isScrolled
+                    ? "text-black-soft"
+                    : "text-white"
+                }`}
+              >
+                {item.name}
+              </Link>
+            );
+          })}
           <Link
             href={"/contacto"}
             className="bg-red-primary text-white px-4 py-2 rounded-md shadow-sm hover:opacity-80 transition-all duration-300"
@@ -177,126 +143,110 @@ function Header() {
             Solicitar Asesoría
           </Link>
         </nav>
-
-        {/* Mobile Menu Button */}
+        {/* Botón de menú movil */}
         <button
-          className={`md:hidden hover:cursor-pointer transition-colors duration-300 ${
+          className={`lg:hidden hover:cursor-pointer transition-colors duration-300 ${
             isScrolled || isMenuOpen ? "text-black-soft" : "text-white"
           }`}
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          onClick={() => {
+            setIsMenuOpen(!isMenuOpen);
+            setIsServicesOpen(false);
+            setIsServiceOpen(false);
+          }}
         >
-          {isMenuOpen ? <X size={24}></X> : <Menu size={24}></Menu>}
+          {isMenuOpen ? (
+            <X className="w-6 h-6 md:w-7 md:h-7 lg:w-6"></X>
+          ) : (
+            <Menu className="w-6 h-6 md:w-7 md:h-7 lg:h-6"></Menu>
+          )}
         </button>
       </div>
-
       {/* Navegación Móvil */}
       {isMenuOpen && (
-        <div className="md:hidden bg-white py-4 px-4 shadow-inner animate-fadeIn">
-          <nav className="flex flex-col space-y-4">
-            <Link
-              href={"/"}
-              className="text-black-soft hover:text-red-primary transition-all duration-300"
-            >
-              Inicio
-            </Link>
-            <Link
-              href={"/conocenos"}
-              className="text-black-soft hover:text-red-primary transition-all duration-300"
-            >
-              Conócenos
-            </Link>
-
-            {/* Servicios dropdown (mobile) */}
-            <div ref={servicesRef}>
-              <div
-                className="flex gap-8 items-center justify-between text-black-soft hover:text-red-primary transition-all duration-300 cursor-pointer"
-                onClick={() => setIsServicesOpen(!isServicesOpen)}
-              >
-                <Link href={"/servicios"} className="flex-grow">
-                  Servicios
+        <div className="lg:hidden bg-white py-4 px-4 text-base md:text-xl lg:text-base shadow-inner animate-fadeIn">
+          <nav className="flex flex-col space-y-4 md:space-y-5 lg:space-y-4">
+            {navigationLinks.map((item) => {
+              return item.subLinks ? (
+                <div key={`/services/${item.name}`}>
+                  {/* Servicios dropdown (movil) */}
+                  <div
+                    className="flex gap-8 items-center justify-between text-black-soft hover:text-red-primary transition-all duration-300 cursor-pointer"
+                    onClick={() => {
+                      setIsServicesOpen(!isServicesOpen);
+                      setIsServiceOpen(false);
+                    }}
+                  >
+                    <Link href={item.href} className="flex-grow">
+                      {item.name}
+                    </Link>
+                    <ChevronDown
+                      className={`w-5 h-5 md:w-6 md:h-6 lg:w-5 lg:h-5 transform transition-transform duration-300 ${
+                        isServicesOpen ? "rotate-180" : ""
+                      }`}
+                    ></ChevronDown>
+                  </div>
+                  {isServicesOpen && (
+                    <ul className="pl-4 mt-2 border-l-2 border-gray-light space-y-3 md:space-y-4 lg:space-y-3">
+                      {item.subLinks.map((item) => {
+                        return item.categories ? (
+                          <li key={`/services/service/${item.name}`}>
+                            <div
+                              className="flex gap-8 items-center justify-between text-black-soft hover:text-red-primary transition-all duration-300 cursor-pointer"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setIsServiceOpen(!isServiceOpen);
+                              }}
+                            >
+                              <Link href={item.href} className="flex-grow">
+                                {item.name}
+                              </Link>
+                              <ChevronDown
+                                className={`w-4 h-4 md:w-5 md:h-5 lg:w-4 lg:h-4 transform transition-transform duration-300 ${
+                                  isServiceOpen ? "rotate-180" : ""
+                                }`}
+                              ></ChevronDown>
+                            </div>
+                            {isServiceOpen && (
+                              <ul className="pl-4 mt-2 border-l-2 border-gray-light space-y-3 md:space-y-4 lg:space-y-3">
+                                {item.categories.map((item) => (
+                                  <li
+                                    key={`/services/service/subservice/${item.name}`}
+                                  >
+                                    <Link
+                                      href={item.href}
+                                      className="block text-black-soft hover:text-red-primary transition-all duration-300"
+                                    >
+                                      {item.name}
+                                    </Link>
+                                  </li>
+                                ))}
+                              </ul>
+                            )}
+                          </li>
+                        ) : (
+                          <li key={`/services/service/${item.name}`}>
+                            <Link
+                              href={item.href}
+                              className="block text-black-soft hover:text-red-primary transition-all duration-300"
+                            >
+                              {item.name}
+                            </Link>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  )}
+                </div>
+              ) : (
+                <Link
+                  key={`/services/${item.name}`}
+                  href={item.href}
+                  className="text-black-soft hover:text-red-primary transition-all duration-300"
+                >
+                  {item.name}
                 </Link>
-                <ChevronDown
-                  size={16}
-                  className={`transform transition-transform duration-300 ${
-                    isServicesOpen ? "rotate-180" : ""
-                  }`}
-                ></ChevronDown>
-              </div>
-
-              {isServicesOpen && (
-                <ul className="pl-4 mt-2 border-l-2 border-gray-light space-y-3">
-                  <li>
-                    <Link
-                      href={"/servicios/contabilidad"}
-                      className="block text-black-soft hover:text-red-primary transition-all duration-300"
-                    >
-                      Contabilidad
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href={"/servicios/asesoria-juridica"}
-                      className="block text-black-soft hover:text-red-primary transition-all duration-300"
-                    >
-                      Asesoría Jurídica
-                    </Link>
-                  </li>
-                  <li ref={digitalServicesRef}>
-                    <div
-                      className="flex gap-8 items-center justify-between text-black-soft hover:text-red-primary transition-all duration-300 cursor-pointer"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setIsDigitalServicesOpen(!isDigitalServicesOpen);
-                      }}
-                    >
-                      <span>Servicios Digitales</span>
-                      <ChevronDown
-                        size={14}
-                        className={`transform transition-transform duration-300 ${
-                          isDigitalServicesOpen ? "rotate-180" : ""
-                        }`}
-                      ></ChevronDown>
-                    </div>
-
-                    {isDigitalServicesOpen && (
-                      <ul className="pl-4 mt-2 border-l-2 border-gray-light space-y-3">
-                        <li>
-                          <Link
-                            href={"/servicios/digitales/marketing"}
-                            className="block text-black-soft hover:text-red-primary transition-all duration-300"
-                          >
-                            Marketing Digital
-                          </Link>
-                        </li>
-                        <li>
-                          <Link
-                            href={"/servicios/digitales/diseño-web"}
-                            className="block text-black-soft hover:text-red-primary transition-all duration-300"
-                          >
-                            Diseño Web
-                          </Link>
-                        </li>
-                        <li>
-                          <Link
-                            href={"/servicios/digitales/desarrollo"}
-                            className="block text-black-soft hover:text-red-primary transition-all duration-300"
-                          >
-                            Desarrollo de Sistemas
-                          </Link>
-                        </li>
-                      </ul>
-                    )}
-                  </li>
-                </ul>
-              )}
-            </div>
-
-            <Link
-              href={"/contacto"}
-              className="text-black-soft hover:text-red-primary transition-all duration-300"
-            >
-              Contáctanos
-            </Link>
+              );
+            })}
             <Link
               href={"/contacto"}
               className="bg-red-primary text-white px-4 py-2 rounded-md shadow-sm hover:opacity-80 transition-all duration-300 text-center"
