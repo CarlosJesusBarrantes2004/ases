@@ -1,4 +1,4 @@
-import { Service, SubService } from "@/types";
+import { Service } from "@/types";
 
 // Services
 export const services: Service[] = [
