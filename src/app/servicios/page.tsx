@@ -1,7 +1,7 @@
-import HeroSection from "@/components/services/HeroSection";
+import Hero from "@/components/services/Hero";
 import ListServices from "@/components/services/ListServices";
 import ServicesTable from "@/components/services/ServicesTable";
-import UseCasesSection from "@/components/services/UseCasesSection";
+import UseCases from "@/components/services/UseCases";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -15,10 +15,10 @@ export const metadata: Metadata = {
 function ServicesPage() {
   return (
     <>
-      <HeroSection></HeroSection>
+      <Hero></Hero>
       <ListServices></ListServices>
       <ServicesTable></ServicesTable>
-      <UseCasesSection></UseCasesSection>
+      <UseCases></UseCases>
     </>
   );
 }

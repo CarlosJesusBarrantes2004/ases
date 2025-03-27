@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   description:
     "Impulsa tu negocio con servicios de contabilidad, asesoría jurídica y soluciones digitales. En Grupo Ases, ofrecemos experiencia y confianza para hacer crecer tu empresa.",
   keywords:
-    "asesoría contable, asesoría jurídica, servicios digitales, consultoría empresarial, gestión financiera, desarrollo web, marketing digital, empresa, negocios, impuestos, legal",
+    "asesoría contable, asesoría jurídica, servicios digitales, consultoría empresarial, gestión financiera, desarrollo web, marketing digital, empresa, negocios, impuestos, legal, asesoría legal",
   authors: [{ name: "Grupo Ases", url: "https://grupoases.pe" }],
   openGraph: {
     title: "Grupo Ases - Soluciones Integrales para Empresas",

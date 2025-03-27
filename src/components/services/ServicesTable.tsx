@@ -1,53 +1,34 @@
+import { services } from "@/data";
 import { FileSpreadsheet, Globe, Scale } from "lucide-react";
 
 function ServicesTable() {
-  const services = [
-    {
-      id: 1,
-      title: "Contabilidad",
-      objective: "Mantener orden financiero y cumplir obligaciones",
-      audience: "Empresas y emprendedores",
-      features: "Declaraciones, balances, asesoría fiscal",
-      icon: (
-        <FileSpreadsheet className="w-10 h-10 text-red-primary group-hover:text-white transition-all-300"></FileSpreadsheet>
-      ),
-    },
-    {
-      id: 2,
-      title: "Asesoría Jurídica",
-      objective: "Solucionar problemas legales y prevenir conflictos",
-      audience: "Negocios y personas con temas legales",
-      features: "Contratos, representación legal, asesoría en litigios",
-      icon: (
-        <Scale className="w-10 h-10 text-red-primary group-hover:text-white transition-all-300"></Scale>
-      ),
-    },
-    {
-      id: 3,
-      title: "Servicios Digitales",
-      objective: "Mejorar la presencia online y optimizar procesos",
-      audience: "Empresas que buscan digitalizar su negocio",
-      features: "Marketing digital, diseño web, desarrollo de sistemas",
-      icon: (
-        <Globe className="w-10 h-10 text-red-primary group-hover:text-white transition-all-300"></Globe>
-      ),
-    },
-  ];
+  const serviceIcon: Record<string, React.ReactNode> = {
+    contabilidad: (
+      <FileSpreadsheet className="w-10 h-10 text-red-primary group-hover:text-white transition-all-300"></FileSpreadsheet>
+    ),
+    "asesoria-juridica": (
+      <Scale className="w-10 h-10 text-red-primary group-hover:text-white transition-all-300"></Scale>
+    ),
+    digitales: (
+      <Globe className="w-10 h-10 text-red-primary group-hover:text-white transition-all-300"></Globe>
+    ),
+  };
 
   return (
-    <section className="py-20 bg-black-soft">
-      <div className="text-center mb-12 md:mb-16 animate-slide-up">
-        <h2 className="text-white text-3xl md:text-5xl font-bold mb-4">
-          Comparación de Servicios
-        </h2>
-        <div className="w-24 h-1 bg-red-primary mx-auto mb-6 animate-expand"></div>
-        <p className="text-white text-base md:text-lg max-w-2xl mx-auto">
-          Soluciones profesionales adaptadas a tus necesidades
-        </p>
-      </div>
-
+    <section className="py-16 md:py-20 bg-black-soft">
       <div className="container mx-auto px-4">
-        <div className="animate-fade-in rounded-lg overflow-hidden shadow-lg overflow-x-auto">
+        {/* Encabezado */}
+        <div className="text-center mb-12 md:mb-16">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
+            Comparación de Servicios
+          </h2>
+          <div className="w-24 h-1 bg-red-primary mx-auto mb-6"></div>
+          <p className="text-white text-base md:text-lg max-w-2xl mx-auto">
+            Soluciones profesionales adaptadas a tus necesidades
+          </p>
+        </div>
+        {/* Tabla */}
+        <div className="rounded-lg overflow-hidden shadow-lg overflow-x-auto">
           <table className="w-full min-w-[600px] border-collapse">
             <thead>
               <tr className="bg-red-primary text-white">
@@ -70,15 +51,14 @@ function ServicesTable() {
             <tbody>
               {services.map((service, index) => (
                 <tr
-                  key={service.id}
+                  key={index}
                   className={`border-b border-gray-dark hover:bg-gray-dark/70 transition-all-300 ${
                     index % 2 === 0 ? "bg-black-soft" : "bg-gray-dark/30"
                   }`}
-                  style={{ animationDelay: `${index * 150}ms` }}
                 >
                   <td className="p-4 whitespace-nowrap">
                     <div className="flex items-center space-x-3">
-                      {service.icon}
+                      {serviceIcon[service.slug]}
                       <span className="font-semibold text-white">
                         {service.title}
                       </span>

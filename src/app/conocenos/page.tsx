@@ -1,13 +1,11 @@
-import CompanyValues from "@/components/about-us/CompanyValues";
+import Hero from "@/components/about-us/Hero";
 import DetailedHistory from "@/components/about-us/DetailedHistory";
-import HeroSection from "@/components/about-us/HeroSection";
-/*import OurTeam from "@/components/about-us/OurTeam";
-import WorkMethodology from "@/components/about-us/WorkMethodology";*/
+import CompanyValues from "@/components/about-us/CompanyValues";
 
 function AboutUsPage() {
   return (
     <>
-      <HeroSection></HeroSection>
+      <Hero></Hero>
       <DetailedHistory></DetailedHistory>
       <CompanyValues></CompanyValues>
     </>

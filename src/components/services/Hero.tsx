@@ -1,14 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { MoveDown } from "lucide-react";
 
-function HeroSection() {
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    setIsVisible(true);
-  }, []);
-
+function Hero() {
   const scrollToServices = () => {
     document
       .getElementById("servicios")
@@ -16,14 +10,10 @@ function HeroSection() {
   };
 
   return (
-    <section
-      className={`relative h-screen flex items-center justify-center bg-gradient-to-r from-black-soft to-gray-dark text-white transition-opacity duration-1000 ${
-        isVisible ? "opacity-100" : "opacity-0"
-      }`}
-    >
+    <section className="relative h-screen flex items-center justify-center bg-gradient-to-r from-black-soft to-gray-dark text-white transition-opacity duration-1000">
       <div className="absolute inset-0 bg-black-soft opacity-70"></div>
       <div className="container mx-auto px-4 z-10 text-center">
-        <h1 className="text-4xl md:text-6xl font-bold mb-6 animate-fade-in">
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
           <span className="text-red-primary">📢</span> Soluciones Empresariales
           para Impulsar tu Negocio
         </h1>
@@ -42,26 +32,13 @@ function HeroSection() {
           Descubre nuestros servicios
         </button>
       </div>
-      <div className="absolute bottom-10 w-full text-center animate-bounce">
+      <div className="absolute bottom-3 md:bottom-10 w-full text-center animate-bounce">
         <button onClick={scrollToServices} className="text-[#ffffff]">
-          <svg
-            className="w-10 h-10 mx-auto"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M19 14l-7 7m0 0l-7-7m7 7V3"
-            />
-          </svg>
+          <MoveDown className="w-10 h-10 md:w-20 md:h-20 lg:w-10 lg:h-10 mx-auto"></MoveDown>
         </button>
       </div>
     </section>
   );
 }
 
-export default HeroSection;
+export default Hero;
