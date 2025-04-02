@@ -1,13 +1,6 @@
-import { Award, Search, Zap } from "lucide-react";
-import { benefits } from "@/data";
+import { benefits } from "../index";
 
 function Benefits() {
-  const benefitIcon: Record<string, React.ReactNode> = {
-    experiencia: <Award size={48}></Award>,
-    atencion: <Search size={48}></Search>,
-    resultados: <Zap size={48}></Zap>,
-  };
-
   return (
     <section className="py-16 md:py-20 bg-white">
       <div className="container mx-auto px-4">
@@ -26,7 +19,7 @@ function Benefits() {
               className="text-center p-6 transition-all-300 hover:translate-y-[-4px] border rounded-lg shadow-sm"
             >
               <div className="text-red-primary mb-4 text-4xl mx-auto">
-                {benefitIcon[benefit.slug]}
+                {benefit.icon}
               </div>
               <h3 className="text-xl font-bold mb-3 text-black-soft">
                 {benefit.title}

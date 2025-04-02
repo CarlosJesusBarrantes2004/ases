@@ -8,6 +8,7 @@ export const navigationLinks = [
     name: "Servicios",
     href: "/servicios",
     subLinks: [
+      // Servicio de contabilidad
       {
         name: "Contabilidad",
         href: "/servicios/contabilidad",
@@ -26,6 +27,7 @@ export const navigationLinks = [
           },
         ],
       },
+      // Servicio de asesoría jurídica
       {
         name: "Asesoría Jurídica",
         href: "/servicios/asesoria-juridica",
@@ -44,6 +46,7 @@ export const navigationLinks = [
           },
         ],
       },
+      // Servicios digitales
       {
         name: "Servicios Digitales",
         href: "/servicios/digitales",
@@ -223,6 +226,7 @@ export const services: Service[] = [
   },
 ];*/
 export const services: Service[] = [
+  // Servicio de contabilidad
   {
     name: "Contabilidad Empresarial",
     title: "Servicios Contables Integrales",
@@ -236,6 +240,7 @@ export const services: Service[] = [
     audience: "Empresas y emprendedores",
     features: "Declaraciones, balances, asesoría fiscal",
     subServices: [
+      // Sub-servicio de contabilidad básica
       {
         name: "Contabilidad Básica",
         shortDescription:
@@ -250,6 +255,7 @@ export const services: Service[] = [
         ],
         slug: "contabilidad-basica",
       },
+      // Sub-servicio de asesoría tributaria
       {
         name: "Asesoría Tributaria",
         shortDescription: "Optimización fiscal y cumplimiento normativo",
@@ -263,6 +269,7 @@ export const services: Service[] = [
         ],
         slug: "asesoria-tributaria",
       },
+      // Sub-servicio de auditoría financiera
       {
         name: "Auditoría Financiera",
         shortDescription: "Revisión y validación de registros contables",
@@ -298,6 +305,7 @@ export const services: Service[] = [
     ],
     slug: "contabilidad",
   },
+  // Servicio de asesoria juridica
   {
     name: "Asesoría Jurídica",
     title: "Asesoría Legal Especializada",
@@ -311,6 +319,7 @@ export const services: Service[] = [
     audience: "Negocios y personas con temas legales",
     features: "Contratos, representación legal, asesoría en litigios",
     subServices: [
+      // Sub-servicio de constitución de empresas
       {
         name: "Constitución de Empresas",
         shortDescription: "Asesoría integral para la creación de tu negocio",
@@ -324,6 +333,7 @@ export const services: Service[] = [
         ],
         slug: "constitucion-empresas",
       },
+      // Sub-servicio de contratos y revisión legal
       {
         name: "Contratos y Revisión Legal",
         shortDescription: "Protección y claridad en tus acuerdos comerciales",
@@ -337,6 +347,7 @@ export const services: Service[] = [
         ],
         slug: "contratos-revision",
       },
+      // Sub-servicio de representación legal
       {
         name: "Representación Legal",
         shortDescription: "Defensa de tus intereses en procesos legales",
@@ -372,6 +383,7 @@ export const services: Service[] = [
     ],
     slug: "asesoria-juridica",
   },
+  // Servicios digitales
   {
     name: "Servicios Digitales",
     title: "Impulsa tu negocio con soluciones digitales a medida",
@@ -385,6 +397,7 @@ export const services: Service[] = [
     audience: "Empresas que buscan digitalizar su negocio",
     features: "Marketing digital, diseño web, desarrollo de sistemas",
     subServices: [
+      // Sub-servicio de marketing digital
       {
         name: "Marketing Digital",
         shortDescription: "Estrategias para aumentar tu presencia online.",
@@ -398,6 +411,7 @@ export const services: Service[] = [
         ],
         slug: "marketing",
       },
+      // Sub-servicio de diseño web
       {
         name: "Diseño Web",
         shortDescription: "Páginas atractivas y funcionales para tu negocio.",
@@ -411,6 +425,7 @@ export const services: Service[] = [
         ],
         slug: "diseño-web",
       },
+      // Sub-servicio de desarrollo de sistemas
       {
         name: "Desarrollo de Sistemas",
         shortDescription: "Soluciones a medida para optimizar tus procesos.",
@@ -446,28 +461,6 @@ export const services: Service[] = [
       },
     ],
     slug: "digitales",
-  },
-];
-
-// Benefits
-export const benefits = [
-  {
-    title: "Experiencia Comprobada",
-    description:
-      "Más de 6 años ayudando a empresas a crecer con soluciones eficientes.",
-    slug: "experiencia",
-  },
-  {
-    title: "Atención Personalizada",
-    description:
-      "Brindamos asesoría adaptada a las necesidades de cada cliente",
-    slug: "atencion",
-  },
-  {
-    title: "Resultados Garantizados",
-    description:
-      "Optimizamos procesos y mejoramos la rentabilidad de tu negocio.",
-    slug: "resultados",
   },
 ];
 

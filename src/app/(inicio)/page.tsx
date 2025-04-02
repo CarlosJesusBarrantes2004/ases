@@ -1,9 +1,9 @@
-import Benefits from "@/components/home/Benefits";
-import Contact from "@/components/home/Contact";
-import Faq from "@/components/home/Faq";
-import Hero from "@/components/home/Hero";
-import HistoryMissionVision from "@/components/home/HistoryMissionVision";
-import Services from "@/components/home/Services";
+import Benefits from "@/app/(inicio)/components/Benefits";
+import Contact from "@/app/(inicio)/components/Contact";
+import Faq from "@/app/(inicio)/components/Faq";
+import Hero from "@/app/(inicio)/components/Hero";
+import HistoryMissionVision from "@/app/(inicio)/components/HistoryMissionVision";
+import Services from "@/app/(inicio)/components/Services";
 
 function HomePage() {
   return (
