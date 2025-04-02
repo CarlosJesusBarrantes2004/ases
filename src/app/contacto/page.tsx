@@ -1,6 +1,6 @@
-import ContactForm from "@/components/contact/form/ContactForm";
-import Info from "@/components/contact/Info";
-import Map from "@/components/contact/Map";
+import ContactForm from "@/app/contacto/components/form/ContactForm";
+import Info from "@/app/contacto/components/Info";
+import Map from "@/app/contacto/components/Map";
 
 function ContactPage() {
   return (

@@ -6,7 +6,7 @@ import {
   Phone,
   Twitter,
 } from "lucide-react";
-import ContactForm from "../../../components/contact/form/ContactForm";
+import ContactForm from "../../contacto/components/form/ContactForm";
 
 function Contact() {
   return (
