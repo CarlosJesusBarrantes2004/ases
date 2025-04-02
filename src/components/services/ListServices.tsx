@@ -8,6 +8,9 @@ import {
   Settings,
   ChevronRight,
   Star,
+  Album,
+  Coins,
+  WalletMinimal,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -16,6 +19,9 @@ function ListServices() {
     contabilidad: <Calculator size={30}></Calculator>,
     "asesoria-juridica": <Scale size={30}></Scale>,
     digitales: <Smartphone size={30}></Smartphone>,
+    "contabilidad-basica": <Album size={24}></Album>,
+    "asesoria-tributaria": <Coins size={24}></Coins>,
+    "auditoria-financiera": <WalletMinimal size={24}></WalletMinimal>,
     marketing: <Megaphone size={24}></Megaphone>,
     "diseño-web": <Monitor size={24}></Monitor>,
     desarrollo: <Settings size={24}></Settings>,
