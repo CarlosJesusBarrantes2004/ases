@@ -1,6 +1,6 @@
-import Hero from "@/components/about-us/Hero";
-import DetailedHistory from "@/components/about-us/DetailedHistory";
-import CompanyValues from "@/components/about-us/CompanyValues";
+import Hero from "@/app/conocenos/components/Hero";
+import DetailedHistory from "@/app/conocenos/components/DetailedHistory";
+import CompanyValues from "@/app/conocenos/components/CompanyValues";
 
 function AboutUsPage() {
   return (

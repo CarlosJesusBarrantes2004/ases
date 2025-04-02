@@ -9,8 +9,9 @@ import { navigationLinks } from "@/data";
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
-  const [isServiceOpen, setIsServiceOpen] = useState(false);
+  const [servicesOpen, setServicesOpen] = useState<string[]>([]);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isService, setIsService] = useState(false);
   const path = usePathname();
 
   useEffect(() => {
@@ -29,15 +30,21 @@ function Header() {
   useEffect(() => {
     setIsMenuOpen(false);
     setIsServicesOpen(false);
-    setIsServiceOpen(false);
+    setServicesOpen([]);
   }, [path]);
 
-  if (path.includes("/servicios/")) return null;
+  useEffect(() => {
+    if (path.includes("/servicios/")) setIsService(true);
+  }, []);
 
   return (
     <header
       className={`fixed w-full top-0 z-50 transition-all duration-300 ${
-        isScrolled || isMenuOpen ? "bg-white shadow-md" : "bg-transparent"
+        isService
+          ? "bg-black-soft"
+          : isScrolled || isMenuOpen
+          ? "bg-white shadow-md"
+          : "bg-transparent"
       }`}
     >
       <div className="container mx-auto px-4 py-3 md:px-6 md:py-5 flex justify-between items-center">
@@ -151,7 +158,7 @@ function Header() {
           onClick={() => {
             setIsMenuOpen(!isMenuOpen);
             setIsServicesOpen(false);
-            setIsServiceOpen(false);
+            setServicesOpen([]);
           }}
         >
           {isMenuOpen ? (
@@ -173,7 +180,7 @@ function Header() {
                     className="flex gap-8 items-center justify-between text-black-soft hover:text-red-primary transition-all duration-300 cursor-pointer"
                     onClick={() => {
                       setIsServicesOpen(!isServicesOpen);
-                      setIsServiceOpen(false);
+                      setServicesOpen([]);
                     }}
                   >
                     <Link href={item.href} className="flex-grow">
@@ -194,7 +201,13 @@ function Header() {
                               className="flex gap-8 items-center justify-between text-black-soft hover:text-red-primary transition-all duration-300 cursor-pointer"
                               onClick={(e) => {
                                 e.stopPropagation();
-                                setIsServiceOpen(!isServiceOpen);
+                                setServicesOpen(
+                                  !servicesOpen.includes(item.name)
+                                    ? [...servicesOpen, item.name]
+                                    : servicesOpen.filter(
+                                        (i) => i !== item.name
+                                      )
+                                );
                               }}
                             >
                               <Link href={item.href} className="flex-grow">
@@ -202,11 +215,13 @@ function Header() {
                               </Link>
                               <ChevronDown
                                 className={`w-4 h-4 md:w-5 md:h-5 lg:w-4 lg:h-4 transform transition-transform duration-300 ${
-                                  isServiceOpen ? "rotate-180" : ""
+                                  servicesOpen.includes(item.name)
+                                    ? "rotate-180"
+                                    : ""
                                 }`}
                               ></ChevronDown>
                             </div>
-                            {isServiceOpen && (
+                            {servicesOpen.includes(item.name) && (
                               <ul className="pl-4 mt-2 border-l-2 border-gray-light space-y-3 md:space-y-4 lg:space-y-3">
                                 {item.categories.map((item) => (
                                   <li
