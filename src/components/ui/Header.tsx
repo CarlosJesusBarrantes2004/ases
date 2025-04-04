@@ -31,16 +31,13 @@ function Header() {
     setIsMenuOpen(false);
     setIsServicesOpen(false);
     setServicesOpen([]);
+    path.includes("/servicios/") ? setIsService(true) : setIsService(false);
   }, [path]);
-
-  useEffect(() => {
-    if (path.includes("/servicios/")) setIsService(true);
-  }, []);
 
   return (
     <header
       className={`fixed w-full top-0 z-50 transition-all duration-300 ${
-        isService
+        isService && !isScrolled
           ? "bg-black-soft"
           : isScrolled || isMenuOpen
           ? "bg-white shadow-md"
