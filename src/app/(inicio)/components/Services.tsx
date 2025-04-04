@@ -1,4 +1,4 @@
-import { services } from "@/data";
+import { services } from "../../servicios/index";
 import { ArrowRight, BarChart3, Globe, Scale } from "lucide-react";
 import Link from "next/link";
 

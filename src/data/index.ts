@@ -225,6 +225,8 @@ export const services: Service[] = [
     slug: "digitales",
   },
 ];*/
+
+/*
 export const services: Service[] = [
   // Servicio de contabilidad
   {
@@ -463,6 +465,7 @@ export const services: Service[] = [
     slug: "digitales",
   },
 ];
+*/
 
 // Questions
 export const faqData = [

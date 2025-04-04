@@ -1,6 +1,6 @@
-import Hero from "@/components/services/service/Hero";
-import SubServices from "@/components/services/service/SubServices";
-import { services } from "@/data";
+import Hero from "@/app/servicios/components/service/Hero";
+import SubServices from "@/app/servicios/components/service/SubServices";
+import { services } from "../index";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 

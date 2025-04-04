@@ -1,5 +1,5 @@
-import Hero from "@/components/services/service/subservice/Hero";
-import { services } from "@/data";
+import Hero from "@/app/servicios/components/service/subservice/Hero";
+import { services } from "../../index";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 

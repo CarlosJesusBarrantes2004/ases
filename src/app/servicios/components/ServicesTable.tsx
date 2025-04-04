@@ -1,4 +1,4 @@
-import { services } from "@/data";
+import { services } from "../index";
 import { FileSpreadsheet, Globe, Scale } from "lucide-react";
 
 function ServicesTable() {
