@@ -1,36 +1,50 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ases
 
-## Getting Started
+![License](https://img.shields.io/badge/license-Unlicensed-blue.svg)
+![Language](https://img.shields.io/badge/language-TypeScript-blue.svg)
 
-First, run the development server:
+Bienvenido al repositorio del proyecto **ases**. Este proyecto está desarrollado principalmente en TypeScript.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Índice
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- [Descripción](#descripción)
+- [Características](#características)
+- [Detalles del Repositorio](#detalles-del-repositorio)
+- [Propietario](#propietario)
+- [Página Principal](#página-principal)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Descripción
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+El proyecto **ases** es una aplicación web desarrollada con la finalidad de mostrar información de esta corporación. Este proyecto se ha desarrollado utilizando tecnologías modernas y mejores prácticas de desarrollo.
 
-## Learn More
+## Características
 
-To learn more about Next.js, take a look at the following resources:
+- **Lenguaje principal:** TypeScript (97.9%)
+- **Otros lenguajes:** CSS (1.7%), JavaScript (0.4%)
+- **Repositorio público:** Sí
+- **Permite forking:** Sí
+- **Soporte para discusiones:** No
+- **Soporte para descargas:** Sí
+- **Soporte para issues:** Sí
+- **Soporte para páginas:** No
+- **Soporte para proyectos:** Sí
+- **Soporte para wiki:** Sí
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Detalles del Repositorio
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **URL del repositorio:** [CarlosJesusBarrantes2004/ases](https://github.com/CarlosJesusBarrantes2004/ases)
+- **Rama principal:** master
+- **Creado hace:** 11 días
+- **Tamaño del repositorio:** 11174 KB
+- **Número de forks:** 0
+- **Número de estrellas:** 0
+- **Número de suscriptores:** 1
 
-## Deploy on Vercel
+## Propietario
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Propietario:** [CarlosJesusBarrantes2004](https://github.com/CarlosJesusBarrantes2004)
+- **Avatar:** ![CarlosJesusBarrantes2004](https://avatars.githubusercontent.com/u/147318137?v=4)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Página Principal
+
+- **Homepage:** [https://ases-orpin.vercel.app](https://ases-orpin.vercel.app)
