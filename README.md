@@ -43,7 +43,7 @@ El proyecto **ases** es una aplicación web desarrollada con la finalidad de mos
 ## Propietario
 
 - **Propietario:** [CarlosJesusBarrantes2004](https://github.com/CarlosJesusBarrantes2004)
-- **Avatar:** ![CarlosJesusBarrantes2004](https://avatars.githubusercontent.com/u/147318137?v=4)
+![CarlosJesusBarrantes2004](https://avatars.githubusercontent.com/u/147318137?v=4)
 
 ## Página Principal
 
