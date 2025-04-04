@@ -14,7 +14,7 @@ interface HeroProps {
 function Hero({ items, name, title, description, imagePath }: HeroProps) {
   return (
     <div className="overflow-hidden">
-      <header className="bg-white px-6 md:px-8 pt-24 pb-1 relative z-10">
+      <header className="bg-white px-6 md:px-8 pt-28 pb-1 relative z-10">
         <Breadcrumb items={items} currentPage={name}></Breadcrumb>
       </header>
 
