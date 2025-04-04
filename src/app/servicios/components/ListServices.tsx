@@ -1,32 +1,8 @@
 import { services } from "../index";
-import {
-  Calculator,
-  Scale,
-  Smartphone,
-  Megaphone,
-  Monitor,
-  Settings,
-  ChevronRight,
-  Star,
-  Album,
-  Coins,
-  WalletMinimal,
-} from "lucide-react";
+import { ChevronRight, Star } from "lucide-react";
 import Link from "next/link";
 
 function ListServices() {
-  const serviceIcon: Record<string, React.ReactNode> = {
-    contabilidad: <Calculator size={30}></Calculator>,
-    "asesoria-juridica": <Scale size={30}></Scale>,
-    digitales: <Smartphone size={30}></Smartphone>,
-    "contabilidad-basica": <Album size={24}></Album>,
-    "asesoria-tributaria": <Coins size={24}></Coins>,
-    "auditoria-financiera": <WalletMinimal size={24}></WalletMinimal>,
-    marketing: <Megaphone size={24}></Megaphone>,
-    "diseño-web": <Monitor size={24}></Monitor>,
-    desarrollo: <Settings size={24}></Settings>,
-  };
-
   return (
     <section
       id="servicios"
@@ -57,7 +33,7 @@ function ListServices() {
             >
               <div className="p-8">
                 <div className="bg-red-primary text-white rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-6 shadow-md transform transition-transform duration-300 hover:scale-110">
-                  {serviceIcon[service.slug]}
+                  {service.icon}
                 </div>
                 <h3 className="text-2xl font-bold text-center mb-4 text-black-soft">
                   {service.name}
@@ -73,7 +49,7 @@ function ListServices() {
                         className="flex items-center p-4 bg-[#f5f5f5] rounded-lg hover:bg-[#f0f0f0] transition-all duration-300"
                       >
                         <div className="bg-white p-2 rounded-full shadow-sm text-red-primary mr-3">
-                          {serviceIcon[subservice.slug]}
+                          {subservice.icon}
                         </div>
                         <div>
                           <h4 className="font-semibold text-black-soft">

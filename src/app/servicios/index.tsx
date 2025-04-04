@@ -1,3 +1,17 @@
+import {
+  Calculator,
+  Scale,
+  Smartphone,
+  Megaphone,
+  Monitor,
+  Settings,
+  Album,
+  Coins,
+  WalletMinimal,
+  Building2,
+  ReceiptText,
+  AlignEndHorizontal,
+} from "lucide-react";
 export const services = [
   // Servicio de contabilidad
   {
@@ -12,6 +26,7 @@ export const services = [
     tagline: "Mantén tus Finanzas en Orden sin Estrés",
     audience: "Empresas y emprendedores",
     features: "Declaraciones, balances, asesoría fiscal",
+    icon: <Calculator size={30}></Calculator>,
     subServices: [
       // Sub-servicio de contabilidad básica
       {
@@ -27,6 +42,7 @@ export const services = [
           "Soporte para declaraciones tributarias simples",
         ],
         slug: "contabilidad-basica",
+        icon: <Album size={24}></Album>,
       },
       // Sub-servicio de asesoría tributaria
       {
@@ -41,6 +57,7 @@ export const services = [
           "Asesoramiento personalizado en normativa tributaria",
         ],
         slug: "asesoria-tributaria",
+        icon: <Coins size={24}></Coins>,
       },
       // Sub-servicio de auditoría financiera
       {
@@ -55,6 +72,7 @@ export const services = [
           "Informes detallados y recomendaciones",
         ],
         slug: "auditoria-financiera",
+        icon: <WalletMinimal size={24}></WalletMinimal>,
       },
     ],
     cases: [
@@ -91,6 +109,7 @@ export const services = [
     tagline: "Protege tu Negocio y Evita Problemas Legales",
     audience: "Negocios y personas con temas legales",
     features: "Contratos, representación legal, asesoría en litigios",
+    icon: <Scale size={30}></Scale>,
     subServices: [
       // Sub-servicio de constitución de empresas
       {
@@ -105,6 +124,7 @@ export const services = [
           "Prevención de errores legales comunes",
         ],
         slug: "constitucion-empresas",
+        icon: <Building2 size={28}></Building2>,
       },
       // Sub-servicio de contratos y revisión legal
       {
@@ -119,6 +139,7 @@ export const services = [
           "Asesoramiento en negociación contractual",
         ],
         slug: "contratos-revision",
+        icon: <ReceiptText size={28}></ReceiptText>,
       },
       // Sub-servicio de representación legal
       {
@@ -133,6 +154,7 @@ export const services = [
           "Seguimiento exhaustivo de procesos legales",
         ],
         slug: "representacion-legal",
+        icon: <AlignEndHorizontal size={28}></AlignEndHorizontal>,
       },
     ],
     cases: [
@@ -169,6 +191,7 @@ export const services = [
     tagline: "Lleva tu Negocio al Mundo Digital",
     audience: "Empresas que buscan digitalizar su negocio",
     features: "Marketing digital, diseño web, desarrollo de sistemas",
+    icon: <Smartphone size={30}></Smartphone>,
     subServices: [
       // Sub-servicio de marketing digital
       {
@@ -183,6 +206,7 @@ export const services = [
           "Posicionamiento SEO para atraer clientes orgánicos",
         ],
         slug: "marketing",
+        icon: <Megaphone size={24}></Megaphone>,
       },
       // Sub-servicio de diseño web
       {
@@ -197,6 +221,7 @@ export const services = [
           "Estrategia UX/UI para una mejor experiencia de usuario",
         ],
         slug: "diseño-web",
+        icon: <Monitor size={24}></Monitor>,
       },
       // Sub-servicio de desarrollo de sistemas
       {
@@ -211,6 +236,7 @@ export const services = [
           "Mayor seguridad y escalabilidad en la gestión de datos",
         ],
         slug: "desarrollo",
+        icon: <Settings size={24}></Settings>,
       },
     ],
     cases: [
