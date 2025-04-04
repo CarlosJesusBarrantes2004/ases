@@ -26,6 +26,7 @@ export const services = [
           "Preparación de estados financieros mensuales",
           "Soporte para declaraciones tributarias simples",
         ],
+        imagePath: "/images/basic-accounting.jpg",
         slug: "contabilidad-basica",
       },
       // Sub-servicio de asesoría tributaria
@@ -40,6 +41,7 @@ export const services = [
           "Reducción de riesgos de sanciones",
           "Asesoramiento personalizado en normativa tributaria",
         ],
+        imagePath: "/images/tax-advice.jpg",
         slug: "asesoria-tributaria",
       },
       // Sub-servicio de auditoría financiera
@@ -54,6 +56,7 @@ export const services = [
           "Mejora en los procesos financieros",
           "Informes detallados y recomendaciones",
         ],
+        imagePath: "/images/financial-audit.jpg",
         slug: "auditoria-financiera",
       },
     ],
@@ -104,6 +107,7 @@ export const services = [
           "Asesoramiento en obligaciones iniciales",
           "Prevención de errores legales comunes",
         ],
+        imagePath: "/images/company-formation.jpg",
         slug: "constitucion-empresas",
       },
       // Sub-servicio de contratos y revisión legal
@@ -118,6 +122,7 @@ export const services = [
           "Identificación de cláusulas de riesgo",
           "Asesoramiento en negociación contractual",
         ],
+        imagePath: "/images/contract-review.jpg",
         slug: "contratos-revision",
       },
       // Sub-servicio de representación legal
@@ -132,6 +137,7 @@ export const services = [
           "Negociación y resolución de conflictos",
           "Seguimiento exhaustivo de procesos legales",
         ],
+        imagePath: "/images/legal-representation.jpg",
         slug: "representacion-legal",
       },
     ],
@@ -182,6 +188,7 @@ export const services = [
           "Publicidad pagada optimizada para resultados rápidos",
           "Posicionamiento SEO para atraer clientes orgánicos",
         ],
+        imagePath: "/images/marketing-digital.jpg",
         slug: "marketing",
       },
       // Sub-servicio de diseño web
@@ -196,6 +203,7 @@ export const services = [
           "Integración con herramientas como Google Analytics",
           "Estrategia UX/UI para una mejor experiencia de usuario",
         ],
+        imagePath: "/images/web-design.jpg",
         slug: "diseño-web",
       },
       // Sub-servicio de desarrollo de sistemas
@@ -210,6 +218,7 @@ export const services = [
           "Integraciones con otras herramientas y plataformas",
           "Mayor seguridad y escalabilidad en la gestión de datos",
         ],
+        imagePath: "/images/software-development.jpg",
         slug: "desarrollo",
       },
     ],

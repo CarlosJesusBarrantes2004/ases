@@ -67,6 +67,7 @@ async function SubservicePage({ params }: SubservicePageProps) {
         name={subService.name}
         title={subService.name}
         description={subService.longDescription}
+        imagePath={subService.imagePath}
       ></Hero>
     </>
   );
