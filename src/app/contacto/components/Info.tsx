@@ -1,8 +1,9 @@
+import Reveal from "@/components/ui/Reveal";
 import { Clock, Mail, MapPin, Phone } from "lucide-react";
 
 function Info() {
   return (
-    <div className="bg-white p-8 rounded-lg shadow-lg">
+    <Reveal direction="left" className="bg-white p-8 rounded-lg shadow-lg">
       <h2 className="text-2xl font-bold text-black-soft mb-6 text-center">
         Información de Contacto
       </h2>
@@ -51,7 +52,7 @@ function Info() {
           </div>
         </article>
       </div>
-    </div>
+    </Reveal>
   );
 }
 

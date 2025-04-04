@@ -1,20 +1,24 @@
+import Reveal from "@/components/ui/Reveal";
+
 function Map() {
   return (
     <section className="py-16 md:py-20 bg-gray-dark">
       <div className="container mx-auto px-4">
         {/* Encabezado */}
-        <div className="text-center mb-12 md:mb-16">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
-            Contáctanos y Ubícanos
-          </h2>
-          <div className="w-24 h-1 bg-red-primary mx-auto mb-6"></div>
-          <p className="text-white text-base md:text-lg mx-auto max-w-2xl">
-            Estamos listos para escuchar tu proyecto. Completa el formulario o
-            visítanos en nuestra ubicación.
-          </p>
-        </div>
+        <Reveal>
+          <div className="text-center mb-12 md:mb-16">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
+              Contáctanos y Ubícanos
+            </h2>
+            <div className="w-24 h-1 bg-red-primary mx-auto mb-6"></div>
+            <p className="text-white text-base md:text-lg mx-auto max-w-2xl">
+              Estamos listos para escuchar tu proyecto. Completa el formulario o
+              visítanos en nuestra ubicación.
+            </p>
+          </div>
+        </Reveal>
         {/* Contenedor responsivo para el mapa */}
-        <section className="flex">
+        <Reveal className="flex">
           <div className="bg-black-soft/60 duration-300 flex flex-col p-7 sm:p-10 lg:p-16 gap-4 items-center text-center lg:text-start lg:items-start justify-center h-fit lg:h-96 lg:w-1/3 rounded-s-md">
             <span className="text-3xl text-white group-hover:text-white font-medium  duration-300">
               Grupo Ases
@@ -40,7 +44,7 @@ function Map() {
               referrerPolicy="no-referrer-when-downgrade"
             ></iframe>
           </div>
-        </section>
+        </Reveal>
       </div>
     </section>
   );
