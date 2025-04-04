@@ -11,6 +11,15 @@ import {
   Building2,
   ReceiptText,
   AlignEndHorizontal,
+  ArrowRight,
+  Briefcase,
+  Building,
+  ClipboardList,
+  Clock,
+  DollarSign,
+  FileCheck,
+  Users,
+  Zap,
 } from "lucide-react";
 export const services = [
   // Servicio de contabilidad
@@ -84,17 +93,20 @@ export const services = [
         solution:
           "Te ayudamos a manejar tus impuestos y llevar la contabilidad de forma eficiente para evitar sanciones.",
         slug: "file",
+        icon: <FileCheck size={20}></FileCheck>,
       },
       {
         text: "No tengo tiempo para llevar mi contabilidad.",
         solution: "Olvídate del papeleo y déjalo en manos de expertos.",
         slug: "clock",
+        icon: <Clock size={20}></Clock>,
       },
       {
         text: "Quiero optimizar mis costos y pagar menos impuestos legalmente.",
         solution:
           "Te asesoramos para que aproveches beneficios tributarios sin riesgos.",
         slug: "calculator",
+        icon: <Briefcase size={20}></Briefcase>,
       },
     ],
     slug: "contabilidad",
@@ -169,17 +181,20 @@ export const services = [
         solution:
           "Desde la inscripción hasta los permisos legales, te guiamos paso a paso.",
         slug: "building",
+        icon: <Building size={20}></Building>,
       },
       {
         text: "Tengo problemas con un cliente que no me paga.",
         solution:
           "Te ayudamos con cobranzas legales y soluciones jurídicas efectivas.",
         slug: "dollar",
+        icon: <DollarSign size={20}></DollarSign>,
       },
       {
         text: "Voy a firmar un contrato importante, pero no sé si es seguro para mí.",
         solution: "Revisamos y redactamos contratos para protegerte.",
         slug: "clipboard",
+        icon: <ClipboardList size={20}></ClipboardList>,
       },
     ],
     slug: "asesoria-juridica",
@@ -254,18 +269,21 @@ export const services = [
         solution:
           "Implementamos estrategias de marketing digital para atraer más clientes.",
         slug: "users",
+        icon: <Users size={20}></Users>,
       },
       {
         text: "Quiero tener presencia en internet, pero no tengo página web.",
         solution:
           "Diseñamos y desarrollamos un sitio web profesional adaptado a tu negocio.",
         slug: "zap",
+        icon: <Zap size={20}></Zap>,
       },
       {
         text: "Me gustaría automatizar algunas tareas de mi empresa.",
         solution:
           "Creamos sistemas personalizados para mejorar la gestión de tu negocio.",
         slug: "calculator",
+        icon: <Calculator size={20}></Calculator>,
       },
     ],
     slug: "digitales",

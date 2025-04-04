@@ -1,34 +1,7 @@
 import { services } from "../index";
-import {
-  ArrowRight,
-  Briefcase,
-  Building,
-  Calculator,
-  ClipboardList,
-  Clock,
-  DollarSign,
-  FileCheck,
-  Scale,
-  Smartphone,
-  Users,
-  Zap,
-} from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 function UseCases() {
-  const serviceIcon: Record<string, React.ReactNode> = {
-    contabilidad: <Briefcase size={32}></Briefcase>,
-    "asesoria-juridica": <Scale size={32}></Scale>,
-    digitales: <Smartphone size={32}></Smartphone>,
-    file: <FileCheck size={20}></FileCheck>,
-    clock: <Clock size={20}></Clock>,
-    calculator: <Calculator size={20}></Calculator>,
-    building: <Building size={20}></Building>,
-    dollar: <DollarSign size={20}></DollarSign>,
-    clipboard: <ClipboardList size={20}></ClipboardList>,
-    users: <Users size={20}></Users>,
-    zap: <Zap size={20}></Zap>,
-  };
-
   return (
     <section className="py-16 md:py-20 bg-gray-dark bg-opacity-95 relative overflow-hidden">
       {/* Elementos decorativos de fondo */}
@@ -60,7 +33,7 @@ function UseCases() {
                   } px-6 py-5 flex items-center`}
                 >
                   <div className="bg-white text-black-soft bg-opacity-20 p-3 rounded-full mr-4">
-                    {serviceIcon[service.slug]}
+                    {service.icon}
                   </div>
                   <div>
                     <h3 className="text-white text-xl font-bold">
@@ -81,7 +54,7 @@ function UseCases() {
                       >
                         <div className="flex items-start mb-2">
                           <div className="text-red-primary mr-2 mt-1">
-                            {serviceIcon[useCase.slug]}
+                            {useCase.icon}
                           </div>
                           <p className="text-white font-medium">
                             &quot;{useCase.text}&quot;
