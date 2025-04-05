@@ -31,7 +31,7 @@ function Header() {
     setIsMenuOpen(false);
     setIsServicesOpen(false);
     setServicesOpen([]);
-    path.includes("/servicios/") ? setIsService(true) : setIsService(false);
+    setIsService(path.includes("/servicios/"));
   }, [path]);
 
   return (
