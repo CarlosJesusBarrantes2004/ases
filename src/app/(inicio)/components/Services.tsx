@@ -14,17 +14,14 @@ function Services() {
     <section className="py-16 md:py-20 bg-white">
       <div className="container mx-auto px-4">
         {/* Encabezado */}
-        <div className="text-center mb-12 md:mb-16">
-          <Reveal>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-black-soft">
-              Nuestros Servicios
-            </h2>
-          </Reveal>
-
+        <Reveal className="text-center mb-12 md:mb-16">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-black-soft">
+            Nuestros Servicios
+          </h2>
           <div className="w-24 h-1 bg-red-primary mx-auto mb-6"></div>
-        </div>
+        </Reveal>
         {/* Contenido */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <Reveal className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {services.map((service, index) => (
             <Reveal key={index}>
               <article className="bg-white border rounded-lg shadow-sm p-6 h-full flex flex-col transition-all-300 hover:translate-y-[-8px]">
@@ -47,7 +44,7 @@ function Services() {
               </article>
             </Reveal>
           ))}
-        </div>
+        </Reveal>
       </div>
     </section>
   );
