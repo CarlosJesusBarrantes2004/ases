@@ -1,3 +1,4 @@
+import Reveal from "@/components/ui/Reveal";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -8,19 +9,25 @@ function Hero() {
         <div className="flex flex-col md:flex-row items-center justify-between gap-8">
           {/* Contenido */}
           <div className="mx-auto md:mx-0 text-center md:text-left md:w-1/2">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-              Impulsamos tu negocio con soluciones integrales
-            </h1>
-            <p className="text-xl md:text-2xl mb-8">
-              Expertos en Contabilidad, Asesoría Jurídica y Servicios Digitales
-              para que tu empresa crezca con confianza.
-            </p>
-            <Link
-              href={"/contacto"}
-              className="inline-block bg-white text-black-soft px-8 py-4 rounded-md text-lg font-semibold shadow-sm hover:bg-red-primary hover:text-white hover:-translate-y-2 transition-all-300"
-            >
-              Contáctanos ahora
-            </Link>
+            <Reveal direction="left">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+                Impulsamos tu negocio con soluciones integrales
+              </h1>
+            </Reveal>
+            <Reveal direction="right">
+              <p className="text-xl md:text-2xl mb-8">
+                Expertos en Contabilidad, Asesoría Jurídica y Servicios
+                Digitales para que tu empresa crezca con confianza.
+              </p>
+            </Reveal>
+            <Reveal>
+              <Link
+                href={"/contacto"}
+                className="inline-block bg-white text-black-soft px-8 py-4 rounded-md text-lg font-semibold shadow-sm hover:bg-red-primary hover:text-white hover:-translate-y-2 transition-all-300"
+              >
+                Contáctanos ahora
+              </Link>
+            </Reveal>
           </div>
           {/* Imagen */}
           <div className="mt-10 md:mt-0 md:w-1/2">

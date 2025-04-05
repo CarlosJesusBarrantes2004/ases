@@ -65,13 +65,25 @@ function ContactForm() {
 
   const onSubmit = async (data: ContactFormType) => {
     try {
-      console.log("Datos enviados:", data);
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      setSubmitStatus({
-        success: true,
-        message:
-          "¡message enviado con éxito! Nos pondremos en contacto pronto.",
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
       });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Error al enviar el mensaje");
+      } else {
+        const result = await response.json();
+        setSubmitStatus({
+          success: true,
+          message: result.message || "Mensaje enviado correctamente. ¡Gracias!",
+        });
+      }
+
       reset();
     } catch (error) {
       console.log(error);
@@ -259,27 +271,6 @@ function ContactForm() {
             <div className="text-right text-gray-400 text-xs mt-1">
               <span id="charCount">{charCount}</span>/500
             </div>
-          </div>
-
-          <div className="flex items-center">
-            <input
-              type="checkbox"
-              id="politicaPrivacidad"
-              className="h-4 w-4 text-red-primary rounded border-gray-300 focus:ring-red-primary"
-              required
-            />
-            <label
-              htmlFor="politicaPrivacidad"
-              className="ml-2 block text-sm text-gray-700"
-            >
-              He leído y acepto la{" "}
-              <a
-                href="#"
-                className="text-red-primary font-medium hover:underline"
-              >
-                política de privacidad
-              </a>
-            </label>
           </div>
 
           <div className="pt-4">

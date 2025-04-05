@@ -1,3 +1,4 @@
+import Reveal from "@/components/ui/Reveal";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -20,15 +21,19 @@ function Hero() {
       {/* Contenido */}
       <div className="container mx-auto px-4 relative z-20">
         <div className="max-w-2xl">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white leading-16">
-            Descubre Quiénes Somos y Cómo Podemos{" "}
-            <span className="text-red-primary">Impulsar Tu Negocio</span>
-          </h1>
-          <p className="text-xl md:text-2xl text-gray-light mb-8">
-            Un equipo de expertos a tu servicio. Te acompañamos en cada paso
-            para optimizar tu negocio.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4">
+          <Reveal direction="left">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white leading-16">
+              Descubre Quiénes Somos y Cómo Podemos{" "}
+              <span className="text-red-primary">Impulsar Tu Negocio</span>
+            </h1>
+          </Reveal>
+          <Reveal direction="right">
+            <p className="text-xl md:text-2xl text-gray-light mb-8">
+              Un equipo de expertos a tu servicio. Te acompañamos en cada paso
+              para optimizar tu negocio.
+            </p>
+          </Reveal>
+          <Reveal className="flex flex-col sm:flex-row gap-4">
             <Link
               href={"#history"}
               className="inline-block bg-transparent border-2 border-red-primary text-white font-semibold py-3 px-6 rounded-full hover:bg-red-primary transition-all-300"
@@ -42,7 +47,7 @@ function Hero() {
             >
               Hablemos sobre tu empresa
             </Link>
-          </div>
+          </Reveal>
         </div>
       </div>
     </section>

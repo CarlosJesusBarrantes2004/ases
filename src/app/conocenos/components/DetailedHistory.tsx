@@ -1,3 +1,4 @@
+import Reveal from "@/components/ui/Reveal";
 import { timelineItems } from "@/data";
 import Image from "next/image";
 
@@ -22,17 +23,21 @@ function DetailedHistory() {
       <div className="container mx-auto px-4 relative z-10">
         {/* Encabezado */}
         <div className="text-center mb-12 md:mb-16">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
-            Nuestra Historia{" "}
-            <span className="text-red-primary">creciendo contigo</span>
-          </h2>
+          <Reveal>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
+              Nuestra Historia{" "}
+              <span className="text-red-primary">creciendo contigo</span>
+            </h2>
+          </Reveal>
           <div className="w-24 h-1 bg-red-primary mx-auto mb-6"></div>
-          <p className="mx-auto text-base md:text-lg text-gray-light max-w-2xl">
-            Desde nuestros inicios, en Grupo ASES hemos trabajado con un
-            propósito claro: brindar soluciones empresariales integrales que
-            impulsen el crecimiento y la estabilidad de negocios de todos los
-            tamaños.
-          </p>
+          <Reveal>
+            <p className="mx-auto text-base md:text-lg text-gray-light max-w-2xl">
+              Desde nuestros inicios, en Grupo ASES hemos trabajado con un
+              propósito claro: brindar soluciones empresariales integrales que
+              impulsen el crecimiento y la estabilidad de negocios de todos los
+              tamaños.
+            </p>
+          </Reveal>
         </div>
         {/* Cronología */}
         <div className="relative">

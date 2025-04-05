@@ -1,12 +1,16 @@
+import Reveal from "@/components/ui/Reveal";
+
 function HistoryMissionVision() {
   return (
     <section className="py-16 md:py-20 bg-gray-dark">
       <div className="container mx-auto px-4">
         {/* Title */}
         <div className="text-center mb-12 md:mb-16">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-white">
-            Nuestra Compañía
-          </h2>
+          <Reveal>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-white">
+              Nuestra Compañía
+            </h2>
+          </Reveal>
           <div className="w-24 h-1 bg-red-primary mx-auto mb-6"></div>
         </div>
         {/* History */}
