@@ -1,10 +1,11 @@
+import Reveal from "@/components/ui/Reveal";
 import Image from "next/image";
 import Link from "next/link";
 
 function Hero() {
   return (
     <section className="bg-black-soft py-16 md:py-20 lg:py-24">
-      <div className="container mx-auto px-4">
+      <Reveal className="container mx-auto px-4">
         <div className="flex flex-col md:flex-row items-center justify-between gap-8">
           {/* Contenido */}
           <div className="mx-auto md:mx-0 text-center md:text-left md:w-1/2">
@@ -36,7 +37,7 @@ function Hero() {
             </div>
           </div>
         </div>
-      </div>
+      </Reveal>
     </section>
   );
 }
