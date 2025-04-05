@@ -16,7 +16,7 @@ function CompanyValues() {
           <div className="w-24 h-1 bg-red-primary mx-auto mb-6"></div>
         </div>
         {/* Valores de la empresa */}
-        <div className="grid gap-8 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+        <Reveal className="grid gap-8 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
           {values.map((value) => (
             <article
               key={value.title}
@@ -33,7 +33,7 @@ function CompanyValues() {
               </div>
             </article>
           ))}
-        </div>
+        </Reveal>
       </div>
     </section>
   );

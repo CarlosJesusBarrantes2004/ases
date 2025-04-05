@@ -30,12 +30,14 @@ function Hero() {
             </em>
           </p>
         </Reveal>
-        <button
-          onClick={scrollToServices}
-          className="bg-red-primary hover:bg-[#b71c1c] text-white px-8 py-4 rounded-md text-lg font-bold transition-all-300 transform hover:scale-105 shadow-lg cursor-pointer"
-        >
-          Descubre nuestros servicios
-        </button>
+        <Reveal direction="up">
+          <button
+            onClick={scrollToServices}
+            className="bg-red-primary hover:bg-[#b71c1c] text-white px-8 py-4 rounded-md text-lg font-bold transition-all-300 transform hover:scale-105 shadow-lg cursor-pointer"
+          >
+            Descubre nuestros servicios
+          </button>
+        </Reveal>
       </div>
       <div className="absolute bottom-3 md:bottom-10 w-full text-center animate-bounce">
         <button onClick={scrollToServices} className="text-[#ffffff]">

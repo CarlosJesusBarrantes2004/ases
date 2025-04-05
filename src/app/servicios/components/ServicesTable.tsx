@@ -1,3 +1,4 @@
+import Reveal from "@/components/ui/Reveal";
 import { services } from "../index";
 import { FileSpreadsheet, Globe, Scale } from "lucide-react";
 
@@ -19,13 +20,13 @@ function ServicesTable() {
       <div className="container mx-auto px-4">
         {/* Encabezado */}
         <div className="text-center mb-12 md:mb-16">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
+          <Reveal className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
             Comparación de Servicios
-          </h2>
+          </Reveal>
           <div className="w-24 h-1 bg-red-primary mx-auto mb-6"></div>
-          <p className="text-white text-base md:text-lg max-w-2xl mx-auto">
+          <Reveal className="text-white text-base md:text-lg max-w-2xl mx-auto">
             Soluciones profesionales adaptadas a tus necesidades
-          </p>
+          </Reveal>
         </div>
         {/* Tabla */}
         <div className="rounded-lg overflow-hidden shadow-lg overflow-x-auto">

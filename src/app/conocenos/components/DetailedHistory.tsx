@@ -30,13 +30,11 @@ function DetailedHistory() {
             </h2>
           </Reveal>
           <div className="w-24 h-1 bg-red-primary mx-auto mb-6"></div>
-          <Reveal>
-            <p className="mx-auto text-base md:text-lg text-gray-light max-w-2xl">
-              Desde nuestros inicios, en Grupo ASES hemos trabajado con un
-              propósito claro: brindar soluciones empresariales integrales que
-              impulsen el crecimiento y la estabilidad de negocios de todos los
-              tamaños.
-            </p>
+          <Reveal className="mx-auto text-base md:text-lg text-gray-light max-w-2xl">
+            Desde nuestros inicios, en Grupo ASES hemos trabajado con un
+            propósito claro: brindar soluciones empresariales integrales que
+            impulsen el crecimiento y la estabilidad de negocios de todos los
+            tamaños.
           </Reveal>
         </div>
         {/* Cronología */}

@@ -1,4 +1,5 @@
 import Breadcrumb from "@/components/ui/Breadcrumb";
+import Reveal from "@/components/ui/Reveal";
 import { ArrowRight, Sparkles } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -15,7 +16,9 @@ function Hero({ items, name, title, description, imagePath }: HeroProps) {
   return (
     <div className="overflow-hidden">
       <header className="bg-white px-6 md:px-8 pt-28 pb-1 relative z-10">
-        <Breadcrumb items={items} currentPage={name}></Breadcrumb>
+        <Reveal direction="left">
+          <Breadcrumb items={items} currentPage={name}></Breadcrumb>
+        </Reveal>
       </header>
 
       <section className="bg-white py-16 md:py-20 relative">
@@ -28,17 +31,20 @@ function Hero({ items, name, title, description, imagePath }: HeroProps) {
         <div className="container mx-auto px-6 md:px-8 relative z-10">
           <div className="flex flex-col md:flex-row items-start justify-between gap-8 lg:gap-12">
             <div className="flex flex-col justify-start w-full md:w-3/5 lg:w-1/2">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-black-soft mb-6">
-                <span className="text-red-primary inline-flex items-center">
-                  {title}
-                  <Sparkles className="w-16 h-16 md:w-24 md:h-24 ml-2 text-red-primary md:inline"></Sparkles>
-                </span>
-              </h1>
+              <Reveal>
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-black-soft mb-6">
+                  <span className="text-red-primary inline-flex items-center">
+                    {title}
+                    <Sparkles className="w-16 h-16 md:w-24 md:h-24 ml-2 text-red-primary md:inline"></Sparkles>
+                  </span>
+                </h1>
+              </Reveal>
               <div className="w-24 md:w-32 h-2 bg-red-primary mb-8"></div>
-              <p className="text-lg md:text-xl lg:text-2xl text-gray-dark max-w-3xl">
-                {description}
-              </p>
-
+              <Reveal>
+                <p className="text-lg md:text-xl lg:text-2xl text-gray-dark max-w-3xl">
+                  {description}
+                </p>
+              </Reveal>
               <div className="mt-10">
                 <Link
                   href={`/servicios/${name

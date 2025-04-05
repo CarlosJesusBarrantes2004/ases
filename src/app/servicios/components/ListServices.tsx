@@ -1,3 +1,4 @@
+import Reveal from "@/components/ui/Reveal";
 import { services } from "../index";
 import { ChevronRight, Star } from "lucide-react";
 import Link from "next/link";
@@ -10,7 +11,7 @@ function ListServices() {
     >
       <div className="container mx-auto px-4">
         {/* Encabezado */}
-        <div className="text-center mb-16">
+        <Reveal className="text-center mb-16">
           <div className="inline-block bg-[#d32f2f12] px-4 py-2 rounded-full mb-4">
             <span className="text-red-primary font-semibold flex items-center">
               <Star size={16} className="mr-2"></Star> Lo que ofrecemos
@@ -23,9 +24,9 @@ function ListServices() {
             Soluciones integrales diseñadas para impulsar el crecimiento de tu
             empresa con un enfoque moderno y eficiente.
           </p>
-        </div>
+        </Reveal>
         {/* Contenido */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <Reveal className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {services.map((service, index) => (
             <article
               key={index}
@@ -79,7 +80,7 @@ function ListServices() {
               </div>
             </article>
           ))}
-        </div>
+        </Reveal>
       </div>
     </section>
   );
