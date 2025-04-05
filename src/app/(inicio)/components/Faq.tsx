@@ -1,5 +1,6 @@
 "use client";
 
+import Reveal from "@/components/ui/Reveal";
 import { faqData } from "@/data";
 import { ChevronDown } from "lucide-react";
 import { useState } from "react";
@@ -21,18 +22,18 @@ function Faq() {
       <div className="container mx-auto px-4">
         {/* Encabezado */}
         <div className="text-center mb-12 md:mb-16">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-white">
+          <Reveal className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-white">
             Preguntas Frecuentes
-          </h2>
+          </Reveal>
           <div className="w-24 h-1 bg-red-primary mx-auto mb-6"></div>
-          <p className="text-white text-base md:text-lg mx-auto max-w-2xl">
+          <Reveal className="text-white text-base md:text-lg mx-auto max-w-2xl">
             Respuestas a las dudas más comunes sobre nuestros servicios
-          </p>
+          </Reveal>
         </div>
         {/* Preguntas */}
         <div className="space-y-8">
           {faqData.map((category, index) => (
-            <article
+            <Reveal
               key={index}
               className="bg-white bg-opacity-20 rounded-xl p-6"
             >
@@ -79,7 +80,7 @@ function Faq() {
                   </div>
                 ))}
               </div>
-            </article>
+            </Reveal>
           ))}
         </div>
       </div>
