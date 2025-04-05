@@ -11,7 +11,6 @@ import {
   Building2,
   ReceiptText,
   AlignEndHorizontal,
-  ArrowRight,
   Briefcase,
   Building,
   ClipboardList,
