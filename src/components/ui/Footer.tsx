@@ -94,11 +94,11 @@ function Footer() {
                 <span>info@grupoases.pe</span>
               </a>
               <a
-                href="tel:+51944668448"
+                href="tel:+51975733304"
                 className="text-gray-light hover:text-red-primary transition-all-300 flex items-center space-x-2"
               >
                 <Phone size={16}></Phone>
-                <span>+51 944 668 448</span>
+                <span>+51 975 733 304</span>
               </a>
             </div>
           </div>
