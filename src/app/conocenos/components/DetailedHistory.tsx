@@ -105,6 +105,7 @@ function DetailedHistory() {
                 {/* Espacio vacío (lado contrario) */}
                 <div className="w-5/12"></div>
               </div>
+              
             </Reveal>
           ))}
         </div>
