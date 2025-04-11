@@ -1,4 +1,4 @@
-# ases
+# Ases
 
 ![License](https://img.shields.io/badge/license-Unlicensed-blue.svg)
 ![Language](https://img.shields.io/badge/language-TypeScript-blue.svg)
