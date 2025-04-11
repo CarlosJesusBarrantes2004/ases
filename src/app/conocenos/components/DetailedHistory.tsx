@@ -44,7 +44,7 @@ function DetailedHistory() {
           {/* Línea izquierda para móviles */}
           <div className="md:hidden absolute left-8 top-0 bottom-0 w-1 bg-red-primary"></div>
           {timelineItems.map((item, index) => (
-            <div key={index} className="relative mb-16">
+            <Reveal key={index} className="relative mb-16">
               {/* Versión móvil (apilado) */}
               <div className="md:hidden flex flex-col relative pl-16">
                 {/* Punto en la línea vertical */}
@@ -105,7 +105,7 @@ function DetailedHistory() {
                 {/* Espacio vacío (lado contrario) */}
                 <div className="w-5/12"></div>
               </div>
-            </div>
+            </Reveal>
           ))}
         </div>
       </div>
