@@ -1,25 +1,22 @@
-import { JWT_SECRET as SECRET, NODE_ENV } from "@/config";
+import { JWT_SECRET, NODE_ENV } from "@/config";
 import pool from "@/lib/db";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { NextRequest, NextResponse } from "next/server";
 
-const JWT_SECRET =
-  SECRET || "KPdkqQtYsrC3qXitVWnbjFdFsz1rkI8AvEl1wiKqZCT6PLnAE7RT2RHbQqWPLSFK";
-
 export async function POST(request: NextRequest) {
   try {
-    const { email, password } = await request.json();
+    const { username, password } = await request.json();
 
-    if (!email || !password)
+    if (!username || !password)
       return NextResponse.json(
-        { error: "Email y password son requeridos" },
+        { error: "Username y password son requeridos" },
         { status: 400 }
       );
 
     const [rows] = await pool.query(
-      "SELECT id, email, password FROM users WHERE email = ?",
-      [email]
+      "SELECT id, username, password FROM users WHERE username = ?",
+      [username]
     );
 
     const users = rows as any[];
@@ -40,9 +37,13 @@ export async function POST(request: NextRequest) {
         { status: 401 }
       );
 
-    const token = jwt.sign({ userId: user.id, email: user.email }, JWT_SECRET, {
-      expiresIn: "1d",
-    });
+    const token = jwt.sign(
+      { userId: user.id, username: user.username },
+      JWT_SECRET,
+      {
+        expiresIn: "1d",
+      }
+    );
 
     const response = NextResponse.json({
       message: "Login exitoso",

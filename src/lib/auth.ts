@@ -1,9 +1,6 @@
 import { NextRequest } from "next/server";
 import jwt from "jsonwebtoken";
-import { JWT_SECRET as SECRET } from "@/config";
-
-const JWT_SECRET =
-  SECRET || "KPdkqQtYsrC3qXitVWnbjFdFsz1rkI8AvEl1wiKqZCT6PLnAE7RT2RHbQqWPLSFK";
+import { JWT_SECRET } from "@/config";
 
 export async function verifyAuth(request: NextRequest) {
   try {

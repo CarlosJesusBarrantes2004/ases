@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
 
     const [rows] = await pool.query(
       `SELECT b.id, b.title, b.content, b.created_at,
-            u.id as author_id, u.email as author_email        
+            u.id as author_id, u.username as author        
         FROM blogs b
         JOIN users u ON b.author_id = u.id
         ORDER BY b.created_at DESC

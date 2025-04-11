@@ -1,6 +1,6 @@
-import ContactForm from "@/app/contacto/components/form/ContactForm";
-import Info from "@/app/contacto/components/Info";
-import Map from "@/app/contacto/components/Map";
+import ContactForm from "@/app/(public)/(public-layout)/contacto/components/form/ContactForm";
+import Info from "@/app/(public)/(public-layout)/contacto/components/Info";
+import Map from "@/app/(public)/(public-layout)/contacto/components/Map";
 import Reveal from "@/components/ui/Reveal";
 
 function ContactPage() {

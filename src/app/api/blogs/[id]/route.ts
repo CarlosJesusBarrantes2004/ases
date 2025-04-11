@@ -11,7 +11,7 @@ export async function GET(
 
     const [rows] = await pool.query(
       `SELECT b.id, b.title, b.content, b.created_at
-            u.id as author_id, u.email as author_email
+            u.id as author_id, u.username as author
         FROM blogs b
         JOIN users u ON b.author_id = u.id
         WHERE b.id = ?`,
@@ -39,7 +39,7 @@ export async function PUT(
 
     const userId = authResult.userId;
     const blogId = params.id;
-    const { title, content } = await request.json();
+    const { title, content, published } = await request.json();
 
     if (!title || !content)
       return NextResponse.json(
@@ -68,11 +68,10 @@ export async function PUT(
         { status: 403 }
       );
 
-    await pool.query("UPDATE blogs SET title = ?, content = ? WHERE id = ?", [
-      title,
-      content,
-      blogId,
-    ]);
+    await pool.query(
+      "UPDATE blogs SET title = ?, content = ?, published = ? WHERE id = ?",
+      [title, content, published, blogId]
+    );
 
     return NextResponse.json({ message: "Blog actualizado correctamente" });
   } catch (error) {
@@ -84,4 +83,47 @@ export async function PUT(
   }
 }
 
-export async function DELETE() {}
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  try {
+    const authResult = await verifyAuth(request);
+    if (!authResult.isAuthenticated)
+      return NextResponse.json({ error: "No autorizado" }, { status: 401 });
+
+    const userId = authResult.userId;
+    const blogId = params.id;
+
+    const [blogs] = await pool.query(
+      "SELECT author_id FROM blogs WHERE id = ?",
+      [blogId]
+    );
+
+    const blogResults = blogs as any[];
+
+    if (blogResults.length === 0)
+      return NextResponse.json(
+        { error: "Blog no encontrado" },
+        { status: 404 }
+      );
+
+    if (blogResults[0].author_id !== userId)
+      return NextResponse.json(
+        {
+          error: "No tienes permiso para eliminar este blog",
+        },
+        { status: 403 }
+      );
+
+    await pool.query("DELETE FROM blogs WHERE id = ?", [blogId]);
+
+    return NextResponse.json({ message: "Blog eliminado correctamente" });
+  } catch (error) {
+    console.error("Error al eliminar blog");
+    return NextResponse.json(
+      { error: "Error en el servidor" },
+      { status: 500 }
+    );
+  }
+}

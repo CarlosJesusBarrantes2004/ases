@@ -1,4 +1,4 @@
-import Hero from "@/app/servicios/components/service/subservice/Hero";
+import Hero from "@/app/(public)/(public-layout)/servicios/components/service/subservice/Hero";
 import { services } from "../../index";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";

@@ -1,7 +1,7 @@
-import Hero from "@/app/servicios/components/Hero";
-import ListServices from "@/app/servicios/components/ListServices";
-import ServicesTable from "@/app/servicios/components/ServicesTable";
-import UseCases from "@/app/servicios/components/UseCases";
+import Hero from "@/app/(public)/(public-layout)/servicios/components/Hero";
+import ListServices from "@/app/(public)/(public-layout)/servicios/components/ListServices";
+import ServicesTable from "@/app/(public)/(public-layout)/servicios/components/ServicesTable";
+import UseCases from "@/app/(public)/(public-layout)/servicios/components/UseCases";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
