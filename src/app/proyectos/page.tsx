@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
-import { Star } from "lucide-react";
 import Hero from "./components/Hero";
 import { projectsData } from ".";
 import Projects from "./components/Projects";
@@ -16,18 +15,18 @@ export default function ProjectsPage() {
   const filteredProjects = useMemo(() => {
     return projectsData.filter((proyecto) => {
       const coincideBusqueda =
-        proyecto.nombre.toLowerCase().includes(busqueda.toLowerCase()) ||
-        proyecto.descripcion.toLowerCase().includes(busqueda.toLowerCase()) ||
+        proyecto.nombre.toLowerCase().includes(search.toLowerCase()) ||
+        proyecto.descripcion.toLowerCase().includes(search.toLowerCase()) ||
         proyecto.tags.some((tag) =>
-          tag.toLowerCase().includes(busqueda.toLowerCase())
+          tag.toLowerCase().includes(search.toLowerCase())
         );
 
       const coincideCategoria =
-        categoriaSeleccionada === "Todas" ||
-        proyecto.categoria === categoriaSeleccionada;
+        categoriesSelected === "Todas" ||
+        proyecto.categoria === categoriesSelected;
       const coincideUbicacion =
-        ubicacionSeleccionada === "Todas" ||
-        proyecto.ubicacion.includes(ubicacionSeleccionada);
+        citiesSelected === "Todas" ||
+        proyecto.ubicacion.includes(citiesSelected);
 
       return coincideBusqueda && coincideCategoria && coincideUbicacion;
     });
@@ -36,7 +35,15 @@ export default function ProjectsPage() {
   return (
     <>
       <Hero></Hero>
-      <FiltersAndSearch></FiltersAndSearch>
+      <FiltersAndSearch
+        filteredProjects={filteredProjects}
+        search={search}
+        setSearch={setSearch}
+        categoriesSelected={categoriesSelected}
+        setCategoriesSelected={setCategoriesSelected}
+        citiesSelected={citiesSelected}
+        setCitiesSelected={setCitiesSelected}
+      ></FiltersAndSearch>
       <Projects filteredProjects={filteredProjects}></Projects>
       <Cta></Cta>
     </>

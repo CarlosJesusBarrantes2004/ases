@@ -9,14 +9,20 @@ interface FiltersAndSearchProps {
   search: any;
   setSearch: any;
   categoriesSelected: any;
+  setCategoriesSelected: any;
+  citiesSelected: any;
+  setCitiesSelected: any;
 }
 
 export default function FiltersAndSearch({
   filteredProjects,
+  search,
+  setSearch,
+  categoriesSelected,
+  setCategoriesSelected,
+  citiesSelected,
+  setCitiesSelected,
 }: FiltersAndSearchProps) {
-  const [search, setSearch] = useState("");
-  const [categoriesSelected, setCategoriesSelected] = useState("Todas");
-  const [citiesSelected, setCitiesSelected] = useState("Todas");
   const [showFilters, setShowFilters] = useState(false);
 
   return (
