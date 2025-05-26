@@ -5,13 +5,25 @@ import { categories, cities, projectsData } from "..";
 import { useState } from "react";
 
 interface FiltersAndSearchProps {
-  filteredProjects: any;
-  search: any;
-  setSearch: any;
-  categoriesSelected: any;
-  setCategoriesSelected: any;
-  citiesSelected: any;
-  setCitiesSelected: any;
+  filteredProjects: {
+    id: number;
+    nombre: string;
+    categoria: string;
+    ubicacion: string;
+    fecha: string;
+    cliente: string;
+    descripcion: string;
+    imagen: string;
+    tags: string[];
+    rating: number;
+    estado: string;
+  }[];
+  search: string;
+  setSearch: (val: string) => void;
+  categoriesSelected: string;
+  setCategoriesSelected: (val: string) => void;
+  citiesSelected: string;
+  setCitiesSelected: (val: string) => void;
 }
 
 export default function FiltersAndSearch({

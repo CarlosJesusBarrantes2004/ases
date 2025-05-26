@@ -2,7 +2,19 @@ import { Calendar, MapPin, Star, Users } from "lucide-react";
 import Image from "next/image";
 
 interface CardProjectProps {
-  project: any;
+  project: {
+    id: number;
+    nombre: string;
+    categoria: string;
+    ubicacion: string;
+    fecha: string;
+    cliente: string;
+    descripcion: string;
+    imagen: string;
+    tags: string[];
+    rating: number;
+    estado: string;
+  };
 }
 
 export default function CardProject({ project }: CardProjectProps) {
@@ -75,7 +87,7 @@ export default function CardProject({ project }: CardProjectProps) {
 
         {/* Tags */}
         <div className="flex flex-wrap gap-2 mb-4">
-          {project.tags.map((tag: String, index:number) => (
+          {project.tags.map((tag: String, index: number) => (
             <span
               key={index}
               className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full"
