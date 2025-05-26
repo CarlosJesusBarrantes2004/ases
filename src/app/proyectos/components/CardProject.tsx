@@ -87,7 +87,7 @@ export default function CardProject({ project }: CardProjectProps) {
 
         {/* Tags */}
         <div className="flex flex-wrap gap-2 mb-4">
-          {project.tags.map((tag: String, index: number) => (
+          {project.tags.map((tag: string, index: number) => (
             <span
               key={index}
               className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full"

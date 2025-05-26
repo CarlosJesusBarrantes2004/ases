@@ -1,12 +1,13 @@
 "use client";
+
 import React, { useState } from "react";
-import { 
-  MapPin, 
-  Calendar, 
-  Users, 
-  Star, 
-  Clock, 
-  CheckCircle, 
+import {
+  MapPin,
+  Calendar,
+  Users,
+  Star,
+  Clock,
+  CheckCircle,
   Phone,
   Mail,
   Globe,
@@ -15,7 +16,7 @@ import {
   Award,
   Target,
   TrendingUp,
-  Lightbulb
+  Lightbulb,
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
@@ -29,14 +30,17 @@ const proyectoData = {
   fecha: "2024",
   duracion: "6 meses",
   cliente: "Empresa Comercial SAC",
-  descripcion: "Desarrollo de sistema integral para gestión de inventarios, ventas y facturación electrónica que revolucionó los procesos operativos del cliente.",
-  descripcionLarga: "Este ambicioso proyecto consistió en la creación de un sistema ERP completo que integra múltiples módulos empresariales. El sistema incluye gestión de inventarios en tiempo real, módulo de ventas con CRM integrado, facturación electrónica SUNAT, reportes avanzados y dashboard ejecutivo. La solución fue desarrollada con tecnologías modernas y se implementó siguiendo metodologías ágiles.",
-  imagen: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=500&fit=crop",
+  descripcion:
+    "Desarrollo de sistema integral para gestión de inventarios, ventas y facturación electrónica que revolucionó los procesos operativos del cliente.",
+  descripcionLarga:
+    "Este ambicioso proyecto consistió en la creación de un sistema ERP completo que integra múltiples módulos empresariales. El sistema incluye gestión de inventarios en tiempo real, módulo de ventas con CRM integrado, facturación electrónica SUNAT, reportes avanzados y dashboard ejecutivo. La solución fue desarrollada con tecnologías modernas y se implementó siguiendo metodologías ágiles.",
+  imagen:
+    "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=500&fit=crop",
   galeria: [
     "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop",
     "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=600&h=400&fit=crop",
     "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop",
-    "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=600&h=400&fit=crop"
+    "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=600&h=400&fit=crop",
   ],
   tags: ["ERP", "Facturación", "Inventarios", "CRM", "SUNAT"],
   rating: 5,
@@ -48,49 +52,51 @@ const proyectoData = {
     "Integrar facturación electrónica con SUNAT",
     "Mejorar trazabilidad de ventas",
     "Reducir errores operativos en un 80%",
-    "Generar reportes ejecutivos en tiempo real"
+    "Generar reportes ejecutivos en tiempo real",
   ],
   resultados: [
     "Reducción del 85% en tiempo de procesamiento",
     "Eliminación total de errores de facturación",
     "Aumento del 40% en productividad",
     "ROI del 300% en el primer año",
-    "100% de cumplimiento normativo SUNAT"
+    "100% de cumplimiento normativo SUNAT",
   ],
   fases: [
     {
       nombre: "Análisis y Diseño",
       duracion: "1 mes",
-      descripcion: "Levantamiento de requerimientos y diseño de arquitectura"
+      descripcion: "Levantamiento de requerimientos y diseño de arquitectura",
     },
     {
       nombre: "Desarrollo Backend",
       duracion: "2 meses",
-      descripcion: "Implementación de APIs y lógica de negocio"
+      descripcion: "Implementación de APIs y lógica de negocio",
     },
     {
-      nombre: "Desarrollo Frontend", 
+      nombre: "Desarrollo Frontend",
       duracion: "2 meses",
-      descripcion: "Creación de interfaces y experiencia de usuario"
+      descripcion: "Creación de interfaces y experiencia de usuario",
     },
     {
       nombre: "Testing e Integración",
       duracion: "3 semanas",
-      descripcion: "Pruebas exhaustivas y integración con sistemas externos"
+      descripcion: "Pruebas exhaustivas y integración con sistemas externos",
     },
     {
       nombre: "Despliegue y Capacitación",
       duracion: "1 semana",
-      descripcion: "Puesta en producción y entrenamiento al equipo"
-    }
+      descripcion: "Puesta en producción y entrenamiento al equipo",
+    },
   ],
   testimonial: {
-    texto: "El sistema desarrollado por Grupo Ases transformó completamente nuestra operación. La automatización y integración lograda superó nuestras expectativas. Excelente equipo profesional.",
+    texto:
+      "El sistema desarrollado por Grupo Ases transformó completamente nuestra operación. La automatización y integración lograda superó nuestras expectativas. Excelente equipo profesional.",
     autor: "María González",
     cargo: "Gerente General",
     empresa: "Empresa Comercial SAC",
-    avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=100&h=100&fit=crop&crop=face"
-  }
+    avatar:
+      "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=100&h=100&fit=crop&crop=face",
+  },
 };
 
 export default function ProjectDetailPage() {
@@ -99,10 +105,12 @@ export default function ProjectDetailPage() {
 
   const renderStars = (rating: number) => {
     return Array.from({ length: 5 }, (_, i) => (
-      <Star 
-        key={i} 
-        size={20} 
-        className={`${i < rating ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'}`}
+      <Star
+        key={i}
+        size={20}
+        className={`${
+          i < rating ? "fill-yellow-400 text-yellow-400" : "text-gray-300"
+        }`}
       />
     ));
   };
@@ -113,11 +121,20 @@ export default function ProjectDetailPage() {
       <div className="bg-gray-50 py-4">
         <div className="container mx-auto px-4">
           <div className="flex items-center gap-2 text-sm text-gray-600">
-            <Link href="/" className="hover:text-red-primary transition-colors">Inicio</Link>
+            <Link href="/" className="hover:text-red-primary transition-colors">
+              Inicio
+            </Link>
             <span>/</span>
-            <Link href="/proyectos" className="hover:text-red-primary transition-colors">Proyectos</Link>
+            <Link
+              href="/proyectos"
+              className="hover:text-red-primary transition-colors"
+            >
+              Proyectos
+            </Link>
             <span>/</span>
-            <span className="text-gray-900 font-medium">{proyectoData.nombre}</span>
+            <span className="text-gray-900 font-medium">
+              {proyectoData.nombre}
+            </span>
           </div>
         </div>
       </div>
@@ -125,7 +142,7 @@ export default function ProjectDetailPage() {
       {/* Header del Proyecto */}
       <section className="py-8">
         <div className="container mx-auto px-4">
-          <Link 
+          <Link
             href="/proyectos"
             className="inline-flex items-center gap-2 text-red-primary hover:text-red-600 transition-colors mb-6"
           >
@@ -140,16 +157,20 @@ export default function ProjectDetailPage() {
                 <span className="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-medium">
                   {proyectoData.categoria}
                 </span>
-                <span className={`px-3 py-1 rounded-full text-sm font-medium ${
-                  proyectoData.estado === 'Completado' 
-                    ? 'bg-green-100 text-green-800' 
-                    : 'bg-blue-100 text-blue-800'
-                }`}>
+                <span
+                  className={`px-3 py-1 rounded-full text-sm font-medium ${
+                    proyectoData.estado === "Completado"
+                      ? "bg-green-100 text-green-800"
+                      : "bg-blue-100 text-blue-800"
+                  }`}
+                >
                   {proyectoData.estado}
                 </span>
                 <div className="flex items-center gap-1">
                   {renderStars(proyectoData.rating)}
-                  <span className="text-gray-600 ml-2">({proyectoData.rating}.0)</span>
+                  <span className="text-gray-600 ml-2">
+                    ({proyectoData.rating}.0)
+                  </span>
                 </div>
               </div>
 
@@ -169,7 +190,10 @@ export default function ProjectDetailPage() {
                   <div className="font-semibold">{proyectoData.cliente}</div>
                 </div>
                 <div className="text-center p-4 bg-gray-50 rounded-lg">
-                  <Calendar className="mx-auto mb-2 text-red-primary" size={24} />
+                  <Calendar
+                    className="mx-auto mb-2 text-red-primary"
+                    size={24}
+                  />
                   <div className="text-sm text-gray-600">Año</div>
                   <div className="font-semibold">{proyectoData.fecha}</div>
                 </div>
@@ -193,7 +217,7 @@ export default function ProjectDetailPage() {
                 <p className="text-red-100 mb-6">
                   Podemos desarrollar una solución personalizada para tu empresa
                 </p>
-                
+
                 <div className="space-y-3 mb-6">
                   <div className="flex items-center gap-3">
                     <Phone size={18} />
@@ -222,7 +246,7 @@ export default function ProjectDetailPage() {
       <section className="py-8">
         <div className="container mx-auto px-4">
           <h2 className="text-2xl font-bold mb-6">Galería del Proyecto</h2>
-          
+
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Imagen Principal */}
             <div className="lg:col-span-2">
@@ -252,7 +276,9 @@ export default function ProjectDetailPage() {
                   key={index}
                   onClick={() => setImagenActiva(index)}
                   className={`w-full aspect-video rounded-lg overflow-hidden border-2 transition-all duration-300 ${
-                    imagenActiva === index ? 'border-red-primary' : 'border-gray-200 hover:border-gray-300'
+                    imagenActiva === index
+                      ? "border-red-primary"
+                      : "border-gray-200 hover:border-gray-300"
                   }`}
                 >
                   <Image
@@ -282,7 +308,9 @@ export default function ProjectDetailPage() {
 
               {/* Tecnologías */}
               <div className="mb-8">
-                <h3 className="text-lg font-semibold mb-3">Tecnologías Utilizadas</h3>
+                <h3 className="text-lg font-semibold mb-3">
+                  Tecnologías Utilizadas
+                </h3>
                 <div className="flex flex-wrap gap-2">
                   {proyectoData.tecnologias.map((tech, index) => (
                     <span
@@ -306,7 +334,10 @@ export default function ProjectDetailPage() {
                 <ul className="space-y-2">
                   {proyectoData.objetivos.map((objetivo, index) => (
                     <li key={index} className="flex items-start gap-2">
-                      <CheckCircle className="text-green-500 mt-1 flex-shrink-0" size={16} />
+                      <CheckCircle
+                        className="text-green-500 mt-1 flex-shrink-0"
+                        size={16}
+                      />
                       <span className="text-gray-700">{objetivo}</span>
                     </li>
                   ))}
@@ -322,8 +353,13 @@ export default function ProjectDetailPage() {
                 <ul className="space-y-2">
                   {proyectoData.resultados.map((resultado, index) => (
                     <li key={index} className="flex items-start gap-2">
-                      <Award className="text-yellow-500 mt-1 flex-shrink-0" size={16} />
-                      <span className="text-gray-700 font-medium">{resultado}</span>
+                      <Award
+                        className="text-yellow-500 mt-1 flex-shrink-0"
+                        size={16}
+                      />
+                      <span className="text-gray-700 font-medium">
+                        {resultado}
+                      </span>
                     </li>
                   ))}
                 </ul>
@@ -338,22 +374,29 @@ export default function ProjectDetailPage() {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <div className="mb-8">
-              <div className="text-6xl text-red-primary mb-4">"</div>
+              <div className="text-6xl text-red-primary mb-4">&quot;</div>
               <p className="text-xl md:text-2xl leading-relaxed mb-8">
                 {proyectoData.testimonial.texto}
               </p>
             </div>
-            
+
             <div className="flex items-center justify-center gap-4">
-              <img
+              <Image
+                fill={true}
                 src={proyectoData.testimonial.avatar}
                 alt={proyectoData.testimonial.autor}
                 className="w-16 h-16 rounded-full object-cover"
               />
               <div className="text-left">
-                <div className="font-semibold text-lg">{proyectoData.testimonial.autor}</div>
-                <div className="text-gray-400">{proyectoData.testimonial.cargo}</div>
-                <div className="text-red-primary">{proyectoData.testimonial.empresa}</div>
+                <div className="font-semibold text-lg">
+                  {proyectoData.testimonial.autor}
+                </div>
+                <div className="text-gray-400">
+                  {proyectoData.testimonial.cargo}
+                </div>
+                <div className="text-red-primary">
+                  {proyectoData.testimonial.empresa}
+                </div>
               </div>
             </div>
           </div>
@@ -368,8 +411,8 @@ export default function ProjectDetailPage() {
               ¿Te Inspiró Este Proyecto?
             </h2>
             <p className="text-xl mb-8 text-red-100">
-              Podemos crear una solución similar o completamente personalizada para tu empresa. 
-              Conversemos sobre tus necesidades.
+              Podemos crear una solución similar o completamente personalizada
+              para tu empresa. Conversemos sobre tus necesidades.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <button className="bg-white text-red-primary px-8 py-4 rounded-lg text-lg font-semibold hover:bg-gray-100 transition-all duration-300 shadow-lg">

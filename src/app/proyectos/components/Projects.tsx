@@ -1,7 +1,19 @@
 import CardProject from "./CardProject";
 
 interface ProjectsPageProps {
-  filteredProjects: any;
+  filteredProjects: {
+    id: number;
+    nombre: string;
+    categoria: string;
+    ubicacion: string;
+    fecha: string;
+    cliente: string;
+    descripcion: string;
+    imagen: string;
+    tags: string[];
+    rating: number;
+    estado: string;
+  }[];
 }
 
 export default function ProjectsPage({ filteredProjects }: ProjectsPageProps) {
@@ -20,9 +32,23 @@ export default function ProjectsPage({ filteredProjects }: ProjectsPageProps) {
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredProjects.map((project: any) => (
-              <CardProject key={project.id} project={project}></CardProject>
-            ))}
+            {filteredProjects.map(
+              (project: {
+                id: number;
+                nombre: string;
+                categoria: string;
+                ubicacion: string;
+                fecha: string;
+                cliente: string;
+                descripcion: string;
+                imagen: string;
+                tags: string[];
+                rating: number;
+                estado: string;
+              }) => (
+                <CardProject key={project.id} project={project}></CardProject>
+              )
+            )}
           </div>
         )}
       </div>
