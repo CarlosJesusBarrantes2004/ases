@@ -7,7 +7,6 @@ import {
   Star, 
   Clock, 
   CheckCircle, 
-  ArrowRight,
   Phone,
   Mail,
   Globe,
@@ -19,6 +18,7 @@ import {
   Lightbulb
 } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 // Datos del proyecto (normalmente vendrían de una API o base de datos)
 const proyectoData = {
@@ -93,7 +93,7 @@ const proyectoData = {
   }
 };
 
-export default function ProjectDetailPage({ params }: { params: { project: string } }) {
+export default function ProjectDetailPage() {
   const [imagenActiva, setImagenActiva] = useState(0);
   const [mostrarVideo, setMostrarVideo] = useState(false);
 
@@ -227,7 +227,7 @@ export default function ProjectDetailPage({ params }: { params: { project: strin
             {/* Imagen Principal */}
             <div className="lg:col-span-2">
               <div className="relative aspect-video rounded-xl overflow-hidden">
-                <img
+                <Image
                   src={proyectoData.galeria[imagenActiva]}
                   alt={`Vista ${imagenActiva + 1} del proyecto`}
                   className="w-full h-full object-cover"
@@ -255,7 +255,7 @@ export default function ProjectDetailPage({ params }: { params: { project: strin
                     imagenActiva === index ? 'border-red-primary' : 'border-gray-200 hover:border-gray-300'
                   }`}
                 >
-                  <img
+                  <Image
                     src={imagen}
                     alt={`Vista ${index + 1}`}
                     className="w-full h-full object-cover"
@@ -329,37 +329,6 @@ export default function ProjectDetailPage({ params }: { params: { project: strin
                 </ul>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Fases del Proyecto */}
-      <section className="py-12">
-        <div className="container mx-auto px-4">
-          <h2 className="text-2xl font-bold mb-8 text-center">Fases del Proyecto</h2>
-          
-          <div className="max-w-4xl mx-auto">
-            {proyectoData.fases.map((fase, index) => (
-              <div key={index} className="flex gap-6 mb-8 last:mb-0">
-                <div className="flex flex-col items-center">
-                  <div className="bg-red-primary text-white w-10 h-10 rounded-full flex items-center justify-center font-bold">
-                    {index + 1}
-                  </div>
-                  {index < proyectoData.fases.length - 1 && (
-                    <div className="w-px h-16 bg-gray-300 mt-4"></div>
-                  )}
-                </div>
-                <div className="flex-1 pb-8">
-                  <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
-                    <div className="flex justify-between items-start mb-2">
-                      <h3 className="text-lg font-semibold text-gray-900">{fase.nombre}</h3>
-                      <span className="text-sm text-red-primary font-medium">{fase.duracion}</span>
-                    </div>
-                    <p className="text-gray-600">{fase.descripcion}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
           </div>
         </div>
       </section>

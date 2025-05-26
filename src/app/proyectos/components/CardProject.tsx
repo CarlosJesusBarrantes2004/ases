@@ -1,4 +1,5 @@
 import { Calendar, MapPin, Star, Users } from "lucide-react";
+import Image from "next/image";
 
 interface CardProjectProps {
   project: any;
@@ -21,7 +22,7 @@ export default function CardProject({ project }: CardProjectProps) {
     <div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-2 group">
       {/* Imagen */}
       <div className="relative h-48 overflow-hidden">
-        <img
+        <Image
           src={project.imagen}
           alt={project.nombre}
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
