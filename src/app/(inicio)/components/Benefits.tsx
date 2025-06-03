@@ -46,7 +46,7 @@ function Benefits() {
         {/* Grid de beneficios renovado */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
           {benefits.map((benefit, index) => (
-            <Reveal key={index} direction="up" delay={index * 200}>
+            <Reveal key={index} direction="up">
               <article className="group relative h-full">
                 {/* Contenedor principal */}
                 <div

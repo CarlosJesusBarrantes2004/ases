@@ -47,7 +47,7 @@ function Services() {
         {/* Grid de servicios renovado */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
           {services.map((service, index) => (
-            <Reveal key={index} direction="up" delay={index * 200}>
+            <Reveal key={index} direction="up">
               <article className="group relative bg-white/80 backdrop-blur-sm border border-gray-200/50 rounded-3xl p-8 h-full shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 overflow-hidden">
                 {/* Fondo decorativo */}
                 <div

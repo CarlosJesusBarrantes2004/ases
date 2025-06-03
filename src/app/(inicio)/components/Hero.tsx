@@ -125,16 +125,13 @@ function Hero() {
                 </h1>
               </Reveal>
 
-              <Reveal direction="right" delay={0.2}>
+              <Reveal direction="right">
                 <p className="text-lg md:text-xl lg:text-2xl text-slate-600 leading-relaxed max-w-2xl mx-auto lg:mx-0">
                   {slides[currentSlide].description}
                 </p>
               </Reveal>
 
-              <Reveal
-                delay={0.4}
-                className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
-              >
+              <Reveal className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                 <Link
                   href={slides[currentSlide].ctaLink}
                   className="group inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-emerald-500 to-blue-500 text-white text-lg font-semibold rounded-2xl shadow-lg shadow-emerald-500/25 hover:shadow-xl hover:shadow-emerald-500/30 hover:-translate-y-1 transition-all duration-300"
