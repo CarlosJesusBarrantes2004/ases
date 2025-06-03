@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "https://grupoases.pe/images/og-image.jpg",
+        url: "https://grupoases.pe/images/og-image.jpg", // Cambia esto por tu imagen real
         width: 1200,
         height: 630,
         alt: "Grupo Ases - Soluciones Integrales para Empresas",
@@ -33,11 +33,11 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    site: "@GrupoAses",
+    site: "@GrupoAses", // Cambia esto si tienes Twitter
     title: "Grupo Ases - Asesoría Empresarial",
     description:
       "Optimiza tu empresa con nuestros servicios en contabilidad, asesoría legal y soluciones digitales.",
-    images: ["https://grupoases.pe/images/twitter-card.jpg"],
+    images: ["https://grupoases.pe/images/twitter-card.jpg"], // Cambia esto por tu imagen real
   },
 };
 
@@ -47,15 +47,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es">
-      <body className={`${inter.className} bg-white`}>
-        <div className="flex flex-col min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/30">
+    <html lang="en">
+      <body className={inter.className}>
+        <div className="flex flex-col min-h-screen">
+          <Header></Header>
           <main className="flex-grow">
             {children}
-            <CallToAction />
+            <CallToAction></CallToAction>
           </main>
-          <Footer />
-          <BtnWhatsapp />
+          <Footer></Footer>
+          <BtnWhatsapp></BtnWhatsapp>
         </div>
       </body>
     </html>
