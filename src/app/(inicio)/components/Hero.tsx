@@ -67,7 +67,6 @@ const slides: CarouselSlide[] = [
 function Hero() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
-  const [isLoaded, setIsLoaded] = useState(false);
 
   // Auto-play del carrusel
   useEffect(() => {
@@ -79,11 +78,6 @@ function Hero() {
 
     return () => clearInterval(interval);
   }, [isPlaying]);
-
-  // Marcar como cargado para animaciones
-  useEffect(() => {
-    setIsLoaded(true);
-  }, []);
 
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % slides.length);
