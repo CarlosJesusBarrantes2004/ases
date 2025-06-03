@@ -254,6 +254,8 @@ export default function ProjectDetailPage() {
                 <Image
                   src={proyectoData.galeria[imagenActiva]}
                   alt={`Vista ${imagenActiva + 1} del proyecto`}
+                  width={500}
+                  height={300}
                   className="w-full h-full object-cover"
                 />
                 {!mostrarVideo && (
@@ -283,6 +285,8 @@ export default function ProjectDetailPage() {
                 >
                   <Image
                     src={imagen}
+                    width={500}
+                    height={300}
                     alt={`Vista ${index + 1}`}
                     className="w-full h-full object-cover"
                   />
@@ -382,7 +386,8 @@ export default function ProjectDetailPage() {
 
             <div className="flex items-center justify-center gap-4">
               <Image
-                fill={true}
+                width={700}
+                height={500}
                 src={proyectoData.testimonial.avatar}
                 alt={proyectoData.testimonial.autor}
                 className="w-16 h-16 rounded-full object-cover"

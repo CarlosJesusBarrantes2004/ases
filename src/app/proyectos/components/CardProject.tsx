@@ -37,6 +37,8 @@ export default function CardProject({ project }: CardProjectProps) {
         <Image
           src={project.imagen}
           alt={project.nombre}
+          width={400}
+          height={300}
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
         />
         <div className="absolute top-4 right-4">

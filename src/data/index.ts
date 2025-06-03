@@ -2,8 +2,8 @@
 export const navigationLinks = [
   { name: "Inicio", href: "/" },
   { name: "Conócenos", href: "/conocenos" },
-  { name: "Proyectos", href: "/proyectos"},
-  { name: "Detalles_Prueba", href: "/proyectos/detalles"},
+  { name: "Proyectos", href: "/proyectos", subProyectos: [] },
+  { name: "Detalles", href: "/detalles" },
   {
     name: "Servicios",
     href: "/servicios",
