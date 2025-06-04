@@ -1,9 +1,11 @@
 import { Inter } from "next/font/google";
 import { Metadata } from "next";
+import Header from "@/components/ui/Header";
 import Footer from "@/components/ui/Footer";
 import "./globals.css";
 import BtnWhatsapp from "@/components/ui/BtnWhatsapp";
 import CallToAction from "@/components/ui/CallToAction";
+import InvestmentBanner from "@/components/ui/InvestmentBanner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -47,8 +49,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
-      <body className={`${inter.className} bg-white`}>
-        <div className="flex flex-col min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/30">
+      <body className={inter.className}>
+        <div className="flex flex-col min-h-screen bg-gradient-to-br from-blue-50 via-white to-emerald-50">
+          <Header />
           <main className="flex-grow">
             {children}
             <CallToAction />

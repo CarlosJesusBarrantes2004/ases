@@ -100,7 +100,7 @@ function Services() {
 
         {/* CTA adicional */}
         <Reveal className="text-center mt-16">
-          <div className="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-3xl p-8 md:p-12 border border-blue-100">
+          <div className="bg-gradient-to-r from-red-50 to-rose-50 rounded-3xl p-8 md:p-12 border border-blue-100">
             <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
               ¿No encuentras lo que buscas?
             </h3>
@@ -110,7 +110,7 @@ function Services() {
             </p>
             <Link
               href="/contacto"
-              className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-cyan-600 text-white px-8 py-4 rounded-2xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+              className="inline-flex items-center gap-2 bg-gradient-to-r from-red-600 to-rose-600 text-white px-8 py-4 rounded-2xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
             >
               <span>Consulta personalizada</span>
               <ArrowRight className="w-5 h-5" />
