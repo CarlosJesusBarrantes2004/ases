@@ -21,8 +21,7 @@ const slides = [
       "Expertos en Contabilidad, Asesoría Jurídica y Servicios Digitales",
     description:
       "Transformamos tu empresa con estrategias innovadoras y tecnología de vanguardia",
-    image:
-      "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?q=80&w=1926&auto=format&fit=crop", // Oficina moderna
+    image: "/images/bg.jpg", // Oficina moderna
     icon: TrendingUp,
     gradient: "from-emerald-500/90 via-teal-500/80 to-cyan-500/70",
   },
