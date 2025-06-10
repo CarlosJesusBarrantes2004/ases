@@ -82,7 +82,6 @@ function Hero() {
       {/* Carrusel de imágenes */}
       <div className="relative w-full h-full">
         {slides.map((slide, index) => {
-          const IconComponent = slide.icon;
           return (
             <div
               key={slide.id}
