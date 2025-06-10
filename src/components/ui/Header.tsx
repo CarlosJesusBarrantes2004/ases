@@ -6,6 +6,7 @@ import { ChevronDown, Menu, X } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { navigationLinks } from "@/data";
 import InvestmentBanner from "./InvestmentBanner";
+import Image from "next/image";
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -46,27 +47,16 @@ function Header() {
       }`}
     >
       <InvestmentBanner></InvestmentBanner>
-      <div className="container mx-auto px-4 py-4 md:px-6 md:py-5 flex justify-between items-center">
+      <div className="container mx-auto px-4 py-4 md:px-6 md:py-2 flex justify-between items-center">
         <Link href={"/"} className="flex items-center space-x-2">
-          <div className="font-bold text-xl md:text-2xl lg:text-xl">
-            <span
-              className={`transition-colors duration-300 ${
-                isScrolled || isMenuOpen || !isService
-                  ? "text-red-600"
-                  : "text-white"
-              }`}
-            >
-              Grupo
-            </span>
-            <span
-              className={`transition-colors duration-300 ${
-                isScrolled || isMenuOpen || !isService
-                  ? "text-slate-700"
-                  : "text-white"
-              }`}
-            >
-              Ases
-            </span>
+          <div className="relative w-[120px] h-[80px]">
+            <Image
+              src="/images/logo.png"
+              alt="Logo - Grupo Ases"
+              fill // Usamos fill en lugar de width/height para que la imagen llene el contenedor
+              priority={true}
+              className="object-contain" // Asegura que la imagen mantenga sus proporciones
+            />
           </div>
         </Link>
 
@@ -149,7 +139,7 @@ function Header() {
           })}
           <Link
             href={"/contacto"}
-            className="bg-gradient-to-r from-red-400 to-rose-500 text-white px-6 py-2 rounded-full shadow-lg hover:from-red-500 hover:to-rose-600 hover:shadow-xl hover:scale-105 transition-all duration-300"
+            className="bg-[#E1251B] text-white px-6 py-2 rounded-full shadow-lg hover:from-red-500 hover:to-rose-600 hover:shadow-xl hover:scale-105 transition-all duration-300"
           >
             Solicitar Asesoría
           </Link>

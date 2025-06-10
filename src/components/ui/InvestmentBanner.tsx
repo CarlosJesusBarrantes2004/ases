@@ -10,7 +10,7 @@ function InvestmentBanner() {
   if (!isVisible) return null;
 
   return (
-    <div className="bg-gradient-to-r from-pink-500 via-rose-500 to-red-500 text-white py-2 px-4 relative overflow-hidden w-full z-50 h-14">
+    <div className="bg-[#E1251B] text-white py-2 px-4 relative overflow-hidden w-full z-50 h-14">
       {/* Altura fija */}
       <div className="absolute inset-0 bg-gradient-to-r from-emerald-400/20 via-teal-400/20 to-cyan-400/20 animate-pulse"></div>
       <div className="container mx-auto flex items-center justify-between relative z-10 h-full">
@@ -24,7 +24,7 @@ function InvestmentBanner() {
         <div className="flex items-center space-x-3">
           <Link
             href="/contacto"
-            className="bg-white text-red-600 px-4 py-1 rounded-full text-xs md:text-sm font-semibold hover:bg-yellow-100 transition-all duration-300 hover:scale-105"
+            className="bg-white text-[#E1251B] px-4 py-1 rounded-full text-xs md:text-sm font-semibold hover:bg-yellow-100 transition-all duration-300 hover:scale-105"
           >
             Conocer más
           </Link>
