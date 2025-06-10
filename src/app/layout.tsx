@@ -5,7 +5,6 @@ import Footer from "@/components/ui/Footer";
 import "./globals.css";
 import BtnWhatsapp from "@/components/ui/BtnWhatsapp";
 import CallToAction from "@/components/ui/CallToAction";
-import InvestmentBanner from "@/components/ui/InvestmentBanner";
 
 const inter = Inter({ subsets: ["latin"] });
 
