@@ -33,7 +33,7 @@ function Hero() {
           <div className="mt-10 md:mt-0 md:w-1/2">
             <div className="relative overflow-hidden rounded-3xl shadow-2xl">
               <Image
-                src={"/images/home-bg.jpg"}
+                src={"/images/home.jpg"}
                 alt="Fondo de inicio"
                 width={800}
                 height={600}

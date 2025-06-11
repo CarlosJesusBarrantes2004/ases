@@ -44,12 +44,11 @@ function HistoryMissionVision() {
             </div>
             <div className="w-24 h-1 bg-red-primary mb-6"></div>
             <p className="text-gray-dark text-lg leading-relaxed">
-              En grupo ases, somos aliados estratégicos de las mypes y pymes en
-              su crecimiento, brindándoles asesoría integral de alto nivel para
-              potenciar su crecimiento. nos comprometemos a ofrecer soluciones
-              estratégicas que optimizan su gestión, fortalecen su estructura
-              organizativa y garantizan su desarrollo sostenible en un entorno
-              competitivo.
+              Impulsar el crecimiento regional mediante la creación,
+              estructuración y financiamiento de proyectos estratégicos,
+              ofreciendo soluciones integrales en inversión, desarrollo
+              empresarial y consultoría, con un enfoque colaborativo, ético y
+              transformador.
             </p>
           </Reveal>
           {/* Vision */}
@@ -66,12 +65,10 @@ function HistoryMissionVision() {
             </div>
             <div className="w-24 h-1 bg-red-primary mb-6"></div>
             <p className="text-gray-dark text-lg leading-relaxed">
-              Ser reconocidas como la firma de asesoría empresarial más
-              influyente, destacándose por la excelencia, innovación y
-              compromiso con el crecimiento de las mypes y pymes. buscamos ser
-              un referente en soluciones estratégicas que impulsen el desarrollo
-              de los negocios y contribuyan al progreso y fortalecimiento del
-              sector empresarial.
+              Ser el ecosistema empresarial líder del Perú que transforma
+              capital e ideas en desarrollo regional sostenible, articulando
+              inversión, innovación y emprendimiento en sectores clave de alto
+              impacto económico y social.
             </p>
           </Reveal>
         </div>

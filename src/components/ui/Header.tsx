@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { ChevronDown, Menu, X } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { navigationLinks } from "@/data";
+import Image from "next/image";
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -45,22 +46,14 @@ function Header() {
       }`}
     >
       <div className="container mx-auto px-4 py-3 md:px-6 md:py-5 flex justify-between items-center">
-        <Link href={"/"} className="flex items-center space-x-2">
-          <div className="font-bold text-xl md:text-2xl lg:text-xl">
-            <span
-              className={`transition-colors duration-300 ${
-                isScrolled || isMenuOpen ? "text-red-primary" : "text-white"
-              }`}
-            >
-              Grupo
-            </span>
-            <span
-              className={`transition-colors duration-300 ${
-                isScrolled || isMenuOpen ? "text-black-soft" : "text-white"
-              }`}
-            >
-              Ases
-            </span>
+        <Link href={"/"} className="flex justify-center items-center">
+          <div className="relative w-[120px] h-[80px]">
+            <Image
+              src={"/images/logo.png"}
+              alt="Logo - Grupo Ases"
+              fill
+              className="object-contain"
+            ></Image>
           </div>
         </Link>
         {/* Navegación en PC/Laptop */}

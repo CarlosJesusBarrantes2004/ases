@@ -53,8 +53,8 @@ function Contact() {
                     </div>
                     <div>
                       <p className="font-semibold">Teléfono</p>
-                      <a href="tel:+51944668448" className="hover:underline">
-                        +51 944 668 448
+                      <a href="tel:+51975733304" className="hover:underline">
+                        +51 975 733 304
                       </a>
                     </div>
                   </div>
