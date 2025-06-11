@@ -1,13 +1,10 @@
 import {
-  Award,
   Handshake,
   Lightbulb,
   RefreshCcw,
   Rocket,
-  Search,
   ShieldCheck,
   Users,
-  Zap,
 } from "lucide-react";
 
 export const benefits = [
