@@ -45,9 +45,9 @@ function Header() {
           : "bg-transparent"
       }`}
     >
-      <div className="container mx-auto px-4 py-3 md:px-6 md:py-5 flex justify-between items-center">
+      <div className="container mx-auto px-4 py-3 md:px-6 md:py-2 flex justify-between items-center">
         <Link href={"/"} className="flex justify-center items-center">
-          <div className="relative w-[120px] h-[80px]">
+          <div className="relative w-[78px] h-[60px]">
             <Image
               src={"/images/logo.png"}
               alt="Logo - Grupo Ases"
