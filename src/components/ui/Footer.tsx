@@ -1,11 +1,4 @@
-import {
-  Facebook,
-  Instagram,
-  Linkedin,
-  Mail,
-  Phone,
-  Twitter,
-} from "lucide-react";
+import { Facebook, Instagram, Mail, Phone } from "lucide-react";
 import Link from "next/link";
 
 function Footer() {
@@ -21,25 +14,13 @@ function Footer() {
             </p>
             <div className="flex space-x-4">
               <a
-                href="#"
+                href="https://www.facebook.com/grupoasesperu/"
                 className="text-gray-light hover:text-red-primary transition-all-300"
               >
                 <Facebook size={20}></Facebook>
               </a>
               <a
-                href="#"
-                className="text-gray-light hover:text-red-primary transition-all-300"
-              >
-                <Linkedin size={20}></Linkedin>
-              </a>
-              <a
-                href="#"
-                className="text-gray-light hover:text-red-primary transition-all-300"
-              >
-                <Twitter size={20}></Twitter>
-              </a>
-              <a
-                href="#"
+                href="https://www.instagram.com/grupoases.holding/"
                 className="text-gray-light hover:text-red-primary transition-all-300"
               >
                 <Instagram size={20}></Instagram>

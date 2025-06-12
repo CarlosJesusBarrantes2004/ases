@@ -29,7 +29,7 @@ function ContactPage() {
             {/* Formulario de contacto */}
             <Reveal
               direction="right"
-              className="p-8 border rounded-lg shadow-lg"
+              className="p-8 border border-gray-100 rounded-lg shadow-lg"
             >
               <ContactForm></ContactForm>
             </Reveal>
