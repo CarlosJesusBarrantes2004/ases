@@ -24,12 +24,12 @@ function DetailedHistory() {
         {/* Encabezado */}
         <div className="text-center mb-12 md:mb-16">
           <Reveal>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
+            <h2 className="text-4xl md:text-5xl lg:text-4xl xl:text-6xl font-bold mb-4 text-white">
               Nuestra Historia{" "}
               <span className="text-red-primary">creciendo contigo</span>
             </h2>
           </Reveal>
-          <div className="w-24 h-1 bg-red-primary mx-auto mb-6"></div>
+          <div className="w-24 h-1 xl:w-32 bg-red-primary mx-auto mb-6"></div>
           <Reveal className="mx-auto text-base md:text-lg text-gray-light max-w-2xl">
             Desde nuestros inicios, en Grupo ASES hemos trabajado con un
             propósito claro: brindar soluciones empresariales integrales que

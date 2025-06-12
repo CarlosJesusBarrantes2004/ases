@@ -147,32 +147,38 @@ export const timelineItems = [
 export const values = [
   {
     icon: "💡",
-    title: "Compromiso con la Excelencia",
+    title: "Innovación con propósito",
     description:
-      "Nos esforzamos por ofrecer soluciones de alta calidad, con un enfoque en la innovación y la mejora continua.",
+      "Fomentamos ideas disruptivas que generan soluciones reales y sostenibles para la sociedad.",
   },
   {
     icon: "🤝",
-    title: "Confianza y Transparencia",
+    title: "Compromiso regional",
     description:
-      "Creemos en la honestidad y la comunicación abierta. Generamos relaciones de confianza con nuestros clientes, brindando asesoría clara y ética.",
+      "Trabajamos por el desarrollo integral de nuestras comunidades, apostando por el talento y los recursos locales.",
   },
   {
     icon: "📈",
-    title: "Orientación a Resultados",
+    title: "Transparencia y confianza",
     description:
-      "Trabajamos con estrategias efectivas que garantizan el crecimiento y la estabilidad de los negocios que asesoramos.",
+      "Actuamos con integridad, ofreciendo oportunidades claras, seguras y respaldadas legalmente.",
   },
   {
     icon: "💼",
-    title: "Profesionalismo y Responsabilidad",
+    title: "Colaboración estratégica",
     description:
-      "Cada cliente es único y merece un servicio a la altura de sus necesidades. Actuamos con responsabilidad y compromiso en cada tarea que realizamos.",
+      "Unimos inversionistas, emprendedores y profesionales para crear valor compartido y proyectos viables.",
+  },
+  {
+    icon: "🙌",
+    title: "Impacto social y económico",
+    description:
+      "Buscamos resultados que trasciendan lo financiero, mejorando la calidad de vida y dinamizando economías locales.",
   },
   {
     icon: "🚀",
-    title: "Adaptabilidad e Innovación",
+    title: "Responsabilidad y sostenibilidad",
     description:
-      "El mundo cambia constantemente y nosotros evolucionamos con él. Nos mantenemos a la vanguardia para ofrecer soluciones modernas y eficientes.",
+      "Diseñamos proyectos que respetan el entorno y aseguran un futuro viable para las próximas generaciones.",
   },
 ];

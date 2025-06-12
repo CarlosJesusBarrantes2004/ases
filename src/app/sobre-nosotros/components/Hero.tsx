@@ -4,11 +4,11 @@ import Link from "next/link";
 
 function Hero() {
   return (
-    <section className="relative h-screen flex items-center overflow-hidden">
+    <section className="relative h-screen flex items-center overflow-hidden mt-11">
       {/* Imagen de fondo con overlay */}
       <div className="absolute inset-0 z-0">
         <Image
-          src={"/images/aboutus-bg.jpg"}
+          src={"/images/sobre-nosotros.jpg"}
           alt="Fondo de nosotros"
           layout="fill"
           objectFit="cover"
@@ -36,14 +36,14 @@ function Hero() {
           <Reveal className="flex flex-col sm:flex-row gap-4">
             <Link
               href={"#history"}
-              className="inline-block bg-transparent border-2 border-red-primary text-white font-semibold py-3 px-6 rounded-full hover:bg-red-primary transition-all-300"
+              className="inline-block text-center bg-transparent border-2 border-red-primary text-white font-semibold py-3 px-6 rounded-full hover:bg-red-primary transition-all-300"
             >
               Descubre nuestra historia
             </Link>
 
             <Link
               href={"/contacto"}
-              className="inline-block bg-red-primary text-white font-semibold py-3 px-6 rounded-full hover:bg-red-primary/90 hover:scale-105 transition-all-300"
+              className="inline-block text-center bg-red-primary text-white font-semibold py-3 px-6 rounded-full hover:bg-red-primary/90 hover:scale-105 transition-all-300"
             >
               Hablemos sobre tu empresa
             </Link>

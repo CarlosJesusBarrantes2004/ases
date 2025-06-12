@@ -13,7 +13,7 @@ function Info() {
           </div>
           <div>
             <h3 className="text-lg font-semibold text-black-soft">Teléfono</h3>
-            <p className="text-gray-dark">+51 944 668 668</p>
+            <p className="text-gray-dark">+51 975 733 304</p>
           </div>
         </article>
         <article className="flex items-center space-x-4 mb-6 animate-slide-in">

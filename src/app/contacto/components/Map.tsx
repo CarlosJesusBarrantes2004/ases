@@ -6,12 +6,12 @@ function Map() {
       <div className="container mx-auto px-4">
         {/* Encabezado */}
         <Reveal>
-          <div className="text-center mb-12 md:mb-16">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
+          <div className="mt-12 lg:mt-7 text-center mb-12 md:mb-16 text-white">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
               Contáctanos y Ubícanos
             </h2>
             <div className="w-24 h-1 bg-red-primary mx-auto mb-6"></div>
-            <p className="text-white text-base md:text-lg mx-auto max-w-2xl">
+            <p className="text-base md:text-lg mx-auto max-w-2xl">
               Estamos listos para escuchar tu proyecto. Completa el formulario o
               visítanos en nuestra ubicación.
             </p>
