@@ -12,7 +12,6 @@ function Header() {
   const [isServicesOpen, setIsServicesOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState<string[]>([]);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isService, setIsService] = useState(false);
   const path = usePathname();
 
   useEffect(() => {
