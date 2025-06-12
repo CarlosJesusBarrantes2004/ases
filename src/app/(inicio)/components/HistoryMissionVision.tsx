@@ -6,10 +6,10 @@ function HistoryMissionVision() {
       <div className="container mx-auto px-4">
         {/* Title */}
         <Reveal className="text-center mb-12 md:mb-16">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-white">
+          <h2 className="text-4xl md:text-5xl lg:text-4xl xl:text-6xl font-bold mb-4 text-white">
             Nuestra Compañía
           </h2>
-          <div className="w-24 h-1 bg-red-primary mx-auto mb-6"></div>
+          <div className="w-24 h-1 xl:w-32 bg-red-primary mx-auto mb-6"></div>
         </Reveal>
         {/* History */}
         <Reveal className="bg-white rounded-2xl p-8 shadow-lg mb-8 transform transition-transform duration-300 hover:scale-[1.01]">
@@ -17,7 +17,7 @@ function HistoryMissionVision() {
             <div className="rounded-full p-3 bg-gray-light mr-4 flex items-center justify-center">
               <span className="text-2xl">🔴</span>
             </div>
-            <h3 className="text-black-soft text-3xl font-bold">
+            <h3 className="text-black-soft text-2xl md:text-3xl font-bold">
               Nuestra Historia
             </h3>
           </div>
@@ -32,7 +32,7 @@ function HistoryMissionVision() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Mission */}
           <Reveal
-            direction="left"
+            direction="down"
             offset={40}
             className="bg-white rounded-2xl p-8 shadow-lg transform transition-transform duration-300 hover:scale-[1.01]"
           >
@@ -53,7 +53,7 @@ function HistoryMissionVision() {
           </Reveal>
           {/* Vision */}
           <Reveal
-            direction="right"
+            direction="down"
             offset={40}
             className="bg-white rounded-2xl p-8 shadow-lg transform transition-transform duration-300 hover:scale-[1.01]"
           >

@@ -12,7 +12,7 @@ function CallToAction() {
     <section className="py-16 md:py-20 bg-gray-dark">
       <div className="container mx-auto px-4">
         <div className="text-center">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-white">
+          <h2 className="text-4xl md:text-5xl lg:text-4xl xl:text-5xl font-bold mb-4 text-white">
             ¿Listo para llevar tu empresa al siguiente nivel?
           </h2>
           <p className="text-lg md:text-xl lg:text-2xl text-gray-light max-w-2xl mx-auto mb-8">

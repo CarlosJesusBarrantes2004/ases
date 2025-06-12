@@ -22,10 +22,10 @@ function Faq() {
       <div className="container mx-auto px-4">
         {/* Encabezado */}
         <div className="text-center mb-12 md:mb-16">
-          <Reveal className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-white">
+          <Reveal className="text-4xl md:text-5xl lg:text-4xl xl:text-6xl font-bold mb-4 text-white">
             Preguntas Frecuentes
           </Reveal>
-          <div className="w-24 h-1 bg-red-primary mx-auto mb-6"></div>
+          <div className="w-24 h-1 xl:w-32 bg-red-primary mx-auto mb-6"></div>
           <Reveal className="text-white text-base md:text-lg mx-auto max-w-2xl">
             Respuestas a las dudas más comunes sobre nuestros servicios
           </Reveal>
@@ -49,7 +49,7 @@ function Faq() {
                 {category.questions.map((item) => (
                   <div
                     key={item.id}
-                    className="bg-white rounded-lg border shadow-md overflow-hidden transition-all-300"
+                    className="bg-white rounded-lg border border-gray-light shadow-md overflow-hidden transition-all-300"
                   >
                     {/* Pregunta */}
                     <button

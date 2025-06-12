@@ -15,16 +15,16 @@ function Services() {
       <div className="container mx-auto px-4">
         {/* Encabezado */}
         <Reveal className="text-center mb-12 md:mb-16">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-black-soft">
+          <h2 className="text-4xl md:text-5xl lg:text-4xl xl:text-6xl font-bold mb-4 text-black-soft">
             Nuestros Servicios
           </h2>
-          <div className="w-24 h-1 bg-red-primary mx-auto mb-6"></div>
+          <div className="w-24 h-1 xl:w-32 bg-red-primary mx-auto mb-6"></div>
         </Reveal>
         {/* Contenido */}
-        <Reveal className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <Reveal className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-3 gap-8">
           {services.map((service, index) => (
             <Reveal key={index}>
-              <article className="bg-white border rounded-lg shadow-sm p-6 h-full flex flex-col transition-all-300 hover:translate-y-[-8px]">
+              <article className="bg-white border border-gray-light rounded-lg shadow-md p-6 h-full flex flex-col transition-all-300 hover:translate-y-[-8px]">
                 <div className="text-red-primary mb-4 text-4xl">
                   {serviceIcon[service.slug]}
                 </div>

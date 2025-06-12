@@ -37,13 +37,9 @@ function Header() {
 
   return (
     <header
-      className={`fixed w-full top-0 z-50 transition-all duration-300 ${
-        isService && !isScrolled
-          ? "bg-black-soft"
-          : isScrolled || isMenuOpen
-          ? "bg-white shadow-md"
-          : "bg-transparent"
-      }`}
+      className={
+        "fixed w-full top-0 z-50 transition-all duration-300 border-b border-gray-light shadow-md bg-white"
+      }
     >
       <div className="container mx-auto px-4 py-3 md:px-6 md:py-2 flex justify-between items-center">
         <Link href={"/"} className="flex justify-center items-center">
@@ -63,11 +59,7 @@ function Header() {
               <div key={item.name} className="relative group">
                 <div
                   className={`flex items-center space-x-1 cursor-pointer transition-colors duration-300 hover:text-red-primary ${
-                    path === item.href
-                      ? "text-red-primary"
-                      : isScrolled
-                      ? "text-black-soft"
-                      : "text-white"
+                    path === item.href ? "text-red-primary" : ""
                   }`}
                 >
                   <Link href={item.href}>{item.name}</Link>
@@ -122,11 +114,7 @@ function Header() {
                 key={item.name}
                 href={item.href}
                 className={`transition-colors duration-300 hover:text-red-primary ${
-                  path === item.href
-                    ? "text-red-primary"
-                    : isScrolled
-                    ? "text-black-soft"
-                    : "text-white"
+                  path === item.href ? "text-red-primary" : ""
                 }`}
               >
                 {item.name}
