@@ -2,7 +2,7 @@ import { Inter } from "next/font/google";
 import { Metadata } from "next";
 import Header from "@/components/ui/Header";
 import Footer from "@/components/ui/Footer";
-import "./globals.css";
+import "../globals.css";
 import BtnWhatsapp from "@/components/ui/BtnWhatsapp";
 import CallToAction from "@/components/ui/CallToAction";
 

@@ -3,7 +3,7 @@ export const navigationLinks = [
   { name: "Inicio", href: "/" },
   { name: "Sobre nosotros", href: "/sobre-nosotros" },
   { name: "Proyectos", href: "/proyectos", subProyectos: [] },
-  {
+  /*{
     name: "Servicios",
     href: "/servicios",
     subLinks: [
@@ -59,7 +59,7 @@ export const navigationLinks = [
         ],
       },
     ],
-  },
+  },*/
   { name: "Contáctanos", href: "/contacto" },
 ];
 

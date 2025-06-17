@@ -1,4 +1,4 @@
-import { contactSchema } from "@/app/contacto/components/form/schema";
+import { contactSchema } from "@/app/(public)/contacto/components/form/schema";
 import {
   EMAIL_FROM,
   EMAIL_HOST,
