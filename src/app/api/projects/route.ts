@@ -1,13 +1,12 @@
 
 import { NextResponse } from "next/server";
 import prisma from "@/lib/db";
-import bcrypt from "bcrypt";
 
 export async function POST(req: Request) {
   try {
-    consttitle, email, password } = await req.json();
+    const { title, description } = await req.json();
 
-    iftitle || !email || !password)
+    if (!title || !description )
       return NextResponse.json(
         {
           message: "Todos los campos son requeridos.",
@@ -15,39 +14,39 @@ export async function POST(req: Request) {
         { status: 400 }
       );
 
-    const existingUser = await prisma.user.findUnique({
-      where: { email },
+    const existingProject = await prisma.project.findUnique({
+      where: { description },
     });
 
-    if (existingUser)
+    if (existingProject)
       return NextResponse.json(
         {
-          message: "El correo electrónico ya está registrado.",
+          message: "El nombre del proyecto ya está registrado.",
         },
         { status: 409 }
       );
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    
 
-    const newUser = await prisma.user.create({
-      data:title, email, password: hashedPassword },
+    const newProject = await prisma.project.create({
+      data: { title, description },
       select: {
-        id: true,title: true,
-        email: true,
-        emailVerified: true,
+        id: true,
+        title: true,
+        description: true,
         createdAt: true,
       },
     });
 
     return NextResponse.json(
       {
-        message: "Usuario registrado exitosamente",
-        user: newUser,
+        message: "Proyecto registrado exitosamente",
+        project: newProject,
       },
       { status: 201 }
     );
   } catch (error) {
-    console.error("Error al registrar usuario:", error);
+    console.error("Error al registrar proyecto:", error);
     return NextResponse.json(
       { message: "Error interno del servidor." },
       { status: 500 }
@@ -57,12 +56,11 @@ export async function POST(req: Request) {
 
 export async function GET() {
   try {
-    const users = await prisma.user.findMany({
+    const projects = await prisma.project.findMany({
       select: {
         id: true,
         title: true,
-        email: true,
-        emailVerified: true,
+        description: true,
         createdAt: true,
       },
       orderBy: {
@@ -70,7 +68,7 @@ export async function GET() {
       },
     });
 
-    return NextResponse.json(users);
+    return NextResponse.json(projects);
   } catch (error) {
     console.error("Error al obtener usuarios:", error);
     return NextResponse.json(
