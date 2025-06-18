@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import bcrypt from "bcrypt";
+import crypto from "crypto";
+import { sendVerificationEmail } from "@/lib/email";
 
 export async function POST(req: Request) {
   try {
@@ -38,6 +40,19 @@ export async function POST(req: Request) {
         createdAt: true,
       },
     });
+
+    const verificationToken = crypto.randomBytes(32).toString("hex");
+    const expiresAt = new Date(Date.now() + 10 * 60 * 1000);
+
+    await prisma.emailVerification.create({
+      data: {
+        userId: newUser.id,
+        token: verificationToken,
+        expiresAt,
+      },
+    });
+
+    await sendVerificationEmail(newUser.email, verificationToken, password);
 
     return NextResponse.json(
       {
