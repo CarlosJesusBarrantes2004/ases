@@ -1,15 +1,13 @@
-
 import { NextResponse } from "next/server";
 import prisma from "@/lib/db";
-import bcrypt from "bcrypt";
 import crypto from "crypto";
 import { sendVerificationEmail } from "@/lib/email";
 
 export async function POST(req: Request) {
   try {
-    const { name, email, password } = await req.json();
+    const { name, email } = await req.json();
 
-    if (!name || !email || !password)
+    if (!name || !email)
       return NextResponse.json(
         {
           message: "Todos los campos son requeridos.",
@@ -29,10 +27,8 @@ export async function POST(req: Request) {
         { status: 409 }
       );
 
-    const hashedPassword = await bcrypt.hash(password, 10);
-
     const newUser = await prisma.user.create({
-      data: { name, email, password: hashedPassword },
+      data: { name, email, emailVerified: null },
       select: {
         id: true,
         name: true,
@@ -53,11 +49,12 @@ export async function POST(req: Request) {
       },
     });
 
-    await sendVerificationEmail(newUser.email, verificationToken, password);
+    await sendVerificationEmail(newUser.email, verificationToken);
 
     return NextResponse.json(
       {
-        message: "Usuario registrado exitosamente",
+        message:
+          "Usuario registrado exitosamente. Se ha enviado un correo para verificar y establecer la contraseña.",
         user: newUser,
       },
       { status: 201 }

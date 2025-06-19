@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 
-export default function ResetPasswordPage() {
+export default function VerifyAndSetPasswordPage() {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
@@ -16,7 +16,7 @@ export default function ResetPasswordPage() {
 
   useEffect(() => {
     if (!token) {
-      setError("Token de restablecimiento no encontrado en la URL.");
+      setError("Enlace de verificación inválido o faltante.");
     }
   }, [token]);
 
@@ -26,18 +26,29 @@ export default function ResetPasswordPage() {
     setMessage("");
     setError("");
 
+    if (!token) {
+      setError("No hay token de verificación. El enlace es inválido.");
+      setLoading(false);
+      return;
+    }
+
+    if (newPassword.length < 6) {
+      // Ejemplo de validación de longitud mínima
+      setError("La contraseña debe tener al menos 6 caracteres.");
+      setLoading(false);
+      return;
+    }
+
     if (newPassword !== confirmPassword) {
       setError("Las contraseñas no coinciden.");
       setLoading(false);
       return;
     }
-    if (!token) {
-      setError("Token de restablecimiento inválido.");
-      setLoading(false);
-      return;
-    }
 
     try {
+      // Usaremos la misma ruta /api/auth/reset-password, ya que la lógica es similar:
+      // verificar token y actualizar contraseña.
+      // Puedes crear una nueva ruta si quieres una diferenciación más explícita.
       const res = await fetch("/api/auth/reset-password", {
         method: "POST",
         headers: {
@@ -48,10 +59,16 @@ export default function ResetPasswordPage() {
 
       const data = await res.json();
       if (res.ok) {
-        setMessage(data.message);
-        router.push("/login?reset=true"); // Redirigir al login con un mensaje de éxito
+        setMessage(
+          "¡Tu correo ha sido verificado y tu contraseña establecida! Redirigiendo al login..."
+        );
+        setTimeout(() => {
+          router.push("/login?verified=true"); // Redirigir al login con un mensaje de éxito
+        }, 3000);
       } else {
-        setError(data.message || "Error al restablecer la contraseña.");
+        setError(
+          data.message || "Error al verificar o establecer la contraseña."
+        );
       }
     } catch (err) {
       console.error("Error de red o desconocido:", err);
@@ -65,8 +82,11 @@ export default function ResetPasswordPage() {
     <div className="flex min-h-screen items-center justify-center bg-gray-100">
       <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
         <h2 className="text-2xl font-bold text-center">
-          Establecer Nueva Contraseña
+          Verificar Correo y Establecer Contraseña
         </h2>
+        <p className="text-sm text-gray-600 text-center">
+          Por favor, establece una contraseña para tu nueva cuenta.
+        </p>
         <form onSubmit={handleSubmit} className="space-y-4">
           {message && (
             <p className="text-green-500 text-sm text-center">{message}</p>
@@ -107,9 +127,9 @@ export default function ResetPasswordPage() {
           <button
             type="submit"
             className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700"
-            disabled={loading}
+            disabled={loading || !token}
           >
-            {loading ? "Restableciendo..." : "Restablecer Contraseña"}
+            {loading ? "Estableciendo..." : "Establecer Contraseña"}
           </button>
         </form>
         <div className="text-center text-sm">

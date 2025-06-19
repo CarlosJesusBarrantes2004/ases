@@ -4,4 +4,5 @@ export const {
   EMAIL_USER,
   EMAIL_PASSWORD,
   EMAIL_FROM,
+  JWT_SECRET,
 } = process.env;
