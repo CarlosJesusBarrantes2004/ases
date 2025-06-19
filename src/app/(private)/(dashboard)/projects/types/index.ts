@@ -22,3 +22,5 @@ export interface FormData {
   description: string;
   images: string[];
 }
+
+export type ViewMode = 'list' | 'create' | 'edit' | 'view';

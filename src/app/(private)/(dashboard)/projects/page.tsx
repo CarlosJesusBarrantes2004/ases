@@ -5,14 +5,15 @@ import React, { useState } from 'react';
 import { Project, FormData, SortBy } from './types';
 import { mockProjects } from './data/mockData';
 import { filterAndSortProjects } from './utils/helpers';
-import SearchControls from './components/SearchControls';
-import ProjectsGrid from './components/ProjectsGrid';
-import ProjectFormModal from './components/ProjectFormModal';
-import ProjectViewModal from './components/ProjectViewModal';
+import ProjectListView from './components/ProjectListView';
+import ProjectFormView from './components/ProjectFormView';
+import ProjectDetailView from './components/ProjectDetailView';
+
+type ViewMode = 'list' | 'form' | 'detail';
 
 function Page() {
   const [projects, setProjects] = useState<Project[]>(mockProjects);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [viewMode, setViewMode] = useState<ViewMode>('list');
   const [editingProject, setEditingProject] = useState<Project | null>(null);
   const [viewingProject, setViewingProject] = useState<Project | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
@@ -72,7 +73,8 @@ function Page() {
   const resetForm = () => {
     setFormData({ title: '', description: '', images: [] });
     setEditingProject(null);
-    setIsModalOpen(false);
+    setViewingProject(null);
+    setViewMode('list');
   };
 
   const handleEdit = (project: Project) => {
@@ -82,13 +84,29 @@ function Page() {
       description: project.description,
       images: []
     });
-    setIsModalOpen(true);
+    setViewMode('form');
+  };
+
+  const handleView = (project: Project) => {
+    setViewingProject(project);
+    setViewMode('detail');
   };
 
   const handleDelete = (id: number) => {
     if (window.confirm('¿Estás seguro de que quieres eliminar este proyecto?')) {
       setProjects(projects.filter(p => p.id !== id));
+      // Si estamos viendo el proyecto que se elimina, volver a la lista
+      if (viewingProject?.id === id) {
+        setViewMode('list');
+        setViewingProject(null);
+      }
     }
+  };
+
+  const handleNewProject = () => {
+    setEditingProject(null);
+    setFormData({ title: '', description: '', images: [] });
+    setViewMode('form');
   };
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -109,49 +127,70 @@ function Page() {
     }));
   };
 
+  const handleBackToList = () => {
+    setViewMode('list');
+    setEditingProject(null);
+    setViewingProject(null);
+  };
+
+  // Manejar edición desde la vista de detalle
+  const handleEditFromDetail = (project: Project) => {
+    setEditingProject(project);
+    setFormData({
+      title: project.title,
+      description: project.description,
+      images: []
+    });
+    setViewMode('form');
+  };
+
+  // Manejar eliminación desde la vista de detalle
+  const handleDeleteFromDetail = (id: number) => {
+    if (window.confirm('¿Estás seguro de que quieres eliminar este proyecto?')) {
+      setProjects(projects.filter(p => p.id !== id));
+      setViewMode('list');
+      setViewingProject(null);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 p-6">
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">Gestión de Proyectos</h1>
-          <p className="text-gray-600">Administra todos tus proyectos en un solo lugar</p>
-        </div>
+        {/* Renderizar vista según el modo actual */}
+        {viewMode === 'list' && (
+          <ProjectListView
+            projects={filteredAndSortedProjects}
+            searchTerm={searchTerm}
+            setSearchTerm={setSearchTerm}
+            sortBy={sortBy}
+            setSortBy={setSortBy}
+            onNewProject={handleNewProject}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+            onView={handleView}
+          />
+        )}
 
-        {/* Search Controls */}
-        <SearchControls
-          searchTerm={searchTerm}
-          setSearchTerm={setSearchTerm}
-          sortBy={sortBy}
-          setSortBy={setSortBy}
-          onNewProject={() => setIsModalOpen(true)}
-        />
+        {viewMode === 'form' && (
+          <ProjectFormView
+            editingProject={editingProject}
+            formData={formData}
+            setFormData={setFormData}
+            onSubmit={handleSubmit}
+            onCancel={handleBackToList}
+            onImageUpload={handleImageUpload}
+            onRemoveImage={removeImage}
+          />
+        )}
 
-        {/* Projects Grid */}
-        <ProjectsGrid
-          projects={filteredAndSortedProjects}
-          onEdit={handleEdit}
-          onDelete={handleDelete}
-          onView={setViewingProject}
-        />
-
-        {/* Project Form Modal */}
-        <ProjectFormModal
-          isOpen={isModalOpen}
-          editingProject={editingProject}
-          formData={formData}
-          setFormData={setFormData}
-          onSubmit={handleSubmit}
-          onClose={resetForm}
-          onImageUpload={handleImageUpload}
-          onRemoveImage={removeImage}
-        />
-
-        {/* Project View Modal */}
-        <ProjectViewModal
-          project={viewingProject}
-          onClose={() => setViewingProject(null)}
-        />
+        {viewMode === 'detail' && (
+          <ProjectDetailView
+            project={viewingProject}
+            onBack={handleBackToList}
+            onEdit={handleEditFromDetail}
+            onDelete={handleDeleteFromDetail}
+          />
+        )}
       </div>
     </div>
   );
