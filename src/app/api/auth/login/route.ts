@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
+import { SignJWT } from "jose";
 import config from "@/lib/config";
 
 const loginAttempts = new Map<string, { count: number; lastAttempt: number }>();
@@ -83,9 +83,12 @@ export async function POST(req: Request) {
       name: user.name,
     };
 
-    const token = jwt.sign(tokenPayload, config.JWT_SECRET, {
-      expiresIn: "1d",
-    });
+    const secret = new TextEncoder().encode(config.JWT_SECRET);
+    const token = await new SignJWT(tokenPayload)
+      .setProtectedHeader({ alg: "HS256" })
+      .setIssuedAt()
+      .setExpirationTime("1d")
+      .sign(secret);
 
     const response = NextResponse.json(
       {

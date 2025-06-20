@@ -1,5 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server";
-import jwt from "jsonwebtoken";
+import { jwtVerify } from "jose";
 import Config from "./lib/config";
 
 const PUBLIC_PATHS = [
@@ -7,11 +7,11 @@ const PUBLIC_PATHS = [
   "/contacto",
   "/proyectos",
   "/sobre-nosotros",
-  "/login",
-  "/forgot-password",
-  "/reset-password",
-  "/verify-email",
-  "/verify-and-set-password",
+  "/auth/login",
+  "/auth/forgot-password",
+  "/auth/reset-password",
+  "/auth/verify-email",
+  "/auth/verify-and-set-password",
   "/api/auth/login",
   "/api/auth/forgot-password",
   "/api/auth/reset-password",
@@ -46,20 +46,21 @@ export async function middleware(req: NextRequest) {
   const token = req.cookies.get("auth_token")?.value;
 
   if (!token) {
-    if (path !== "/login")
-      return NextResponse.redirect(new URL("/login", req.url));
+    if (path !== "/auth/login")
+      return NextResponse.redirect(new URL("/auth/login", req.url));
 
     return NextResponse.next();
   }
 
   try {
-    const decoded = jwt.verify(token, Config.JWT_SECRET);
+    const secret = new TextEncoder().encode(Config.JWT_SECRET);
+    await jwtVerify(token, secret);
 
     return NextResponse.next();
   } catch (error) {
     console.error("Error al verificar token en middleware:", error);
     const response = NextResponse.redirect(
-      new URL("/login?error=SessionExpired", req.url)
+      new URL("/auth/login?error=SessionExpired", req.url)
     );
     response.cookies.delete("auth_token");
     return response;
