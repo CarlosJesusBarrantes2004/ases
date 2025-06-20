@@ -1,127 +1,241 @@
-// app/api/users/[id]/route.ts
-import { NextResponse } from 'next/server';
-import prisma from '@/lib/db'; // Asegúrate de que esta ruta a tu instancia de Prisma sea correcta
-import bcrypt from 'bcrypt';
+import { NextResponse } from "next/server";
+import prisma from "@/lib/db";
+import { getUserIdFromRequest } from "@/lib/auth";
+import cloudinary from "@/lib/cloudinary";
 
-// Definimos la interfaz para los parámetros de la ruta
-interface Context {
-  params: {
-    id: string; // El id de la ruta dinámica ahora es un string
-  };
-}
+export async function GET(
+  req: Request,
+  { params }: { params: { id: string } }
+) {
+  const projectId = parseInt(params.id, 10);
 
-/**
- * GET /api/users/[id]
- * Obtiene un usuario por su ID.
- */
-export async function GET(request: Request, context: Context) {
-  const { id } = context.params;
+  if (isNaN(projectId))
+    return NextResponse.json(
+      { message: "ID de proyecto inválido." },
+      { status: 400 }
+    );
 
   try {
     const project = await prisma.project.findUnique({
-      where: {
-        id: id,
-      },
-      select: {
-        id: true,
-        title: true,
-        description: true,
-        createdAt: true,
-        updatedAt: true,
+      where: { id: projectId },
+      include: {
+        images: {
+          select: { id: true, url: true },
+        },
+        user: {
+          select: { id: true, name: true, email: true },
+        },
       },
     });
 
-    if (!project) {
-      return NextResponse.json({ message: 'Proyecto no encontrado.' }, { status: 404 });
-    }
+    if (!project)
+      return NextResponse.json(
+        { message: "Proyecto no encontrado." },
+        { status: 404 }
+      );
 
-    return NextResponse.json(project);
+    return NextResponse.json(project, { status: 200 });
   } catch (error) {
-    console.error('Error en la API GET /api/projects/[id]:', error);
-    return NextResponse.json({ message: 'Error interno del servidor.' }, { status: 500 });
+    console.error("Error al obtener proyecto por ID:", error);
+    return NextResponse.json(
+      { message: "Error interno del servidor" },
+      { status: 500 }
+    );
   }
 }
 
-/**
- * PUT /api/users/[id]
- * Edita un usuario por su ID.
- */
-export async function PUT(request: Request, context: Context) {
-  const { id } = context.params;
+export async function PUT(
+  req: Request,
+  { params }: { params: { id: string } }
+) {
+  const projectId = parseInt(params.id, 10);
+  const userId = await getUserIdFromRequest(req);
+
+  if (isNaN(projectId))
+    return NextResponse.json(
+      { message: "ID de proyecto inválido." },
+      { status: 400 }
+    );
+
+  if (!userId)
+    return NextResponse.json({ message: "No autenticado." }, { status: 401 });
 
   try {
-    const body = await request.json();
-    const { title, description } = body; // emailVerified se maneja más por NextAuth.js
+    const projectToUpdate = await prisma.project.findUnique({
+      where: { id: projectId },
+      include: { images: true },
+    });
 
-    // Asegurarse de que al menos un campo relevante esté presente para actualizar
-    if (!title && !description) {
+    if (!projectToUpdate)
       return NextResponse.json(
-        { message: 'Al menos un campo (title, description) debe ser proporcionado para actualizar.' },
+        { message: "Proyecto no encontrado." },
+        { status: 404 }
+      );
+
+    if (projectToUpdate.userId !== userId)
+      return NextResponse.json(
+        {
+          message: "No autorizado para actualizar este proyecto.",
+        },
+        { status: 403 }
+      );
+
+    const formData = await req.formData();
+    const title = formData.get("title") as string;
+    const description = formData.get("description") as string;
+    const newFiles = formData
+      .getAll("new_images")
+      .filter((file) => file instanceof File) as File[];
+    const existingImageUrlsToKeep = JSON.parse(
+      (formData.get("existing_images_to_keep") as string) || "[]"
+    ) as string[];
+
+    if (!title || !description)
+      return NextResponse.json(
+        {
+          message: "Título y descripción son requeridos.",
+        },
         { status: 400 }
       );
+
+    const totalImagesCount = existingImageUrlsToKeep.length + newFiles.length;
+
+    if (totalImagesCount === 0)
+      return NextResponse.json(
+        { message: "Se requiere al menos una imagen para el proyecto." },
+        { status: 400 }
+      );
+
+    if (totalImagesCount > 4)
+      return NextResponse.json(
+        { message: "Se permite un máximo de 4 imágenes por proyecto." },
+        { status: 400 }
+      );
+
+    if (newFiles.some((file) => file.size === 0))
+      return NextResponse.json(
+        {
+          message:
+            "Algunos archivos nuevos están vacíos. Por favor, selecciona imágenes válidas.",
+        },
+        { status: 400 }
+      );
+
+    const imagesToDelete = projectToUpdate.images.filter(
+      (img) => !existingImageUrlsToKeep.includes(img.url)
+    );
+
+    for (const img of imagesToDelete) {
+      const publicId = img.url.split("/").pop()?.split(".")[0];
+      if (publicId) {
+        await cloudinary.uploader.destroy(`grupo-ases/projects/${publicId}`);
+        await prisma.projectImage.delete({ where: { id: img.id } });
+      }
     }
 
-    const dataToUpdate: {
-      title?: string;
-      description?: string;
-      updatedAt: Date;
-    } = {
-      updatedAt: new Date(), // Siempre actualiza la marca de tiempo de actualización
-    };
+    const uploadedNewImageUrls: { url: string }[] = [];
+    for (const file of newFiles) {
+      const arrayBuffer = await file.arrayBuffer();
+      const buffer = Buffer.from(arrayBuffer);
 
-    if (title) dataToUpdate.title = title;
-
-    if (description) dataToUpdate.description = description;
+      const result = (await new Promise((resolve, reject) => {
+        cloudinary.uploader
+          .upload_stream({ folder: "grupo-ases/projects" }, (error, result) => {
+            if (error)
+              return reject(
+                new Error("Error al subir nueva imagen a Cloudinary.")
+              );
+            resolve(result);
+          })
+          .end(buffer);
+      })) as any;
+      uploadedNewImageUrls.push({ url: result.secure_url });
+    }
 
     const updatedProject = await prisma.project.update({
-      where: {
-        id: id,
+      where: { id: projectId },
+      data: {
+        title,
+        description,
+        images: { create: uploadedNewImageUrls },
       },
-      data: dataToUpdate,
-      select: {
-        id: true,
-        title: true,
-        description: true,
-        createdAt: true,
-        updatedAt: true,
+      include: {
+        images: true,
+        user: true,
       },
     });
 
-    return NextResponse.json(updatedProject);
-  } catch (error: any) {
-    if (error.code === 'P2025') { // Prisma error code for "record to update not found"
-      return NextResponse.json({ message: `Proyecto con ID ${id} no encontrado.` }, { status: 404 });
-    }
-    console.error('Error en la API PUT /api/users/[id]:', error);
-    return NextResponse.json({ message: 'Error al actualizar el proyecto.' }, { status: 500 });
+    return NextResponse.json(
+      {
+        message: "Proyecto actualizado exitosamente.",
+        project: updatedProject,
+      },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error("Error al actualizar proyecto:", error);
+    return NextResponse.json(
+      { message: "Error interno del servidor." },
+      { status: 500 }
+    );
   }
 }
 
-/**
- * DELETE /api/users/[id]
- * Elimina un usuario por su ID.
- */
-export async function DELETE(request: Request, context: Context) {
-  const { id } = context.params;
+export async function DELETE(
+  req: Request,
+  { params }: { params: { id: string } }
+) {
+  const projectId = parseInt(params.id, 10);
+  const userId = await getUserIdFromRequest(req);
+
+  if (isNaN(projectId))
+    return NextResponse.json(
+      { message: "ID de proyecto inválido." },
+      { status: 400 }
+    );
+
+  if (!userId)
+    return NextResponse.json({ message: "No autenticado." }, { status: 401 });
 
   try {
-    const deletedProject = await prisma.user.delete({
-      where: {
-        id: id,
-      },
-      select: {
-        id: true,
-        title: true,
-        description: true,
-      }
+    const projectToDelete = await prisma.project.findUnique({
+      where: { id: projectId },
+      include: { images: true },
     });
 
-    return NextResponse.json({ message: `Proyecto ${deletedProject.title} (ID: ${deletedProject.id}) eliminado correctamente.` });
-  } catch (error: any) {
-    if (error.code === 'P2025') { // Prisma error code for "record to delete not found"
-      return NextResponse.json({ message: `Proyecto con ID ${id} no encontrado.` }, { status: 404 });
+    if (!projectToDelete)
+      return NextResponse.json(
+        { message: "Proyecto no encontrado." },
+        { status: 404 }
+      );
+
+    if (projectToDelete.userId !== userId)
+      return NextResponse.json(
+        {
+          message: "No autorizado para eliminar este proyecto.",
+        },
+        { status: 403 }
+      );
+
+    for (const image of projectToDelete.images) {
+      const publicId = image.url.split("/").pop()?.split(".")[0];
+      if (publicId)
+        await cloudinary.uploader.destroy(`grupo-ases/projects/${publicId}`);
     }
-    console.error('Error en la API DELETE /api/users/[id]:', error);
-    return NextResponse.json({ message: 'Error al eliminar el proyecto.' }, { status: 500 });
+
+    await prisma.project.delete({
+      where: { id: projectId },
+    });
+
+    return NextResponse.json(
+      { message: "Proyecto eliminado exitosamente." },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error("Error al eliminar proyecto:", error);
+    return NextResponse.json(
+      { message: "Error interno del servidor." },
+      { status: 500 }
+    );
   }
 }

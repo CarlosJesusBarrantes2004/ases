@@ -14,7 +14,7 @@ function Sidebar() {
   ];
 
   return (
-    <aside className="w-64 bg-gray-800 text-white p-4">
+    <>
       <div className="text-2xl font-bold mb-6">Panel Admin</div>
       <nav>
         <ul>
@@ -32,7 +32,7 @@ function Sidebar() {
           ))}
         </ul>
       </nav>
-    </aside>
+    </>
   );
 }
 

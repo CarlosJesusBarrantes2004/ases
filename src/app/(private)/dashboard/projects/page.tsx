@@ -1,55 +1,99 @@
-// app/(private)/dashboard/projects/page.tsx
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import Link from "next/link";
-import Image from "next/image"; // Para optimizar imágenes
-import { PlusCircle } from "lucide-react"; // Icono para añadir
+import { PlusCircle } from "lucide-react";
 
-interface ProjectImage {
-  id: number;
-  url: string;
-}
+// Importa los componentes y tipos
+import ProjectCard from "./components/ProjectCard";
+import ProjectsFilterBar from "./components/ProjectsFilterBar";
+import { Project, SortByOption, SortOrder } from "./types/project";
 
-interface Project {
-  id: number;
-  title: string;
-  description: string;
-  createdAt: string;
-  images: ProjectImage[];
-  user?: {
-    // El usuario que lo creó (opcional)
-    id: string;
-    name: string | null;
-    email: string;
-  };
-}
+const PROJECTS_PER_LOAD = 6; // Cuántos proyectos cargar con el botón "Cargar más"
 
 export default function ProjectsPage() {
-  const [projects, setProjects] = useState<Project[]>([]);
+  // Estados para filtros y ordenamiento
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [sortBy, setSortBy] = useState<SortByOption>("createdAt");
+  const [sortOrder, setSortOrder] = useState<SortOrder>("desc");
+
+  // Estado para la cantidad de proyectos visibles (para "Cargar más")
+  const [visibleProjectsCount, setVisibleProjectsCount] =
+    useState(PROJECTS_PER_LOAD);
+
+  // Estados para datos y UI
+  const [allProjects, setAllProjects] = useState<Project[]>([]); // Todos los proyectos sin filtrar/ordenar
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    fetchProjects();
-  }, []);
-
-  const fetchProjects = async () => {
+  // Función para obtener todos los proyectos (se llama solo una vez al inicio)
+  const fetchAllProjects = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch("/api/projects");
+      const res = await fetch("/api/projects"); // Llama a la API sin filtros
       if (!res.ok) {
         throw new Error(`Error ${res.status}: ${res.statusText}`);
       }
       const data: Project[] = await res.json();
-      setProjects(data);
+      setAllProjects(data); // Guarda todos los proyectos
     } catch (err: any) {
-      console.error("Error al cargar proyectos:", err);
+      console.error("Error al cargar todos los proyectos:", err);
       setError("No se pudieron cargar los proyectos. Intenta de nuevo.");
     } finally {
       setLoading(false);
     }
+  }, []);
+
+  useEffect(() => {
+    fetchAllProjects();
+  }, [fetchAllProjects]);
+
+  // Lógica de filtrado y ordenamiento del lado del cliente
+  const filteredAndSortedProjects = useMemo(() => {
+    let result = [...allProjects]; // Trabaja con una copia
+
+    // 1. Filtrado por búsqueda
+    if (searchQuery) {
+      const lowerCaseQuery = searchQuery.toLowerCase();
+      result = result.filter(
+        (project) =>
+          project.title.toLowerCase().includes(lowerCaseQuery) ||
+          project.description.toLowerCase().includes(lowerCaseQuery)
+      );
+    }
+
+    // 2. Ordenamiento
+    result.sort((a, b) => {
+      let valA: any;
+      let valB: any;
+
+      if (sortBy === "createdAt") {
+        valA = new Date(a.createdAt).getTime();
+        valB = new Date(b.createdAt).getTime();
+      } else if (sortBy === "title") {
+        valA = a.title.toLowerCase();
+        valB = b.title.toLowerCase();
+      }
+
+      if (valA < valB) return sortOrder === "asc" ? -1 : 1;
+      if (valA > valB) return sortOrder === "asc" ? 1 : -1;
+      return 0;
+    });
+
+    return result;
+  }, [allProjects, searchQuery, sortBy, sortOrder]);
+
+  // Proyectos a mostrar en la interfaz (considerando "Cargar más")
+  const projectsToDisplay = useMemo(() => {
+    return filteredAndSortedProjects.slice(0, visibleProjectsCount);
+  }, [filteredAndSortedProjects, visibleProjectsCount]);
+
+  const hasMoreProjects =
+    filteredAndSortedProjects.length > visibleProjectsCount;
+
+  const handleLoadMore = () => {
+    setVisibleProjectsCount((prevCount) => prevCount + PROJECTS_PER_LOAD);
   };
 
   return (
@@ -65,6 +109,16 @@ export default function ProjectsPage() {
           </button>
         </Link>
       </div>
+
+      {/* Barra de Filtro y Ordenamiento */}
+      <ProjectsFilterBar
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+        sortBy={sortBy}
+        setSortBy={setSortBy}
+        sortOrder={sortOrder}
+        setSortOrder={setSortOrder}
+      />
 
       {loading && (
         <div className="text-center py-8">
@@ -83,61 +137,29 @@ export default function ProjectsPage() {
         </div>
       )}
 
-      {!loading && !error && projects.length === 0 && (
+      {!loading && !error && projectsToDisplay.length === 0 && (
         <div className="text-center py-8 text-gray-600">
-          <p>No hay proyectos registrados aún.</p>
+          <p>No hay proyectos registrados que coincidan con los criterios.</p>
         </div>
       )}
 
-      {!loading && !error && projects.length > 0 && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {projects.map((project) => (
-            <div
-              key={project.id}
-              className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 hover:shadow-lg transition-shadow duration-200"
-            >
-              {project.images.length > 0 ? (
-                <div className="relative w-full h-48 bg-gray-200 flex items-center justify-center overflow-hidden">
-                  <Image
-                    src={project.images[0].url} // Muestra la primera imagen
-                    alt={project.title}
-                    layout="fill"
-                    objectFit="cover"
-                    className="transition-transform duration-300 hover:scale-105"
-                  />
-                </div>
-              ) : (
-                <div className="w-full h-48 bg-gray-200 flex items-center justify-center text-gray-400">
-                  Sin Imagen
-                </div>
-              )}
-              <div className="p-4">
-                <h2 className="text-xl font-semibold text-gray-800 mb-2">
-                  {project.title}
-                </h2>
-                <p className="text-gray-600 text-sm mb-3 line-clamp-3">
-                  {project.description}
-                </p>
-                <div className="flex justify-between items-center text-xs text-gray-500">
-                  <span>
-                    Creado por:{" "}
-                    {project.user?.name || project.user?.email || "Desconocido"}
-                  </span>
-                  <span>
-                    {new Date(project.createdAt).toLocaleDateString()}
-                  </span>
-                </div>
-                <div className="mt-4 text-right">
-                  {/* Aquí puedes añadir botones para ver detalles, editar, eliminar */}
-                  <Link href={`/dashboard/projects/${project.id}`} passHref>
-                    <button className="text-indigo-600 hover:text-indigo-900 font-medium">
-                      Ver Detalles
-                    </button>
-                  </Link>
-                </div>
-              </div>
-            </div>
+      {!loading && !error && projectsToDisplay.length > 0 && (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {projectsToDisplay.map((project) => (
+            <ProjectCard key={project.id} project={project} />
           ))}
+        </div>
+      )}
+
+      {!loading && !error && hasMoreProjects && (
+        <div className="flex justify-center mt-8">
+          <button
+            onClick={handleLoadMore}
+            className="px-8 py-3 hover:cursor-pointer bg-gray-200 text-gray-800 rounded-md shadow-sm hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 transition duration-150 ease-in-out"
+          >
+            Cargar más proyectos (
+            {filteredAndSortedProjects.length - visibleProjectsCount} restantes)
+          </button>
         </div>
       )}
     </div>

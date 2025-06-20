@@ -1,38 +1,10 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import cloudinary from "@/lib/cloudinary";
-import config from "@/lib/config";
-import { jwtVerify } from "jose";
-
-async function getUserIdFromRequest(req: Request): Promise<string | null> {
-  const cookieHeader = req.headers.get("cookie");
-
-  if (!cookieHeader) return null;
-
-  const cookies = cookieHeader.split(";").map((c) => c.trim());
-  const authTokenCookie = cookies.find((c) => c.startsWith("auth_token="));
-
-  if (!authTokenCookie) return null;
-
-  const token = authTokenCookie.split("auth_token=")[1];
-
-  if (!token) return null;
-
-  try {
-    const secret = new TextEncoder().encode(config.JWT_SECRET);
-    const { payload } = await jwtVerify(token, secret);
-    return payload.userId as string;
-  } catch (error) {
-    console.error("Error al verificar el token en la API de proyectos:", error);
-    return null;
-  }
-}
+import { getUserIdFromRequest } from "@/lib/auth";
 
 export async function GET(req: Request) {
   try {
-    // if (!userId) { return NextResponse.json({ message: 'No autenticado.' }, { status: 401 }); }
-    // const projects = await prisma.project.findMany({ where: { userId }, ... });
-
     const projects = await prisma.project.findMany({
       orderBy: { createdAt: "desc" },
       include: {
@@ -49,7 +21,7 @@ export async function GET(req: Request) {
   } catch (error) {
     console.error("Error al obtener proyectos:", error);
     return NextResponse.json(
-      { message: "Error interno del servidor." },
+      { message: "Error interno del servidor al obtener proyectos." },
       { status: 500 }
     );
   }
@@ -68,7 +40,9 @@ export async function POST(req: Request) {
     const formData = await req.formData();
     const title = formData.get("title") as string;
     const description = formData.get("description") as string;
-    const files = formData.getAll("images") as File[];
+    const files = formData
+      .getAll("images")
+      .filter((file) => file instanceof File) as File[];
 
     if (!title || !description)
       return NextResponse.json(
@@ -78,10 +52,27 @@ export async function POST(req: Request) {
         { status: 400 }
       );
 
-    if (!files || files.length === 0 || files[0].size === 0)
+    if (!files || files.length === 0)
       return NextResponse.json(
         {
           message: "Se requiere almenos una imagen para el proyecto.",
+        },
+        { status: 400 }
+      );
+
+    if (files.length > 4)
+      return NextResponse.json(
+        {
+          message: "Se permite un máximo de 4 imágenes por proyecto.",
+        },
+        { status: 400 }
+      );
+
+    if (files.some((file) => file.size === 0))
+      return NextResponse.json(
+        {
+          message:
+            "Algunos archivos estás vacíos. Por favor, selecciona imágenes válidas.",
         },
         { status: 400 }
       );
@@ -132,5 +123,15 @@ export async function POST(req: Request) {
       { message: "Proyecto creado exitosamente.", project: newProject },
       { status: 201 }
     );
-  } catch (error) {}
+  } catch (error) {
+    {
+      console.error("Error al crear proyecto:", error);
+      return NextResponse.json(
+        {
+          message: "Error interno del servidor al crear el proyecto.",
+        },
+        { status: 500 }
+      );
+    }
+  }
 }

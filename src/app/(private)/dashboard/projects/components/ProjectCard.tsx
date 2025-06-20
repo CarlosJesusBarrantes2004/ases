@@ -1,89 +1,56 @@
-// components/ProjectCard.tsx
-import React from 'react';
-import { Edit2, Trash2, Eye, Calendar, User, Image } from 'lucide-react';
-import { Project } from '../types';
-import { formatDate } from '../utils/helpers';
+"use client";
+
+import Link from "next/link";
+import Image from "next/image";
+import { Project } from "../types/project"; // Importa el tipo Project
 
 interface ProjectCardProps {
   project: Project;
-  onEdit: (project: Project) => void;
-  onDelete: (id: number) => void;
-  onView: (project: Project) => void;
 }
 
-const ProjectCard: React.FC<ProjectCardProps> = ({
-  project,
-  onEdit,
-  onDelete,
-  onView
-}) => {
+export default function ProjectCard({ project }: ProjectCardProps) {
   return (
-    <div className="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow border border-gray-200 overflow-hidden group">
-      {/* Project Image */}
-      <div className="h-48 bg-gradient-to-r from-blue-500 to-purple-600 relative overflow-hidden">
-        {project.images.length > 0 ? (
-          <img
-            src={project.images[0].url}
+    <div
+      key={project.id}
+      className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 hover:shadow-lg transition-shadow duration-200"
+    >
+      {project.images.length > 0 ? (
+        <div className="relative w-full h-48 bg-gray-200 flex items-center justify-center overflow-hidden">
+          <Image
+            src={project.images[0].url} // Muestra la primera imagen
             alt={project.title}
-            className="w-full h-full object-cover"
+            layout="fill"
+            objectFit="cover"
+            className="transition-transform duration-300 hover:scale-105"
           />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center">
-            <Image className="w-16 h-16 text-white opacity-50" />
-          </div>
-        )}
-        
-        {/* Actions Overlay */}
-        <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
-          <div className="flex gap-2">
-            <button
-              onClick={() => onView(project)}
-              className="p-2 bg-white/90 hover:bg-white text-gray-700 rounded-lg shadow-sm transition-colors"
-            >
-              <Eye className="w-4 h-4" />
-            </button>
-            <button
-              onClick={() => onEdit(project)}
-              className="p-2 bg-white/90 hover:bg-white text-gray-700 rounded-lg shadow-sm transition-colors"
-            >
-              <Edit2 className="w-4 h-4" />
-            </button>
-            <button
-              onClick={() => onDelete(project.id)}
-              className="p-2 bg-white/90 hover:bg-white text-red-600 rounded-lg shadow-sm transition-colors"
-            >
-              <Trash2 className="w-4 h-4" />
-            </button>
-          </div>
         </div>
-
-        {/* Image Count Badge */}
-        {project.images.length > 1 && (
-          <div className="absolute bottom-4 right-4 bg-black/50 text-white px-2 py-1 rounded-lg text-sm flex items-center gap-1">
-            <Image className="w-3 h-3" />
-            {project.images.length}
-          </div>
-        )}
-      </div>
-
-      {/* Project Info */}
-      <div className="p-6">
-        <h3 className="text-xl font-semibold text-gray-900 mb-2 line-clamp-2">{project.title}</h3>
-        <p className="text-gray-600 mb-4 line-clamp-3">{project.description}</p>
-        
-        <div className="flex items-center justify-between text-sm text-gray-500">
-          <div className="flex items-center gap-1">
-            <Calendar className="w-4 h-4" />
-            {formatDate(project.createdAt)}
-          </div>
-          <div className="flex items-center gap-1">
-            <User className="w-4 h-4" />
-            {project.userId}
-          </div>
+      ) : (
+        <div className="w-full h-48 bg-gray-200 flex items-center justify-center text-gray-400">
+          Sin Imagen
+        </div>
+      )}
+      <div className="p-4">
+        <h2 className="text-xl font-semibold text-gray-800 mb-2">
+          {project.title}
+        </h2>
+        <p className="text-gray-600 text-sm mb-3 line-clamp-3">
+          {project.description}
+        </p>
+        <div className="flex justify-between items-center text-xs text-gray-500">
+          <span>
+            Creado por:{" "}
+            {project.user?.name || project.user?.email || "Desconocido"}
+          </span>
+          <span>{new Date(project.createdAt).toLocaleDateString()}</span>
+        </div>
+        <div className="mt-4 text-right">
+          <Link href={`/dashboard/projects/${project.id}`} passHref>
+            <button className="text-indigo-600 hover:text-indigo-900 font-medium hover:cursor-pointer">
+              Ver Detalles
+            </button>
+          </Link>
         </div>
       </div>
     </div>
   );
-};
-
-export default ProjectCard;
+}
