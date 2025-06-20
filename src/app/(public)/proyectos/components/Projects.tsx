@@ -18,6 +18,7 @@ interface ProjectsPageProps {
 
 export default function ProjectsPage({ filteredProjects }: ProjectsPageProps) {
   return (
+    <div className="transform scale-90 origin-top">
     <section className="py-12">
       <div className="container mx-auto px-4">
         {filteredProjects.length === 0 ? (
@@ -31,7 +32,7 @@ export default function ProjectsPage({ filteredProjects }: ProjectsPageProps) {
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {filteredProjects.map(
               (project: {
                 id: number;
@@ -53,5 +54,6 @@ export default function ProjectsPage({ filteredProjects }: ProjectsPageProps) {
         )}
       </div>
     </section>
+    </div>
   );
 }
