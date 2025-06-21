@@ -58,7 +58,7 @@ export default function CreateUserPage() {
       } else {
         setApiError(responseData.message || "Error al crear el usuario.");
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error("Error de red o desconocido:", err);
       setApiError("Error al conectar con el servidor.");
     } finally {

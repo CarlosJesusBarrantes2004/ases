@@ -37,7 +37,7 @@ export default function ProjectsPage() {
       }
       const data: Project[] = await res.json();
       setAllProjects(data); // Guarda todos los proyectos
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error("Error al cargar todos los proyectos:", err);
       setError("No se pudieron cargar los proyectos. Intenta de nuevo.");
     } finally {

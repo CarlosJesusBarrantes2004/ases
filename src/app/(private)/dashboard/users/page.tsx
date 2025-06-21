@@ -32,7 +32,7 @@ export default function UsersPage() {
       }
       const data: User[] = await res.json();
       setUsers(data);
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error("Error al cargar usuarios:", err);
       setError("No se pudieron cargar los usuarios. Intenta de nuevo.");
     } finally {

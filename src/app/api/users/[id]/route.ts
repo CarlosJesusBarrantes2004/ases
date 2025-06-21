@@ -1,7 +1,7 @@
 // app/api/users/[id]/route.ts
-import { NextResponse } from 'next/server';
-import prisma from '@/lib/db'; // Asegúrate de que esta ruta a tu instancia de Prisma sea correcta
-import bcrypt from 'bcrypt';
+import { NextResponse } from "next/server";
+import prisma from "@/lib/db"; // Asegúrate de que esta ruta a tu instancia de Prisma sea correcta
+import bcrypt from "bcrypt";
 
 // Definimos la interfaz para los parámetros de la ruta
 interface Context {
@@ -33,13 +33,19 @@ export async function GET(request: Request, context: Context) {
     });
 
     if (!user) {
-      return NextResponse.json({ message: 'Usuario no encontrado.' }, { status: 404 });
+      return NextResponse.json(
+        { message: "Usuario no encontrado." },
+        { status: 404 }
+      );
     }
 
     return NextResponse.json(user);
   } catch (error) {
-    console.error('Error en la API GET /api/users/[id]:', error);
-    return NextResponse.json({ message: 'Error interno del servidor.' }, { status: 500 });
+    console.error("Error en la API GET /api/users/[id]:", error);
+    return NextResponse.json(
+      { message: "Error interno del servidor." },
+      { status: 500 }
+    );
   }
 }
 
@@ -57,7 +63,10 @@ export async function PUT(request: Request, context: Context) {
     // Asegurarse de que al menos un campo relevante esté presente para actualizar
     if (!name && !email && !password) {
       return NextResponse.json(
-        { message: 'Al menos un campo (name, email, password) debe ser proporcionado para actualizar.' },
+        {
+          message:
+            "Al menos un campo (name, email, password) debe ser proporcionado para actualizar.",
+        },
         { status: 400 }
       );
     }
@@ -82,7 +91,10 @@ export async function PUT(request: Request, context: Context) {
       });
 
       if (!currentUser) {
-        return NextResponse.json({ message: `Usuario con ID ${id} no encontrado.` }, { status: 404 });
+        return NextResponse.json(
+          { message: `Usuario con ID ${id} no encontrado.` },
+          { status: 404 }
+        );
       }
 
       // 2. Si el email ha cambiado
@@ -94,7 +106,10 @@ export async function PUT(request: Request, context: Context) {
 
         if (existingUserWithEmail && existingUserWithEmail.id !== id) {
           return NextResponse.json(
-            { message: 'El nuevo correo electrónico ya está registrado por otro usuario.' },
+            {
+              message:
+                "El nuevo correo electrónico ya está registrado por otro usuario.",
+            },
             { status: 409 }
           );
         }
@@ -134,12 +149,19 @@ export async function PUT(request: Request, context: Context) {
     });
 
     return NextResponse.json(updatedUser);
-  } catch (error: any) {
-    if (error.code === 'P2025') { // Prisma error code for "record to update not found"
-      return NextResponse.json({ message: `Usuario con ID ${id} no encontrado.` }, { status: 404 });
+  } catch (error: unknown) {
+    if (error.code === "P2025") {
+      // Prisma error code for "record to update not found"
+      return NextResponse.json(
+        { message: `Usuario con ID ${id} no encontrado.` },
+        { status: 404 }
+      );
     }
-    console.error('Error en la API PUT /api/users/[id]:', error);
-    return NextResponse.json({ message: 'Error al actualizar el usuario.' }, { status: 500 });
+    console.error("Error en la API PUT /api/users/[id]:", error);
+    return NextResponse.json(
+      { message: "Error al actualizar el usuario." },
+      { status: 500 }
+    );
   }
 }
 
@@ -159,15 +181,24 @@ export async function DELETE(request: Request, context: Context) {
         id: true,
         name: true,
         email: true,
-      }
+      },
     });
 
-    return NextResponse.json({ message: `Usuario ${deletedUser.name} (ID: ${deletedUser.id}) eliminado correctamente.` });
-  } catch (error: any) {
-    if (error.code === 'P2025') { // Prisma error code for "record to delete not found"
-      return NextResponse.json({ message: `Usuario con ID ${id} no encontrado.` }, { status: 404 });
+    return NextResponse.json({
+      message: `Usuario ${deletedUser.name} (ID: ${deletedUser.id}) eliminado correctamente.`,
+    });
+  } catch (error: unknown) {
+    if (error.code === "P2025") {
+      // Prisma error code for "record to delete not found"
+      return NextResponse.json(
+        { message: `Usuario con ID ${id} no encontrado.` },
+        { status: 404 }
+      );
     }
-    console.error('Error en la API DELETE /api/users/[id]:', error);
-    return NextResponse.json({ message: 'Error al eliminar el usuario.' }, { status: 500 });
+    console.error("Error en la API DELETE /api/users/[id]:", error);
+    return NextResponse.json(
+      { message: "Error al eliminar el usuario." },
+      { status: 500 }
+    );
   }
 }

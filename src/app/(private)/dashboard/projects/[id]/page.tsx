@@ -35,7 +35,7 @@ export default function ProjectDetailsPage() {
       }
       const data: Project = await res.json();
       setProject(data);
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error("Error al cargar detalles del proyecto:", err);
       setError(
         err.message || "No se pudieron cargar los detalles del proyecto."
@@ -62,7 +62,7 @@ export default function ProjectDetailsPage() {
       }
 
       router.push("/dashboard/projects");
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error("Error al eliminar proyecto:", err);
       alert(err.message || "Error al eliminar el proyecto. Intenta de nuevo."); // Notificación de error
     } finally {

@@ -185,7 +185,7 @@ export default function CreateProjectPage() {
       } else {
         setApiError(responseData.message || "Error al crear el proyecto.");
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error("Error de red o desconocido:", err);
       setApiError("Error al conectar con el servidor.");
     } finally {
