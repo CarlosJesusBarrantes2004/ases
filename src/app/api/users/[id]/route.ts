@@ -139,14 +139,7 @@ export async function PUT(
     });
 
     return NextResponse.json(updatedUser);
-  } catch (error: unknown) {
-    if (error.code === "P2025") {
-      // Prisma error code for "record to update not found"
-      return NextResponse.json(
-        { message: `Usuario con ID ${id} no encontrado.` },
-        { status: 404 }
-      );
-    }
+  } catch (error) {
     console.error("Error en la API PUT /api/users/[id]:", error);
     return NextResponse.json(
       { message: "Error al actualizar el usuario." },
@@ -176,14 +169,7 @@ export async function DELETE(
     return NextResponse.json({
       message: `Usuario ${deletedUser.name} (ID: ${deletedUser.id}) eliminado correctamente.`,
     });
-  } catch (error: unknown) {
-    if (error.code === "P2025") {
-      // Prisma error code for "record to delete not found"
-      return NextResponse.json(
-        { message: `Usuario con ID ${id} no encontrado.` },
-        { status: 404 }
-      );
-    }
+  } catch (error) {
     console.error("Error en la API DELETE /api/users/[id]:", error);
     return NextResponse.json(
       { message: "Error al eliminar el usuario." },
