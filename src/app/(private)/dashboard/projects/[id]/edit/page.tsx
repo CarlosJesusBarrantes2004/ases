@@ -58,8 +58,7 @@ export default function EditProjectPage() {
     handleSubmit,
     formState: { errors },
     reset,
-    watch,
-    setValue, // Para establecer valores programáticamente
+    watch, // Para establecer valores programáticamente
   } = useForm<EditProjectFormInputs>({
     resolver: zodResolver(editProjectSchema),
   });

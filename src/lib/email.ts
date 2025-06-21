@@ -14,7 +14,7 @@ export async function sendVerificationEmail(email: string, token: string) {
 
   const verificationUrl = `${config.NEXT_PUBLIC_APP_URL}/verify-and-set-password?token=${token}`;
 
-  let htmlContent = `<p>Hola,</p><p>Tu cuenta en el panel de administración de Grupo Ases ha sido creada. Por favor, haz clic en el siguiente enlace para verificar tu correo electrónico y establecer tu contraseña:</p><p><a href="${verificationUrl}">${verificationUrl}</a></p><p>Una vez verificado, podrás iniciar sesión con tu correo electrónico y tu contraseña.</p><p>Este enlace es válido por 10 minutos.</p>`;
+  const htmlContent = `<p>Hola,</p><p>Tu cuenta en el panel de administración de Grupo Ases ha sido creada. Por favor, haz clic en el siguiente enlace para verificar tu correo electrónico y establecer tu contraseña:</p><p><a href="${verificationUrl}">${verificationUrl}</a></p><p>Una vez verificado, podrás iniciar sesión con tu correo electrónico y tu contraseña.</p><p>Este enlace es válido por 10 minutos.</p>`;
 
   await transporter.sendMail({
     from: config.EMAIL_FROM,

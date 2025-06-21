@@ -54,7 +54,7 @@ export default function CreateUserPage() {
         );
         reset(); // Limpiar el formulario después del éxito
         // Puedes redirigir después de un tiempo o dejar que el usuario cree más
-        // setTimeout(() => router.push('/dashboard/users'), 2000);
+        setTimeout(() => router.push("/dashboard/users"), 2000);
       } else {
         setApiError(responseData.message || "Error al crear el usuario.");
       }
