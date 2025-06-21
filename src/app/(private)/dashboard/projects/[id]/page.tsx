@@ -61,8 +61,7 @@ export default function ProjectDetailsPage() {
         );
       }
 
-      alert("Proyecto eliminado exitosamente."); // Usar una notificación más amigable en producción
-      router.push("/dashboard/projects"); // Redirigir a la lista de proyectos
+      router.push("/dashboard/projects");
     } catch (err: any) {
       console.error("Error al eliminar proyecto:", err);
       alert(err.message || "Error al eliminar el proyecto. Intenta de nuevo."); // Notificación de error
