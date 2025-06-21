@@ -4,19 +4,26 @@ import { getUserIdFromRequest } from "@/lib/auth";
 import cloudinary from "@/lib/cloudinary";
 
 // Define una interfaz para el resultado esperado de Cloudinary upload.
-// Es buena práctica tener esta interfaz definida en un lugar accesible si la usas en varios archivos.
 interface CloudinaryUploadResult {
   secure_url: string;
-  // Añade otras propiedades que Cloudinary retorne y que necesites,
-  // como `public_id`, `width`, `height`, `format`, etc.
-  // Por ejemplo: public_id?: string;
+  public_id?: string; // Incluido por si Cloudinary lo retorna y lo necesitas
+}
+
+// Define una interfaz para el contexto de la ruta que contiene los parámetros dinámicos.
+// Esta es la forma en que Next.js espera que se tipen los parámetros.
+interface RouteContext {
+  params: {
+    id: string;
+  };
 }
 
 export async function GET(
   req: Request,
-  { params }: { params: { id: string } }
+  context: RouteContext // CAMBIO: Usamos la interfaz RouteContext para el segundo argumento
 ) {
-  const projectId = parseInt(params.id, 10);
+  // Ahora, deconstruye `params` de `context` dentro del cuerpo de la función.
+  const { id } = context.params;
+  const projectId = parseInt(id, 10); // Usa 'id' de los params
 
   if (isNaN(projectId))
     return NextResponse.json(
@@ -45,23 +52,19 @@ export async function GET(
 
     return NextResponse.json(project, { status: 200 });
   } catch (error: unknown) {
-    // CAMBIO: Tipado a 'unknown'
     console.error("Error al obtener proyecto por ID:", error);
-    // Para errores generales, puedes devolver un mensaje estándar
-    // Si necesitas el mensaje específico del error, usa:
-    // const errorMessage = error instanceof Error ? error.message : "Error interno del servidor";
-    return NextResponse.json(
-      { message: "Error interno del servidor" },
-      { status: 500 }
-    );
+    const errorMessage =
+      error instanceof Error ? error.message : "Error interno del servidor.";
+    return NextResponse.json({ message: errorMessage }, { status: 500 });
   }
 }
 
 export async function PUT(
   req: Request,
-  { params }: { params: { id: string } }
+  context: RouteContext // CAMBIO: Usamos la interfaz RouteContext para el segundo argumento
 ) {
-  const projectId = parseInt(params.id, 10);
+  const { id } = context.params; // Deconstruye aquí
+  const projectId = parseInt(id, 10);
   const userId = await getUserIdFromRequest(req);
 
   if (isNaN(projectId))
@@ -140,7 +143,6 @@ export async function PUT(
 
     for (const img of imagesToDelete) {
       const publicId = img.url.split("/").pop()?.split(".")[0];
-      // Solo intenta destruir si el publicId existe y Cloudinary es el proveedor de imágenes
       if (publicId) {
         await cloudinary.uploader.destroy(`grupo-ases/projects/${publicId}`);
         await prisma.projectImage.delete({ where: { id: img.id } });
@@ -154,7 +156,6 @@ export async function PUT(
 
       const result = await new Promise<CloudinaryUploadResult>(
         (resolve, reject) => {
-          // CAMBIO: Usamos CloudinaryUploadResult
           cloudinary.uploader
             .upload_stream(
               { folder: "grupo-ases/projects" },
@@ -168,9 +169,8 @@ export async function PUT(
                     new Error("Error al subir nueva imagen a Cloudinary.")
                   );
                 }
-                // Aseguramos que 'result' no sea null/undefined antes de resolver
                 if (result) {
-                  resolve(result as CloudinaryUploadResult); // CAMBIO: Aserción a CloudinaryUploadResult
+                  resolve(result as CloudinaryUploadResult);
                 } else {
                   reject(
                     new Error("Cloudinary upload did not return a result.")
@@ -205,9 +205,7 @@ export async function PUT(
       { status: 200 }
     );
   } catch (error: unknown) {
-    // CAMBIO: Tipado a 'unknown'
     console.error("Error al actualizar proyecto:", error);
-    // Añadir manejo de error para Prisma si es necesario (ej. P2025 para not found)
     const errorMessage =
       error instanceof Error ? error.message : "Error interno del servidor.";
     return NextResponse.json({ message: errorMessage }, { status: 500 });
@@ -216,9 +214,10 @@ export async function PUT(
 
 export async function DELETE(
   req: Request,
-  { params }: { params: { id: string } }
+  context: RouteContext // CAMBIO: Usamos la interfaz RouteContext para el segundo argumento
 ) {
-  const projectId = parseInt(params.id, 10);
+  const { id } = context.params; // Deconstruye aquí
+  const projectId = parseInt(id, 10);
   const userId = await getUserIdFromRequest(req);
 
   if (isNaN(projectId))
@@ -252,7 +251,6 @@ export async function DELETE(
 
     for (const image of projectToDelete.images) {
       const publicId = image.url.split("/").pop()?.split(".")[0];
-      // Solo intenta destruir si el publicId existe y Cloudinary es el proveedor de imágenes
       if (publicId)
         await cloudinary.uploader.destroy(`grupo-ases/projects/${publicId}`);
     }
@@ -266,9 +264,7 @@ export async function DELETE(
       { status: 200 }
     );
   } catch (error: unknown) {
-    // CAMBIO: Tipado a 'unknown'
     console.error("Error al eliminar proyecto:", error);
-    // Añadir manejo de error para Prisma si es necesario (ej. P2025 para not found)
     const errorMessage =
       error instanceof Error ? error.message : "Error interno del servidor.";
     return NextResponse.json({ message: errorMessage }, { status: 500 });
