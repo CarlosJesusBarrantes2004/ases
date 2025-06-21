@@ -17,25 +17,21 @@ const editProjectSchema = z.object({
   description: z.string().min(1, "La descripción es requerida."),
   // `newImages` es para los nuevos archivos de imagen que se van a subir
   newImages: z
-    .any()
+    .instanceof(FileList) // <--- CAMBIO CLAVE AQUÍ: Usamos instanceof FileList
     .refine((files) => {
-      // Refine para FileList o undefined
-      if (files === undefined || files.length === 0) return true; // No es requerido si no se añaden nuevas
-      return Array.from(files).every(
-        (file: File) => file.size <= 5 * 1024 * 1024
-      ); // Añadir 'file: File' para claridad
+      if (files.length === 0) return true; // Si no hay archivos, es válido
+      // Ahora 'files' es reconocido como FileList, y sus elementos como File
+      return Array.from(files).every((file) => file.size <= 5 * 1024 * 1024);
     }, `Cada nueva imagen no debe exceder 5MB.`)
     .refine((files) => {
-      if (files === undefined || files.length === 0) return true;
-      return Array.from(files).every(
-        (
-          file: File // Añadir 'file: File' para claridad
-        ) =>
-          ["image/jpeg", "image/png", "image/webp", "image/gif"].includes(
-            file.type
-          )
+      if (files.length === 0) return true;
+      return Array.from(files).every((file) =>
+        ["image/jpeg", "image/png", "image/webp", "image/gif"].includes(
+          file.type
+        )
       );
-    }, "Solo se permiten imágenes JPEG, PNG, WebP o GIF para nuevas subidas."),
+    }, "Solo se permiten imágenes JPEG, PNG, WebP o GIF para nuevas subidas.")
+    .optional(), // Hacemos que sea opcional, ya que tu lógica ya lo considera.
   // `existingImageUrlsToKeep` es un array de URLs de las imágenes que ya existen y el usuario NO ha borrado
   // Zod no valida el tamaño de un array directamente si no está en el refina de `newImages`
   // La validación de la cantidad total de imágenes (existentes + nuevas) se hará en el `onSubmit` o en el backend.
@@ -90,10 +86,9 @@ export default function EditProjectPage() {
         });
         setExistingImageUrls(data.images.map((img) => img.url));
       } catch (err: unknown) {
-        // CAMBIO: de 'any' a 'unknown'
         console.error("Error al cargar proyecto para edición:", err);
         setError(
-          (err instanceof Error ? err.message : String(err)) || // CAMBIO: Verificación de tipo segura
+          (err instanceof Error ? err.message : String(err)) ||
             "No se pudieron cargar los detalles del proyecto para editar."
         );
       } finally {
@@ -112,7 +107,7 @@ export default function EditProjectPage() {
   // Generar previsualizaciones de NUEVAS imágenes
   useEffect(() => {
     if (watchedNewFiles && watchedNewFiles.length > 0) {
-      const filesArray = Array.from(watchedNewFiles) as File[];
+      const filesArray = Array.from(watchedNewFiles) as File[]; // Ya es FileList, pero un cast aquí es seguro
       const urls = filesArray.map((file) => URL.createObjectURL(file));
       setNewImagePreviews(urls);
 
@@ -146,8 +141,8 @@ export default function EditProjectPage() {
     );
 
     // 2. Añadir nuevas imágenes (si las hay)
-    const newFilesArray =
-      data.newImages instanceof FileList ? Array.from(data.newImages) : [];
+    // El tipo de data.newImages ya es FileList | undefined gracias a Zod.instanceof
+    const newFilesArray = data.newImages ? Array.from(data.newImages) : [];
     if (newFilesArray.length > 0) {
       newFilesArray.forEach((file) => {
         formData.append("new_images", file);
@@ -187,10 +182,9 @@ export default function EditProjectPage() {
         setApiError(responseData.message || "Error al actualizar el proyecto.");
       }
     } catch (err: unknown) {
-      // CAMBIO: de 'any' a 'unknown'
       console.error("Error de red o desconocido al actualizar:", err);
       setApiError(
-        (err instanceof Error ? err.message : String(err)) || // CAMBIO: Verificación de tipo segura
+        (err instanceof Error ? err.message : String(err)) ||
           "Error al conectar con el servidor."
       );
     } finally {
@@ -199,7 +193,6 @@ export default function EditProjectPage() {
   };
 
   if (loading && !project) {
-    // Mostrar loader solo la primera vez, no después de submit
     return (
       <div className="text-center py-8">
         <p className="text-gray-600">Cargando proyecto para edición...</p>
