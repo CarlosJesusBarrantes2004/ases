@@ -65,43 +65,44 @@ export default function EditProjectPage() {
 
   const watchedNewFiles = watch("newImages"); // Observar cambios en el input de nuevas imágenes
 
-  // Cargar datos del proyecto al iniciar
+  const fetchProjectToEdit = useCallback(
+    async (projectId: string) => {
+      setLoading(true);
+      setError(null);
+      try {
+        const res = await fetch(`/api/projects/${projectId}`);
+        if (!res.ok) {
+          const errData = await res.json();
+          throw new Error(
+            errData.message || `Error ${res.status}: ${res.statusText}`
+          );
+        }
+        const data: Project = await res.json();
+        setProject(data);
+        reset({
+          title: data.title,
+          description: data.description,
+        });
+        setExistingImageUrls(data.images.map((img) => img.url));
+      } catch (err: any) {
+        // This `any` will be addressed next
+        console.error("Error al cargar proyecto para edición:", err);
+        setError(
+          (err as Error).message || // Type assertion here
+            "No se pudieron cargar los detalles del proyecto para editar."
+        );
+      } finally {
+        setLoading(false);
+      }
+    },
+    [reset, setError, setProject, setExistingImageUrls] // Add all dependencies used inside useCallback
+  );
+
   useEffect(() => {
     if (id) {
       fetchProjectToEdit(id);
     }
-  }, [id]);
-
-  const fetchProjectToEdit = async (projectId: string) => {
-    setLoading(true);
-    setError(null);
-    try {
-      const res = await fetch(`/api/projects/${projectId}`);
-      if (!res.ok) {
-        const errData = await res.json();
-        throw new Error(
-          errData.message || `Error ${res.status}: ${res.statusText}`
-        );
-      }
-      const data: Project = await res.json();
-      setProject(data);
-      // Pre-llenar el formulario
-      reset({
-        title: data.title,
-        description: data.description,
-      });
-      // Guardar las URLs de las imágenes existentes
-      setExistingImageUrls(data.images.map((img) => img.url));
-    } catch (err: any) {
-      console.error("Error al cargar proyecto para edición:", err);
-      setError(
-        err.message ||
-          "No se pudieron cargar los detalles del proyecto para editar."
-      );
-    } finally {
-      setLoading(false);
-    }
-  };
+  }, [id, fetchProjectToEdit]);
 
   // Generar previsualizaciones de NUEVAS imágenes
   useEffect(() => {

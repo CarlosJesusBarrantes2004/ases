@@ -190,8 +190,9 @@ export default function ProjectDetailsPage() {
               Confirmar Eliminación
             </h3>
             <p className="text-gray-700 mb-6">
-              ¿Estás seguro de que quieres eliminar el proyecto "{project.title}
-              "? Esta acción no se puede deshacer.
+              ¿Estás seguro de que quieres eliminar el proyecto &quot;
+              {project.title}
+              &quot;? Esta acción no se puede deshacer.
             </p>
             <div className="flex justify-end space-x-4">
               <button
