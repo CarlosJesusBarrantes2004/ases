@@ -29,6 +29,7 @@ export default function ProjectDetailsPage() {
       const res = await fetch(`/api/projects/${projectId}`);
       if (!res.ok) {
         const errData = await res.json();
+        // It's good practice to throw an Error object here for consistency
         throw new Error(
           errData.message || `Error ${res.status}: ${res.statusText}`
         );
@@ -36,9 +37,13 @@ export default function ProjectDetailsPage() {
       const data: Project = await res.json();
       setProject(data);
     } catch (err: unknown) {
+      // 'err' is of type unknown
       console.error("Error al cargar detalles del proyecto:", err);
+      // --- CAMBIO CLAVE AQUÍ ---
+      // Check if 'err' is an instance of Error before accessing .message
       setError(
-        err.message || "No se pudieron cargar los detalles del proyecto."
+        (err instanceof Error ? err.message : String(err)) || // Safely access message or convert to string
+          "No se pudieron cargar los detalles del proyecto."
       );
     } finally {
       setLoading(false);
@@ -63,8 +68,14 @@ export default function ProjectDetailsPage() {
 
       router.push("/dashboard/projects");
     } catch (err: unknown) {
+      // 'err' is of type unknown
       console.error("Error al eliminar proyecto:", err);
-      alert(err.message || "Error al eliminar el proyecto. Intenta de nuevo."); // Notificación de error
+      // --- CAMBIO CLAVE AQUÍ ---
+      // Apply the same type narrowing for the alert
+      alert(
+        (err instanceof Error ? err.message : String(err)) ||
+          "Error al eliminar el proyecto. Intenta de nuevo."
+      ); // Notificación de error
     } finally {
       setLoading(false);
     }
