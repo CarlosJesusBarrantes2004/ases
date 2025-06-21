@@ -3,6 +3,15 @@ import prisma from "@/lib/db";
 import { getUserIdFromRequest } from "@/lib/auth";
 import cloudinary from "@/lib/cloudinary";
 
+// Define una interfaz para el resultado esperado de Cloudinary upload.
+// Es buena práctica tener esta interfaz definida en un lugar accesible si la usas en varios archivos.
+interface CloudinaryUploadResult {
+  secure_url: string;
+  // Añade otras propiedades que Cloudinary retorne y que necesites,
+  // como `public_id`, `width`, `height`, `format`, etc.
+  // Por ejemplo: public_id?: string;
+}
+
 export async function GET(
   req: Request,
   { params }: { params: { id: string } }
@@ -35,8 +44,12 @@ export async function GET(
       );
 
     return NextResponse.json(project, { status: 200 });
-  } catch (error) {
+  } catch (error: unknown) {
+    // CAMBIO: Tipado a 'unknown'
     console.error("Error al obtener proyecto por ID:", error);
+    // Para errores generales, puedes devolver un mensaje estándar
+    // Si necesitas el mensaje específico del error, usa:
+    // const errorMessage = error instanceof Error ? error.message : "Error interno del servidor";
     return NextResponse.json(
       { message: "Error interno del servidor" },
       { status: 500 }
@@ -127,6 +140,7 @@ export async function PUT(
 
     for (const img of imagesToDelete) {
       const publicId = img.url.split("/").pop()?.split(".")[0];
+      // Solo intenta destruir si el publicId existe y Cloudinary es el proveedor de imágenes
       if (publicId) {
         await cloudinary.uploader.destroy(`grupo-ases/projects/${publicId}`);
         await prisma.projectImage.delete({ where: { id: img.id } });
@@ -138,17 +152,35 @@ export async function PUT(
       const arrayBuffer = await file.arrayBuffer();
       const buffer = Buffer.from(arrayBuffer);
 
-      const result = (await new Promise((resolve, reject) => {
-        cloudinary.uploader
-          .upload_stream({ folder: "grupo-ases/projects" }, (error, result) => {
-            if (error)
-              return reject(
-                new Error("Error al subir nueva imagen a Cloudinary.")
-              );
-            resolve(result);
-          })
-          .end(buffer);
-      })) as any;
+      const result = await new Promise<CloudinaryUploadResult>(
+        (resolve, reject) => {
+          // CAMBIO: Usamos CloudinaryUploadResult
+          cloudinary.uploader
+            .upload_stream(
+              { folder: "grupo-ases/projects" },
+              (error, result) => {
+                if (error) {
+                  console.error(
+                    "Error al subir nueva imagen a Cloudinary:",
+                    error
+                  );
+                  return reject(
+                    new Error("Error al subir nueva imagen a Cloudinary.")
+                  );
+                }
+                // Aseguramos que 'result' no sea null/undefined antes de resolver
+                if (result) {
+                  resolve(result as CloudinaryUploadResult); // CAMBIO: Aserción a CloudinaryUploadResult
+                } else {
+                  reject(
+                    new Error("Cloudinary upload did not return a result.")
+                  );
+                }
+              }
+            )
+            .end(buffer);
+        }
+      );
       uploadedNewImageUrls.push({ url: result.secure_url });
     }
 
@@ -172,12 +204,13 @@ export async function PUT(
       },
       { status: 200 }
     );
-  } catch (error) {
+  } catch (error: unknown) {
+    // CAMBIO: Tipado a 'unknown'
     console.error("Error al actualizar proyecto:", error);
-    return NextResponse.json(
-      { message: "Error interno del servidor." },
-      { status: 500 }
-    );
+    // Añadir manejo de error para Prisma si es necesario (ej. P2025 para not found)
+    const errorMessage =
+      error instanceof Error ? error.message : "Error interno del servidor.";
+    return NextResponse.json({ message: errorMessage }, { status: 500 });
   }
 }
 
@@ -219,6 +252,7 @@ export async function DELETE(
 
     for (const image of projectToDelete.images) {
       const publicId = image.url.split("/").pop()?.split(".")[0];
+      // Solo intenta destruir si el publicId existe y Cloudinary es el proveedor de imágenes
       if (publicId)
         await cloudinary.uploader.destroy(`grupo-ases/projects/${publicId}`);
     }
@@ -231,11 +265,12 @@ export async function DELETE(
       { message: "Proyecto eliminado exitosamente." },
       { status: 200 }
     );
-  } catch (error) {
+  } catch (error: unknown) {
+    // CAMBIO: Tipado a 'unknown'
     console.error("Error al eliminar proyecto:", error);
-    return NextResponse.json(
-      { message: "Error interno del servidor." },
-      { status: 500 }
-    );
+    // Añadir manejo de error para Prisma si es necesario (ej. P2025 para not found)
+    const errorMessage =
+      error instanceof Error ? error.message : "Error interno del servidor.";
+    return NextResponse.json({ message: errorMessage }, { status: 500 });
   }
 }
