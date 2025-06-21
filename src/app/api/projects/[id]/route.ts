@@ -9,21 +9,17 @@ interface CloudinaryUploadResult {
   public_id?: string; // Incluido por si Cloudinary lo retorna y lo necesitas
 }
 
-// Define una interfaz para el contexto de la ruta que contiene los parámetros dinámicos.
-// Esta es la forma en que Next.js espera que se tipen los parámetros.
-interface RouteContext {
-  params: {
-    id: string;
-  };
-}
+// Ya no necesitas definir RouteContext explícitamente aquí para la firma de la función.
+// Next.js lo maneja internamente.
 
 export async function GET(
   req: Request,
-  context: RouteContext // CAMBIO: Usamos la interfaz RouteContext para el segundo argumento
+  // Aquí, el segundo argumento se deconstruye directamente.
+  // Next.js se encarga de inferir el tipo de `params`.
+  { params }: { params: { id: string } } // Opcional: puedes tipar directamente aquí si lo prefieres, pero Next.js ya lo infiere.
 ) {
-  // Ahora, deconstruye `params` de `context` dentro del cuerpo de la función.
-  const { id } = context.params;
-  const projectId = parseInt(id, 10); // Usa 'id' de los params
+  const { id } = params; // `params` ya está disponible directamente
+  const projectId = parseInt(id, 10);
 
   if (isNaN(projectId))
     return NextResponse.json(
@@ -61,9 +57,10 @@ export async function GET(
 
 export async function PUT(
   req: Request,
-  context: RouteContext // CAMBIO: Usamos la interfaz RouteContext para el segundo argumento
+  // Misma lógica para PUT y DELETE
+  { params }: { params: { id: string } }
 ) {
-  const { id } = context.params; // Deconstruye aquí
+  const { id } = params;
   const projectId = parseInt(id, 10);
   const userId = await getUserIdFromRequest(req);
 
@@ -214,9 +211,10 @@ export async function PUT(
 
 export async function DELETE(
   req: Request,
-  context: RouteContext // CAMBIO: Usamos la interfaz RouteContext para el segundo argumento
+  // Misma lógica para DELETE
+  { params }: { params: { id: string } }
 ) {
-  const { id } = context.params; // Deconstruye aquí
+  const { id } = params;
   const projectId = parseInt(id, 10);
   const userId = await getUserIdFromRequest(req);
 
