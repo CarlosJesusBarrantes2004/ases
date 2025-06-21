@@ -1,15 +1,9 @@
 import Reveal from "@/components/ui/Reveal";
 // import { services } from "../../servicios/index";
-import { BarChart3, Globe, Scale } from "lucide-react";
+// import { BarChart3, Globe, Scale } from "lucide-react";
 // import Link from "next/link";
 
 function Services() {
-  const serviceIcon: Record<string, React.ReactNode> = {
-    contabilidad: <BarChart3 size={48}></BarChart3>,
-    "asesoria-juridica": <Scale size={48}></Scale>,
-    digitales: <Globe size={48}></Globe>,
-  };
-
   return (
     <section className="py-16 md:py-20 bg-white">
       <div className="container mx-auto px-4">
