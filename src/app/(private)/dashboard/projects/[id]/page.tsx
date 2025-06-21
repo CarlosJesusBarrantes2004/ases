@@ -5,10 +5,10 @@ import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowLeft, Edit, Trash2 } from "lucide-react";
-import { Project } from "@/types/project"; // Ajusta la ruta de importación si es necesario
+import { Project } from "./../types/project"; // Ajusta la ruta de importación si es necesario
 
 export default function ProjectDetailsPage() {
-  const { id } = useParams<{ id: string }>(); // Obtener el ID del proyecto de la URL
+  const { id } = useParams<{ id: string }>();
   const router = useRouter();
 
   const [project, setProject] = useState<Project | null>(null);
@@ -29,7 +29,6 @@ export default function ProjectDetailsPage() {
       const res = await fetch(`/api/projects/${projectId}`);
       if (!res.ok) {
         const errData = await res.json();
-        // It's good practice to throw an Error object here for consistency
         throw new Error(
           errData.message || `Error ${res.status}: ${res.statusText}`
         );
@@ -37,12 +36,9 @@ export default function ProjectDetailsPage() {
       const data: Project = await res.json();
       setProject(data);
     } catch (err: unknown) {
-      // 'err' is of type unknown
       console.error("Error al cargar detalles del proyecto:", err);
-      // --- CAMBIO CLAVE AQUÍ ---
-      // Check if 'err' is an instance of Error before accessing .message
       setError(
-        (err instanceof Error ? err.message : String(err)) || // Safely access message or convert to string
+        (err instanceof Error ? err.message : String(err)) ||
           "No se pudieron cargar los detalles del proyecto."
       );
     } finally {
@@ -51,8 +47,8 @@ export default function ProjectDetailsPage() {
   };
 
   const handleDelete = async () => {
-    setShowDeleteConfirm(false); // Ocultar el modal de confirmación
-    setLoading(true); // Opcional: mostrar un indicador de carga
+    setShowDeleteConfirm(false);
+    setLoading(true);
 
     try {
       const res = await fetch(`/api/projects/${id}`, {
@@ -68,19 +64,19 @@ export default function ProjectDetailsPage() {
 
       router.push("/dashboard/projects");
     } catch (err: unknown) {
-      // 'err' is of type unknown
       console.error("Error al eliminar proyecto:", err);
-      // --- CAMBIO CLAVE AQUÍ ---
-      // Apply the same type narrowing for the alert
       alert(
         (err instanceof Error ? err.message : String(err)) ||
           "Error al eliminar el proyecto. Intenta de nuevo."
-      ); // Notificación de error
+      );
     } finally {
       setLoading(false);
     }
   };
 
+  // --- REORDENAMIENTO CLAVE AQUÍ ---
+
+  // 1. Mostrar estado de carga
   if (loading) {
     return (
       <div className="text-center py-8">
@@ -89,6 +85,7 @@ export default function ProjectDetailsPage() {
     );
   }
 
+  // 2. Mostrar estado de error (después de la carga, si ocurrió un error)
   if (error) {
     return (
       <div
@@ -108,6 +105,8 @@ export default function ProjectDetailsPage() {
     );
   }
 
+  // 3. Mostrar "Proyecto no encontrado" si `project` es null DESPUÉS de que la carga finalizó y no hubo error.
+  // En este punto, 'loading' es false y 'error' es null. Si 'project' sigue siendo null, es que no se encontró.
   if (!project) {
     return (
       <div className="text-center py-8 text-gray-600">
@@ -123,6 +122,8 @@ export default function ProjectDetailsPage() {
     );
   }
 
+  // 4. ¡Ahora, y solo ahora, `project` está garantizado como tipo `Project` (no `null`)!
+  // El resto de tu JSX puede usar `project.title`, `project.description`, etc., de forma segura.
   return (
     <div className="container mx-auto p-6 bg-white rounded-lg shadow-md">
       <div className="flex justify-between items-center mb-6">
