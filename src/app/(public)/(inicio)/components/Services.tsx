@@ -1,7 +1,7 @@
 import Reveal from "@/components/ui/Reveal";
-import { services } from "../../servicios/index";
-import { ArrowRight, BarChart3, Globe, Scale } from "lucide-react";
-import Link from "next/link";
+// import { services } from "../../servicios/index";
+import { BarChart3, Globe, Scale } from "lucide-react";
+// import Link from "next/link";
 
 function Services() {
   const serviceIcon: Record<string, React.ReactNode> = {
@@ -20,7 +20,7 @@ function Services() {
           </h2>
           <div className="w-24 h-1 xl:w-32 bg-red-primary mx-auto mb-6"></div>
         </Reveal>
-        {/* Contenido */}
+        {/* Contenido 
         <Reveal className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-3 gap-8">
           {services.map((service, index) => (
             <Reveal key={index}>
@@ -44,7 +44,7 @@ function Services() {
               </article>
             </Reveal>
           ))}
-        </Reveal>
+        </Reveal>*/}
       </div>
     </section>
   );
