@@ -1,15 +1,24 @@
 import { NextResponse } from "next/server";
+import { headers } from "next/headers"; // Import headers from next/headers
 import prisma from "@/lib/db";
 import bcrypt from "bcrypt";
 import { SignJWT } from "jose";
 import config from "@/lib/config";
 
 const loginAttempts = new Map<string, { count: number; lastAttempt: number }>();
-const MAX_ATTEMPTS = 5;
+const MAX_ATTEMPTS = 3;
 const WINDOW_MS = 60 * 1000;
 
 export async function POST(req: Request) {
-  const ip = req.headers.get("x-forwarded-for") || req.ip;
+  // --- CAMBIO CLAVE AQUÍ: AWAIT headers() ---
+  const requestHeaders = await headers(); // Await the headers() function call
+  // Prioritize 'x-forwarded-for' as it's common for proxies/load balancers
+  // Fallback to 'x-real-ip' or other potential headers if 'x-forwarded-for' is not present
+  const ip =
+    requestHeaders.get("x-forwarded-for") || requestHeaders.get("x-real-ip");
+
+  // It's crucial to handle the case where ip might be null if no header is found.
+  // Your current logic already accounts for `if (ip)`, which is good.
 
   if (ip) {
     const entry = loginAttempts.get(ip) || {
@@ -31,6 +40,8 @@ export async function POST(req: Request) {
         },
         { status: 429 }
       );
+  } else {
+    console.warn("Could not determine client IP for login attempt.");
   }
 
   try {
