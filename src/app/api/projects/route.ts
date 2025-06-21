@@ -3,7 +3,7 @@ import prisma from "@/lib/db";
 import cloudinary from "@/lib/cloudinary";
 import { getUserIdFromRequest } from "@/lib/auth";
 
-export async function GET(req: Request) {
+export async function GET() {
   try {
     const projects = await prisma.project.findMany({
       orderBy: { createdAt: "desc" },

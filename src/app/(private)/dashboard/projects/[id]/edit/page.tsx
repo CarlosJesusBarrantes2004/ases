@@ -21,14 +21,19 @@ const editProjectSchema = z.object({
     .refine((files) => {
       // Refine para FileList o undefined
       if (files === undefined || files.length === 0) return true; // No es requerido si no se añaden nuevas
-      return Array.from(files).every((file) => file.size <= 5 * 1024 * 1024);
+      return Array.from(files).every(
+        (file: File) => file.size <= 5 * 1024 * 1024
+      ); // Añadir 'file: File' para claridad
     }, `Cada nueva imagen no debe exceder 5MB.`)
     .refine((files) => {
       if (files === undefined || files.length === 0) return true;
-      return Array.from(files).every((file) =>
-        ["image/jpeg", "image/png", "image/webp", "image/gif"].includes(
-          file.type
-        )
+      return Array.from(files).every(
+        (
+          file: File // Añadir 'file: File' para claridad
+        ) =>
+          ["image/jpeg", "image/png", "image/webp", "image/gif"].includes(
+            file.type
+          )
       );
     }, "Solo se permiten imágenes JPEG, PNG, WebP o GIF para nuevas subidas."),
   // `existingImageUrlsToKeep` es un array de URLs de las imágenes que ya existen y el usuario NO ha borrado
@@ -84,18 +89,18 @@ export default function EditProjectPage() {
           description: data.description,
         });
         setExistingImageUrls(data.images.map((img) => img.url));
-      } catch (err: any) {
-        // This `any` will be addressed next
+      } catch (err: unknown) {
+        // CAMBIO: de 'any' a 'unknown'
         console.error("Error al cargar proyecto para edición:", err);
         setError(
-          (err as Error).message || // Type assertion here
+          (err instanceof Error ? err.message : String(err)) || // CAMBIO: Verificación de tipo segura
             "No se pudieron cargar los detalles del proyecto para editar."
         );
       } finally {
         setLoading(false);
       }
     },
-    [reset, setError, setProject, setExistingImageUrls] // Add all dependencies used inside useCallback
+    [reset, setError, setProject, setExistingImageUrls] // Dependencias para useCallback
   );
 
   useEffect(() => {
@@ -181,9 +186,13 @@ export default function EditProjectPage() {
       } else {
         setApiError(responseData.message || "Error al actualizar el proyecto.");
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
+      // CAMBIO: de 'any' a 'unknown'
       console.error("Error de red o desconocido al actualizar:", err);
-      setApiError("Error al conectar con el servidor.");
+      setApiError(
+        (err instanceof Error ? err.message : String(err)) || // CAMBIO: Verificación de tipo segura
+          "Error al conectar con el servidor."
+      );
     } finally {
       setLoading(false);
     }
