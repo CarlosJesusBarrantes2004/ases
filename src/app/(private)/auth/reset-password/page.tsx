@@ -11,27 +11,14 @@ export default function ResetPasswordPage() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-  const searchParams = useSearchParams(); // This is the problematic line during prerender
-
-  // New state to track if the component is mounted on the client
-  const [isMounted, setIsMounted] = useState(false);
-
-  // Initialize token only after mounting
-  const [token, setToken] = useState<string | null>(null);
+  const searchParams = useSearchParams();
+  const token = searchParams.get("token");
 
   useEffect(() => {
-    setIsMounted(true); // Mark as mounted once on the client
-
-    // Only try to get the token once mounted
-    if (isMounted) {
-      const urlToken = searchParams.get("token");
-      setToken(urlToken);
-
-      if (!urlToken) {
-        setError("Token de restablecimiento no encontrado en la URL.");
-      }
+    if (!token) {
+      setError("Token de restablecimiento no encontrado en la URL.");
     }
-  }, [isMounted, searchParams]); // Add searchParams to dependency array for useEffect
+  }, [token]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -44,11 +31,8 @@ export default function ResetPasswordPage() {
       setLoading(false);
       return;
     }
-
-    // Ensure token is available before proceeding with fetch
     if (!token) {
-      // Use the 'token' state here
-      setError("Token de restablecimiento inválido o no cargado.");
+      setError("Token de restablecimiento inválido.");
       setLoading(false);
       return;
     }
@@ -77,16 +61,6 @@ export default function ResetPasswordPage() {
     }
   };
 
-  // Optionally, show a loading state until the component is mounted and token is retrieved
-  if (!isMounted) {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-gray-100">
-        <p className="text-gray-600">Cargando...</p>
-      </div>
-    );
-  }
-
-  // Once mounted, render the actual form
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-100">
       <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
@@ -98,16 +72,6 @@ export default function ResetPasswordPage() {
             <p className="text-green-500 text-sm text-center">{message}</p>
           )}
           {error && <p className="text-red-500 text-sm text-center">{error}</p>}
-
-          {/* Display a specific error if token is missing after mounting */}
-          {token === null &&
-            error === "Token de restablecimiento no encontrado en la URL." && (
-              <p className="text-red-500 text-sm text-center">
-                No se pudo obtener el token de restablecimiento. Por favor,
-                asegúrate de usar el enlace completo.
-              </p>
-            )}
-
           <div>
             <label
               htmlFor="newPassword"
@@ -143,7 +107,7 @@ export default function ResetPasswordPage() {
           <button
             type="submit"
             className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700"
-            disabled={loading || !token} // Disable if loading or token is not yet available
+            disabled={loading}
           >
             {loading ? "Restableciendo..." : "Restablecer Contraseña"}
           </button>

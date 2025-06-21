@@ -35,7 +35,7 @@ export async function sendPasswordResetEmail(email: string, token: string) {
     },
   });
 
-  const resetUrl = `${config.NEXT_PUBLIC_APP_URL}/reset-password?token=${token}`;
+  const resetUrl = `${config.NEXT_PUBLIC_APP_URL}/auth/reset-password?token=${token}`;
 
   await transporter.sendMail({
     from: config.EMAIL_FROM,
