@@ -3,6 +3,13 @@ import prisma from "@/lib/db";
 import cloudinary from "@/lib/cloudinary";
 import { getUserIdFromRequest } from "@/lib/auth";
 
+// Define una interfaz para el resultado esperado de Cloudinary upload
+interface CloudinaryUploadResult {
+  secure_url: string;
+  // Puedes añadir otras propiedades que Cloudinary retorne y que necesites,
+  // como `public_id`, `width`, `height`, etc.
+}
+
 export async function GET() {
   try {
     const projects = await prisma.project.findMany({
@@ -18,7 +25,8 @@ export async function GET() {
     });
 
     return NextResponse.json(projects, { status: 200 });
-  } catch (error) {
+  } catch (error: unknown) {
+    // CAMBIO: Tipado a 'unknown'
     console.error("Error al obtener proyectos:", error);
     return NextResponse.json(
       { message: "Error interno del servidor al obtener proyectos." },
@@ -82,19 +90,32 @@ export async function POST(req: Request) {
       const arrayBuffer = await file.arrayBuffer();
       const buffer = Buffer.from(arrayBuffer);
 
-      const result = (await new Promise((resolve, reject) => {
-        cloudinary.uploader
-          .upload_stream({ folder: "grupo-ases/projects" }, (error, result) => {
-            if (error) {
-              console.error("Error al subir a Cloudinary:", error);
-              return reject(
-                new Error("Error al subir la imagen a Cloudinary.")
-              );
-            }
-            resolve(result);
-          })
-          .end(buffer);
-      })) as any;
+      const result = await new Promise<CloudinaryUploadResult>(
+        (resolve, reject) => {
+          // CAMBIO: Usa CloudinaryUploadResult
+          cloudinary.uploader
+            .upload_stream(
+              { folder: "grupo-ases/projects" },
+              (error, result) => {
+                if (error) {
+                  console.error("Error al subir a Cloudinary:", error);
+                  return reject(
+                    new Error("Error al subir la imagen a Cloudinary.")
+                  );
+                }
+                // Asegúrate de que 'result' no es null/undefined antes de usarlo
+                if (result) {
+                  resolve(result as CloudinaryUploadResult); // CAMBIO: Asercion a CloudinaryUploadResult
+                } else {
+                  reject(
+                    new Error("Cloudinary upload did not return a result.")
+                  );
+                }
+              }
+            )
+            .end(buffer);
+        }
+      );
 
       uploadImageUrls.push({ url: result.secure_url });
     }
@@ -123,15 +144,14 @@ export async function POST(req: Request) {
       { message: "Proyecto creado exitosamente.", project: newProject },
       { status: 201 }
     );
-  } catch (error) {
-    {
-      console.error("Error al crear proyecto:", error);
-      return NextResponse.json(
-        {
-          message: "Error interno del servidor al crear el proyecto.",
-        },
-        { status: 500 }
-      );
-    }
+  } catch (error: unknown) {
+    // CAMBIO: Tipado a 'unknown'
+    console.error("Error al crear proyecto:", error);
+    // Puedes añadir una verificación más específica si 'error' tiene una propiedad 'message'
+    const errorMessage =
+      error instanceof Error
+        ? error.message
+        : "Error interno del servidor al crear el proyecto.";
+    return NextResponse.json({ message: errorMessage }, { status: 500 });
   }
 }

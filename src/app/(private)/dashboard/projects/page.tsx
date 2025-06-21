@@ -1,3 +1,4 @@
+// app/(private)/dashboard/projects/page.tsx
 "use client";
 
 import { useState, useEffect, useCallback, useMemo } from "react";
@@ -38,6 +39,7 @@ export default function ProjectsPage() {
       const data: Project[] = await res.json();
       setAllProjects(data); // Guarda todos los proyectos
     } catch (err: unknown) {
+      // Ya estaba bien tipado aquí, solo para referencia
       console.error("Error al cargar todos los proyectos:", err);
       setError("No se pudieron cargar los proyectos. Intenta de nuevo.");
     } finally {
@@ -64,9 +66,10 @@ export default function ProjectsPage() {
     }
 
     // 2. Ordenamiento
-    result.sort((a, b) => {
-      let valA: any;
-      let valB: any;
+    result.sort((a, b): number => {
+      // CAMBIO: Añadir el tipo de retorno 'number'
+      let valA: number | string; // CAMBIO: Usar unión de tipos
+      let valB: number | string; // CAMBIO: Usar unión de tipos
 
       if (sortBy === "createdAt") {
         valA = new Date(a.createdAt).getTime();
@@ -74,6 +77,10 @@ export default function ProjectsPage() {
       } else if (sortBy === "title") {
         valA = a.title.toLowerCase();
         valB = b.title.toLowerCase();
+      } else {
+        // Manejar caso por defecto o un tipo de ordenamiento no esperado
+        // Aunque tus `SortByOption` son explícitos, siempre es bueno tener un fallback
+        return 0;
       }
 
       if (valA < valB) return sortOrder === "asc" ? -1 : 1;
