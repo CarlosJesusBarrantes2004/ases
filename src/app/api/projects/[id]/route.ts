@@ -12,7 +12,7 @@ interface CloudinaryUploadResult {
 export async function GET(
   req: Request,
   // ¡SIMPLEMENTE DESESTRUCTURA! Next.js 15 ya maneja el tipado internamente.
-  { params }: { params: { id: string } } // <--- EL CAMBIO CLAVE AQUÍ
+  { params } // <--- EL CAMBIO CLAVE AQUÍ
 ) {
   const { id } = params;
   const projectId = parseInt(id, 10);
@@ -54,7 +54,7 @@ export async function GET(
 export async function PUT(
   req: Request,
   // Aplica el mismo cambio aquí
-  { params }: { params: { id: string } } // <--- EL CAMBIO CLAVE AQUÍ
+  { params } // <--- EL CAMBIO CLAVE AQUÍ
 ) {
   const { id } = params;
   const projectId = parseInt(id, 10);
@@ -208,7 +208,7 @@ export async function PUT(
 export async function DELETE(
   req: Request,
   // Aplica el mismo cambio aquí
-  { params }: { params: { id: string } } // <--- EL CAMBIO CLAVE AQUÍ
+  { params } // <--- EL CAMBIO CLAVE AQUÍ
 ) {
   const { id } = params;
   const projectId = parseInt(id, 10);
