@@ -9,16 +9,12 @@ interface CloudinaryUploadResult {
   public_id?: string; // Incluido por si Cloudinary lo retorna y lo necesitas
 }
 
-// Ya no necesitas definir RouteContext explícitamente aquí para la firma de la función.
-// Next.js lo maneja internamente.
-
 export async function GET(
   req: Request,
-  // Aquí, el segundo argumento se deconstruye directamente.
-  // Next.js se encarga de inferir el tipo de `params`.
-  { params }: { params: { id: string } } // Opcional: puedes tipar directamente aquí si lo prefieres, pero Next.js ya lo infiere.
+  // ¡SIMPLEMENTE DESESTRUCTURA! Next.js 15 ya maneja el tipado internamente.
+  { params }: { params: { id: string } } // <--- EL CAMBIO CLAVE AQUÍ
 ) {
-  const { id } = params; // `params` ya está disponible directamente
+  const { id } = params;
   const projectId = parseInt(id, 10);
 
   if (isNaN(projectId))
@@ -57,8 +53,8 @@ export async function GET(
 
 export async function PUT(
   req: Request,
-  // Misma lógica para PUT y DELETE
-  { params }: { params: { id: string } }
+  // Aplica el mismo cambio aquí
+  { params }: { params: { id: string } } // <--- EL CAMBIO CLAVE AQUÍ
 ) {
   const { id } = params;
   const projectId = parseInt(id, 10);
@@ -211,8 +207,8 @@ export async function PUT(
 
 export async function DELETE(
   req: Request,
-  // Misma lógica para DELETE
-  { params }: { params: { id: string } }
+  // Aplica el mismo cambio aquí
+  { params }: { params: { id: string } } // <--- EL CAMBIO CLAVE AQUÍ
 ) {
   const { id } = params;
   const projectId = parseInt(id, 10);
