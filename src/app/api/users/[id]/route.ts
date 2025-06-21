@@ -1,21 +1,12 @@
-// app/api/users/[id]/route.ts
 import { NextResponse } from "next/server";
-import prisma from "@/lib/db"; // Asegúrate de que esta ruta a tu instancia de Prisma sea correcta
+import prisma from "@/lib/db";
 import bcrypt from "bcrypt";
 
-// Definimos la interfaz para los parámetros de la ruta
-interface Context {
-  params: {
-    id: string; // El id de la ruta dinámica ahora es un string
-  };
-}
-
-/**
- * GET /api/users/[id]
- * Obtiene un usuario por su ID.
- */
-export async function GET(request: Request, context: Context) {
-  const { id } = context.params;
+export async function GET(
+  request: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const id = (await params).id;
 
   try {
     const user = await prisma.user.findUnique({
@@ -49,12 +40,11 @@ export async function GET(request: Request, context: Context) {
   }
 }
 
-/**
- * PUT /api/users/[id]
- * Edita un usuario por su ID.
- */
-export async function PUT(request: Request, context: Context) {
-  const { id } = context.params;
+export async function PUT(
+  request: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const id = (await params).id;
 
   try {
     const body = await request.json();
@@ -165,12 +155,11 @@ export async function PUT(request: Request, context: Context) {
   }
 }
 
-/**
- * DELETE /api/users/[id]
- * Elimina un usuario por su ID.
- */
-export async function DELETE(request: Request, context: Context) {
-  const { id } = context.params;
+export async function DELETE(
+  request: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const id = (await params).id;
 
   try {
     const deletedUser = await prisma.user.delete({
