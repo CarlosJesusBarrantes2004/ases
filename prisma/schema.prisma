@@ -1,0 +1,67 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User{
+  id String @id @default(cuid())
+  name String? 
+  email String @unique
+  password String?
+  emailVerified DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  passwordResetTokens PasswordResetToken[]
+  emailVerificationTokens EmailVerification[]
+
+  projects Project[]
+}
+
+model PasswordResetToken {
+  id        Int      @id @default(autoincrement())
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  userId String
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model EmailVerification{
+  id Int @id @default(autoincrement())
+  token String @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  userId String
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Project{
+  id Int @id @default(autoincrement())
+  title String
+  description String
+  createdAt   DateTime @default(now())
+
+  userId String
+  user User @relation(fields: [userId], references: [id])
+
+  images ProjectImage[]
+}
+
+model ProjectImage {
+  id        Int      @id @default(autoincrement())
+  url       String
+  projectId Int
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+}

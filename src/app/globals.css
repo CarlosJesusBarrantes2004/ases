@@ -1,26 +1,115 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Definición de variables de color según la paleta solicitada */
+  --red-primary: #e1251b;
+  --gray-dark: #424242;
+  --gray-light: #cdcfd0;
+  --white: #ffffff;
+  --black-soft: #212121;
+
+  /* Variables base */
+  --background: var(--white);
+  --foreground: var(--black-soft);
 }
 
 @theme inline {
+  /* Configuración de colores */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+
+  /* Configuración de la paleta de colores personalizada */
+  --color-red-primary: var(--red-primary);
+  --color-gray-dark: var(--gray-dark);
+  --color-gray-light: var(--gray-light);
+  --color-black-soft: var(--black-soft);
+
+  /* Tipografía */
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, monospace;
+
+  /* Animaciones personalizadas */
+  --animate-expand: expand 0.7s ease-out forwards;
+  --animate-fade-in: fadeIn 0.5s ease-in-out forwards;
+  --animate-slide-up: slideUp 0.5s ease-in-out forwards;
+  --animate-slide-in: slideIn 0.5s ease-in-out forwards;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* Definición de animaciones con @keyframes */
+@keyframes expand {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
   }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  0% {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  0% {
+    transform: translateX(-20px);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Clases de utilidad personalizadas */
+.animate-expand {
+  animation: var(--animate-expand);
+}
+
+.animate-fade-in {
+  animation: var(--animate-fade-in);
+}
+
+.animate-slide-up {
+  animation: var(--animate-slide-up);
+}
+
+.animate-slide-in {
+  animation: var(--animate-slide-in);
+}
+
+.transition-all-300 {
+  transition: all 300ms ease-in-out;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  @apply antialiased;
 }
