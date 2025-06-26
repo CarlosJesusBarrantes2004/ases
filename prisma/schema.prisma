@@ -46,16 +46,27 @@ model EmailVerification{
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-model Project{
-  id Int @id @default(autoincrement())
-  title String
-  description String
-  createdAt   DateTime @default(now())
+model Project {
+  id                        Int       @id @default(autoincrement())
+  title                     String
+  description               String
+  createdAt                 DateTime  @default(now())
 
-  userId String
-  user User @relation(fields: [userId], references: [id])
+  // Relación con el usuario
+  userId                    String
+  user                      User      @relation(fields: [userId], references: [id])
 
-  images ProjectImage[]
+  // Imágenes del proyecto
+  images                    ProjectImage[]
+
+  // Campos financieros añadidos
+  totalInvestment           Float     @map("total_investment") // Inversión total
+  tir                       Float?    // Tasa Interna de Retorno (opcional)
+  van                       Float?    // Valor Actual Neto (opcional)
+  payback                   Float?    // Período de Recuperación de la Inversión (opcional)
+  projectedRevenue          Float     @map("projected_revenue") // Ingresos proyectados
+  minimumInvestmentAmount   Float     @map("minimum_investment_amount") // Monto mínimo de inversión
+  executiveSummary          String?   @map("executive_summary") // Resumen ejecutivo (opcional)
 }
 
 model ProjectImage {
