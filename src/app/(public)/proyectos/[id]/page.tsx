@@ -1,26 +1,84 @@
 import Image from "next/image";
 
+// Importa process para acceder a las variables de entorno
+// Nota: En Server Components, 'process.env' es seguro de usar directamente.
+
 export default async function ProjectPage({
   params,
 }: {
   params: { id: string };
 }) {
-  // Obtener los datos del proyecto desde la API
-  const response = await fetch(`api/projects/${params.id}`);
-  const project = await response.json();
+  const { id } = await params;
 
-  if (!project || response.status !== 200) {
+  // Construir la URL completa de la API usando la variable de entorno
+  // Asegúrate de que NEXT_PUBLIC_API_BASE_URL esté definido en tu .env.local
+  const API_BASE_URL = process.env.NEXT_PUBLIC_APP_URL;
+
+  // Validar si la URL base está definida
+  if (!API_BASE_URL) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#CDCFD0]">
         <div className="bg-white p-8 rounded-lg shadow-lg text-center">
           <h1 className="text-2xl font-bold text-[#E1251B] mb-4">
-            {response.status === 404
-              ? "Proyecto no encontrado"
-              : "Error al cargar el proyecto"}
+            Error de Configuración
           </h1>
           <p className="text-gray-700">
-            {project?.message ||
-              "No se pudo cargar la información del proyecto."}
+            La URL base de la API no está configurada. Por favor, revisa tu archivo .env.local.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  // Obtener los datos del proyecto desde la API
+  const response = await fetch(`${API_BASE_URL}/api/projects/${id}`);
+
+  // --- Manejo de Errores Inicial: Verificar si la respuesta de la API fue exitosa ---
+  if (!response.ok) {
+    let errorMessage = "No se pudo cargar la información del proyecto.";
+    let statusCode = response.status;
+    let statusText = response.statusText || "Error desconocido";
+
+    try {
+      const errorData = await response.json();
+      if (errorData.message) {
+        errorMessage = errorData.message;
+      }
+    } catch (e) {
+      errorMessage = `Error al procesar la respuesta del servidor (${statusText}).`;
+    }
+
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#CDCFD0]">
+        <div className="bg-white p-8 rounded-lg shadow-lg text-center">
+          <h1 className="text-2xl font-bold text-[#E1251B] mb-4">
+            {statusCode === 404
+              ? "Proyecto no encontrado"
+              : `Error ${statusCode}: ${errorMessage}`}
+          </h1>
+          <p className="text-gray-700">
+            {statusCode === 404
+              ? "El proyecto que buscas no existe o fue eliminado."
+              : errorMessage}
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  // --- Si la respuesta fue exitosa (response.ok es true), entonces parseamos el JSON ---
+  const project = await response.json();
+
+  // --- Manejo de Error Adicional: Si la respuesta fue 200 OK pero el objeto project está vacío/nulo ---
+  if (!project) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#CDCFD0]">
+        <div className="bg-white p-8 rounded-lg shadow-lg text-center">
+          <h1 className="text-2xl font-bold text-[#E1251B] mb-4">
+            Datos de proyecto no disponibles
+          </h1>
+          <p className="text-gray-700">
+            La solicitud fue exitosa, pero no se recibieron datos válidos para el proyecto.
           </p>
         </div>
       </div>
@@ -78,7 +136,7 @@ export default async function ProjectPage({
           {/* Sección izquierda - Imágenes y descripción */}
           <div className="lg:col-span-2 space-y-8">
             {/* Galería de imágenes */}
-            {project.images.length > 0 && (
+            {project.images && project.images.length > 0 && (
               <div className="bg-white rounded-lg shadow-md overflow-hidden">
                 <div className="p-4 border-b border-[#CDCFD0]">
                   <h2 className="text-xl font-semibold text-gray-800">
