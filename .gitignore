@@ -41,3 +41,5 @@ yarn-error.log*
 next-env.d.ts
 
 /generated/prisma
+
+/libsql:/proyectosases-maad.aws-us-east-1.turso.io/node-compile-cache/v22.16.0-x64-efe9a9df-1000
