@@ -70,7 +70,9 @@ export default function CardProject({ project }: CardProjectProps) {
           {project.nombre}
         </h3>
 
-        <p className="text-[#CDCFD0] mb-4 line-clamp-2 text-sm leading-relaxed">{project.descripcion}</p>
+        <p className="text-[#CDCFD0] mb-4 line-clamp-2 text-sm leading-relaxed">
+          {project.descripcion}
+        </p>
 
         {/* Info del project */}
         <div className="space-y-2.5 mb-4">
@@ -101,7 +103,7 @@ export default function CardProject({ project }: CardProjectProps) {
         </div>
 
         {/* Botón */}
-        <button className="w-full bg-[#E1251B] text-white py-3 px-4 rounded-md font-semibold text-sm uppercase tracking-wide hover:bg-[#E1251B]/90 hover:shadow-lg transition-all duration-300 group-hover:transform group-hover:scale-[1.02]">
+        <button className="w-full hover:cursor-pointer bg-[#E1251B] text-white py-3 px-4 rounded-md font-semibold text-sm uppercase tracking-wide hover:bg-[#E1251B]/90 hover:shadow-lg transition-all duration-300 group-hover:transform group-hover:scale-[1.02]">
           Ver Detalles
         </button>
       </div>
