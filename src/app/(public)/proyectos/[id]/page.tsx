@@ -13,37 +13,6 @@ export default async function ProjectPage({
   const response = await fetch(`${API_BASE_URL}/api/projects/${id}`);
 
   // --- Manejo de Errores Inicial: Verificar si la respuesta de la API fue exitosa ---
-  if (!response.ok) {
-    let errorMessage = "No se pudo cargar la información del proyecto.";
-    let statusCode = response.status;
-    let statusText = response.statusText || "Error desconocido";
-
-    try {
-      const errorData = await response.json();
-      if (errorData.message) {
-        errorMessage = errorData.message;
-      }
-    } catch (e) {
-      errorMessage = `Error al procesar la respuesta del servidor (${statusText}).`;
-    }
-
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-[#CDCFD0]">
-        <div className="bg-white p-8 rounded-lg shadow-lg text-center">
-          <h1 className="text-2xl font-bold text-[#E1251B] mb-4">
-            {statusCode === 404
-              ? "Proyecto no encontrado"
-              : `Error ${statusCode}: ${errorMessage}`}
-          </h1>
-          <p className="text-gray-700">
-            {statusCode === 404
-              ? "El proyecto que buscas no existe o fue eliminado."
-              : errorMessage}
-          </p>
-        </div>
-      </div>
-    );
-  }
 
   // --- Si la respuesta fue exitosa (response.ok es true), entonces parseamos el JSON ---
   const project = await response.json();
