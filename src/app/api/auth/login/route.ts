@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { headers } from "next/headers"; // Import headers from next/headers
+import { headers } from "next/headers"; 
 import prisma from "@/lib/db";
 import bcrypt from "bcrypt";
 import { SignJWT } from "jose";
