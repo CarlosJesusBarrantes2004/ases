@@ -1,21 +1,15 @@
 import { contactSchema } from "@/app/(public)/contacto/components/form/schema";
-import {
-  EMAIL_FROM,
-  EMAIL_HOST,
-  EMAIL_PASSWORD,
-  EMAIL_PORT,
-  EMAIL_USER,
-} from "@/config";
+import config from "@/lib/config";
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 
 const transporter = nodemailer.createTransport({
-  host: EMAIL_HOST,
-  port: Number(EMAIL_PORT),
+  host: config.EMAIL_HOST,
+  port: Number(config.EMAIL_PORT),
   secure: true,
   auth: {
-    user: EMAIL_USER,
-    pass: EMAIL_PASSWORD,
+    user: config.EMAIL_USER,
+    pass: config.EMAIL_PASSWORD,
   },
   tls: {
     rejectUnauthorized: false,
@@ -28,9 +22,9 @@ export async function POST(request: Request) {
     const validatedData = contactSchema.parse(data);
 
     const mailToCompany = {
-      from: `"Formulario Web" <${EMAIL_FROM}>`, // Remitente será el correo institucional
-      to: EMAIL_USER, // Destinatario es la empresa
-      replyTo: validatedData.email, // Permite responder directamente al usuario
+      from: `"Formulario Web" <${config.EMAIL_FROM}>`,
+      to: config.EMAIL_USER,
+      replyTo: validatedData.email,
       subject: `Nuevo contacto: ${validatedData.typeService || "General"} - ${
         validatedData.fullName
       }`,
@@ -113,8 +107,8 @@ export async function POST(request: Request) {
     };
 
     const mailToUser = {
-      from: `"Grupo Ases" <${EMAIL_FROM}>`, // Remitente será el correo institucional
-      to: validatedData.email, // Destinatario es el usuario
+      from: `"Grupo Ases" <${config.EMAIL_FROM}>`,
+      to: validatedData.email,
       subject: `Gracias por contactar a Grupo Ases`,
       html: `
         <!DOCTYPE html>
