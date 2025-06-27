@@ -25,9 +25,10 @@ export async function POST(request: Request) {
       from: `"Formulario Web" <${config.EMAIL_FROM}>`,
       to: config.EMAIL_USER,
       replyTo: validatedData.email,
-      subject: `Nuevo contacto: ${validatedData.typeService || "General"} - ${
+      /*subject: `Nuevo contacto: ${validatedData.typeService || "General"} - ${
         validatedData.fullName
-      }`,
+      }`,*/
+      
       html: `
         <!DOCTYPE html>
         <html>
