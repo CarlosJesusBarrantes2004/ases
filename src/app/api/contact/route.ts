@@ -89,9 +89,7 @@ export async function POST(request: Request) {
               <p><strong>Teléfono:</strong> ${
                 validatedData.phone || "No proporcionado"
               }</p>
-              <p><strong>Servicio:</strong> ${
-                validatedData.typeService || "No especificado"
-              }</p>
+              
               
               <h3>Mensaje:</h3>
               <div class="message-box">
@@ -187,9 +185,7 @@ export async function POST(request: Request) {
               
               <p>Estimado/a <strong>${validatedData.fullName}</strong>,</p>
               
-              <p>Hemos recibido tu mensaje relacionado con nuestros servicios de <strong>${
-                validatedData.typeService || "consultoría"
-              }</strong>.</p>
+              
               
               <p>Uno de nuestros representantes se pondrá en contacto contigo a la brevedad para brindarte la asesoría que necesitas.</p>
               
