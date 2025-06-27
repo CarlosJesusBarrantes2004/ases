@@ -9,7 +9,6 @@ import {
   Mail,
   Phone,
   MessageSquare,
-  ChevronDown,
   Check,
   TriangleAlert,
   LoaderCircle,
