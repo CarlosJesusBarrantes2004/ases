@@ -17,8 +17,7 @@ import {
 import {
   ContactFormDefaultValues,
   ContactFormType,
-  contactSchema,
-  SERVICE_TYPES,
+  contactSchema
 } from "./schema";
 
 function ContactForm() {
@@ -26,7 +25,6 @@ function ContactForm() {
     fullName: "",
     email: "",
     phone: "",
-    typeService: undefined,
     message: "",
   };
 
@@ -190,6 +188,7 @@ function ContactForm() {
               />
             </div>
 
+            {/*  
             <div>
               <label
                 htmlFor="typeService"
@@ -240,7 +239,7 @@ function ContactForm() {
                   {errors.typeService.message}
                 </p>
               )}
-            </div>
+            </div>*/}
           </div>
 
           <div>

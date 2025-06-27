@@ -23,7 +23,7 @@ export const contactSchema = z.object({
 export type ContactFormType = z.infer<typeof contactSchema>;
 
 export type ContactFormDefaultValues = {
-  fullName: string;
+  fullName:  string;
   email: string;
   phone: string;
   typeService: (typeof SERVICE_TYPES)[number] | undefined;
