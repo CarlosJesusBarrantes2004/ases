@@ -46,7 +46,7 @@ export async function POST(req: Request) {
   } catch (error) {
     console.error("Error al restablecer contraseña:", error);
     return NextResponse.json(
-      { message: "Error interno del servidor." },
+      { message: "Error interno del servidor al resetear contraseña." },
       { status: 500 }
     );
   }

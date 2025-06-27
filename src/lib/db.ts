@@ -1,13 +1,18 @@
-import dotenv from 'dotenv'
-import { PrismaLibSQL } from '@prisma/adapter-libsql'
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient } from "@prisma/client";
 
-dotenv.config()
+declare global {
+  var prisma: PrismaClient | undefined;
+}
 
-const adapter = new PrismaLibSQL({ // Pasamos un objeto de configuración
-  url: process.env.DATABASE_URL as string, // La URL de tu base de datos
-  authToken: process.env.TOKEN as string, // Tu token de autenticación
-});
-const prisma = new PrismaClient({ adapter })
+let prisma: PrismaClient;
 
-export default prisma
+if (process.env.NODE_ENV === "production") {
+  prisma = new PrismaClient();
+} else {
+  if (!global.prisma) {
+    global.prisma = new PrismaClient();
+  }
+  prisma = global.prisma;
+}
+
+export default prisma;

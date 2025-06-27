@@ -11,6 +11,9 @@ interface EnvConfig {
   CLOUDINARY_CLOUD_NAME: string;
   CLOUDINARY_API_KEY: string;
   CLOUDINARY_API_SECRET: string;
+  MAX_ATTEMPTS: number;
+  WINDOW_MS: number;
+  SALT_ROUNDS: number;
 }
 
 const config: EnvConfig = {
@@ -26,6 +29,9 @@ const config: EnvConfig = {
   CLOUDINARY_CLOUD_NAME: process.env.CLOUDINARY_CLOUD_NAME!,
   CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY!,
   CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET!,
+  MAX_ATTEMPTS: 3,
+  WINDOW_MS: 60 * 1000, // 1 minute
+  SALT_ROUNDS: 10,
 };
 
 export default config;

@@ -23,7 +23,7 @@ export async function POST(req: Request) {
     });
 
     const token = crypto.randomBytes(32).toString("hex");
-    const expiresAt = new Date(Date.now() + 10 * 60 * 1000);
+    const expiresAt = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
 
     await prisma.passwordResetToken.create({
       data: {
@@ -45,7 +45,10 @@ export async function POST(req: Request) {
   } catch (error) {
     console.error("Error al solicitar restablecimiento de contraseña:", error);
     return NextResponse.json(
-      { message: "Error interno del servidor." },
+      {
+        message:
+          "Error interno del servidor al solicitar reseteo de contraseña.",
+      },
       { status: 500 }
     );
   }

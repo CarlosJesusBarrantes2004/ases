@@ -6,19 +6,11 @@ import { SignJWT } from "jose";
 import config from "@/lib/config";
 
 const loginAttempts = new Map<string, { count: number; lastAttempt: number }>();
-const MAX_ATTEMPTS = 3;
-const WINDOW_MS = 60 * 1000;
 
 export async function POST(req: Request) {
-  // --- CAMBIO CLAVE AQUÍ: AWAIT headers() ---
-  const requestHeaders = await headers(); // Await the headers() function call
-  // Prioritize 'x-forwarded-for' as it's common for proxies/load balancers
-  // Fallback to 'x-real-ip' or other potential headers if 'x-forwarded-for' is not present
+  const requestHeaders = await headers();
   const ip =
     requestHeaders.get("x-forwarded-for") || requestHeaders.get("x-real-ip");
-
-  // It's crucial to handle the case where ip might be null if no header is found.
-  // Your current logic already accounts for `if (ip)`, which is good.
 
   if (ip) {
     const entry = loginAttempts.get(ip) || {
@@ -26,13 +18,13 @@ export async function POST(req: Request) {
       lastAttempt: Date.now(),
     };
 
-    if (Date.now() - entry.lastAttempt > WINDOW_MS) entry.count = 0;
+    if (Date.now() - entry.lastAttempt > config.WINDOW_MS) entry.count = 0;
 
     entry.count++;
     entry.lastAttempt = Date.now();
     loginAttempts.set(ip, entry);
 
-    if (entry.count > MAX_ATTEMPTS)
+    if (entry.count > config.MAX_ATTEMPTS)
       return NextResponse.json(
         {
           message:
@@ -122,7 +114,7 @@ export async function POST(req: Request) {
     console.error("Error en el login:", error);
     return NextResponse.json(
       {
-        message: "Error interno del servidor",
+        message: "Error interno del servidor al loguearse",
       },
       { status: 500 }
     );

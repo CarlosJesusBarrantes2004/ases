@@ -1,8 +1,5 @@
 import Image from "next/image";
 
-// Importa process para acceder a las variables de entorno
-// Nota: En Server Components, 'process.env' es seguro de usar directamente.
-
 export default async function ProjectPage({
   params,
 }: {
@@ -10,25 +7,7 @@ export default async function ProjectPage({
 }) {
   const { id } = await params;
 
-  // Construir la URL completa de la API usando la variable de entorno
-  // Asegúrate de que NEXT_PUBLIC_API_BASE_URL esté definido en tu .env.local
   const API_BASE_URL = process.env.NEXT_PUBLIC_APP_URL;
-
-  // Validar si la URL base está definida
-  if (!API_BASE_URL) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-[#CDCFD0]">
-        <div className="bg-white p-8 rounded-lg shadow-lg text-center">
-          <h1 className="text-2xl font-bold text-[#E1251B] mb-4">
-            Error de Configuración
-          </h1>
-          <p className="text-gray-700">
-            La URL base de la API no está configurada. Por favor, revisa tu archivo .env.local.
-          </p>
-        </div>
-      </div>
-    );
-  }
 
   // Obtener los datos del proyecto desde la API
   const response = await fetch(`${API_BASE_URL}/api/projects/${id}`);
@@ -78,7 +57,8 @@ export default async function ProjectPage({
             Datos de proyecto no disponibles
           </h1>
           <p className="text-gray-700">
-            La solicitud fue exitosa, pero no se recibieron datos válidos para el proyecto.
+            La solicitud fue exitosa, pero no se recibieron datos válidos para
+            el proyecto.
           </p>
         </div>
       </div>

@@ -1,7 +1,7 @@
-// app/api/auth/verify-and-set-password/route.ts
 import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";
 import prisma from "@/lib/db";
+import config from "@/lib/config";
 
 export async function POST(req: Request) {
   try {
@@ -15,7 +15,6 @@ export async function POST(req: Request) {
         { status: 400 }
       );
 
-    // 1. Buscar el token en la tabla EmailVerification
     const verificationEntry = await prisma.emailVerification.findUnique({
       where: { token },
       include: { user: true },
@@ -23,22 +22,20 @@ export async function POST(req: Request) {
 
     if (!verificationEntry || verificationEntry.expiresAt < new Date())
       return NextResponse.json(
-        { message: "Enlace de verificación inválido o expirado." }, // Mensaje más descriptivo
+        { message: "Enlace de verificación inválido o expirado." },
         { status: 400 }
       );
 
-    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    const hashedPassword = await bcrypt.hash(newPassword, config.SALT_ROUNDS);
 
-    // 2. Actualizar el usuario: establecer contraseña y marcar como verificado
     await prisma.user.update({
       where: { id: verificationEntry.userId },
       data: {
         password: hashedPassword,
-        emailVerified: new Date(), // Marcar el correo como verificado
+        emailVerified: new Date(),
       },
     });
 
-    // 3. Eliminar el token de verificación de correo
     await prisma.emailVerification.delete({
       where: { id: verificationEntry.id },
     });
@@ -50,7 +47,10 @@ export async function POST(req: Request) {
   } catch (error) {
     console.error("Error al verificar correo y establecer contraseña:", error);
     return NextResponse.json(
-      { message: "Error interno del servidor." },
+      {
+        message:
+          "Error interno del servidor al verificar y resetear contraseña.",
+      },
       { status: 500 }
     );
   }

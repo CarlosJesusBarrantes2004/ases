@@ -1,14 +1,11 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider        = "prisma-client-js"
   previewFeatures = ["driverAdapters"]
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+  provider = "postgres"
+  url      = env("DATABASE_URL")
 }
 
 model User {
@@ -19,10 +16,8 @@ model User {
   emailVerified DateTime?
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
-
   passwordResetTokens     PasswordResetToken[]
   emailVerificationTokens EmailVerification[]
-
   projects Project[]
 }
 
@@ -31,7 +26,6 @@ model PasswordResetToken {
   token     String   @unique
   expiresAt DateTime
   createdAt DateTime @default(now())
-
   userId String
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
@@ -41,7 +35,6 @@ model EmailVerification {
   token     String   @unique
   expiresAt DateTime
   createdAt DateTime @default(now())
-
   userId String
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
@@ -51,22 +44,16 @@ model Project {
   title       String
   description String
   createdAt   DateTime @default(now())
-
-  // Relación con el usuario
+  totalInvestment         Float   @map("total_investment") 
+  tir                     Float? 
+  van                     Float? 
+  payback                 Float? 
+  projectedRevenue        Float   @map("projected_revenue") 
+  minimumInvestmentAmount Float   @map("minimum_investment_amount") 
+  executiveSummary        String? @map("executive_summary") 
+  images ProjectImage[]
   userId String
   user   User   @relation(fields: [userId], references: [id])
-
-  // Imágenes del proyecto
-  images ProjectImage[]
-
-  // Campos financieros añadidos
-  totalInvestment         Float   @map("total_investment") // Inversión total
-  tir                     Float? // Tasa Interna de Retorno (opcional)
-  van                     Float? // Valor Actual Neto (opcional)
-  payback                 Float? // Período de Recuperación de la Inversión (opcional)
-  projectedRevenue        Float   @map("projected_revenue") // Ingresos proyectados
-  minimumInvestmentAmount Float   @map("minimum_investment_amount") // Monto mínimo de inversión
-  executiveSummary        String? @map("executive_summary") // Resumen ejecutivo (opcional)
 }
 
 model ProjectImage {
