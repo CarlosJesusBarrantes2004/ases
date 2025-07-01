@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { headers } from "next/headers"; 
+import { headers } from "next/headers";
 import prisma from "@/lib/db";
 import bcrypt from "bcrypt";
 import { SignJWT } from "jose";
@@ -92,6 +92,8 @@ export async function POST(req: Request) {
       .setIssuedAt()
       .setExpirationTime("1d")
       .sign(secret);
+
+    console.log(config.JWT_SECRET);
 
     const response = NextResponse.json(
       {
