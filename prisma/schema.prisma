@@ -4,21 +4,21 @@ generator client {
 }
 
 datasource db {
-  provider = "postgres"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String    @unique
-  password      String?
-  emailVerified DateTime?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  id                      String               @id @default(cuid())
+  name                    String?
+  email                   String               @unique
+  password                String?
+  emailVerified           DateTime?
+  createdAt               DateTime             @default(now())
+  updatedAt               DateTime             @updatedAt
   passwordResetTokens     PasswordResetToken[]
   emailVerificationTokens EmailVerification[]
-  projects Project[]
+  projects                Project[]
 }
 
 model PasswordResetToken {
@@ -26,8 +26,8 @@ model PasswordResetToken {
   token     String   @unique
   expiresAt DateTime
   createdAt DateTime @default(now())
-  userId String
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model EmailVerification {
@@ -35,25 +35,25 @@ model EmailVerification {
   token     String   @unique
   expiresAt DateTime
   createdAt DateTime @default(now())
-  userId String
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Project {
-  id          Int      @id @default(autoincrement())
-  title       String
-  description String
-  createdAt   DateTime @default(now())
-  totalInvestment         Float   @map("total_investment") 
-  tir                     Float? 
-  van                     Float? 
-  payback                 Float? 
-  projectedRevenue        Float   @map("projected_revenue") 
-  minimumInvestmentAmount Float   @map("minimum_investment_amount") 
-  executiveSummary        String? @map("executive_summary") 
-  images ProjectImage[]
-  userId String
-  user   User   @relation(fields: [userId], references: [id])
+  id                      Int            @id @default(autoincrement())
+  title                   String
+  description             String
+  createdAt               DateTime       @default(now())
+  totalInvestment         Float          @map("total_investment")
+  tir                     Float?
+  van                     Float?
+  payback                 Float?
+  projectedRevenue        Float          @map("projected_revenue")
+  minimumInvestmentAmount Float          @map("minimum_investment_amount")
+  executiveSummary        String?        @map("executive_summary")
+  images                  ProjectImage[]
+  userId                  String
+  user                    User           @relation(fields: [userId], references: [id])
 }
 
 model ProjectImage {

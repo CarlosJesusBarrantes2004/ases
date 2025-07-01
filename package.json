@@ -12,6 +12,7 @@
   "dependencies": {
     "@hookform/resolvers": "^5.1.1",
     "@prisma/client": "^6.10.1",
+    "@supabase/supabase-js": "^2.50.2",
     "ases": "link:",
     "bcrypt": "^6.0.0",
     "cloudinary": "^2.7.0",
