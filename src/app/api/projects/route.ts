@@ -134,6 +134,9 @@ export async function POST(req: Request) {
         images: {
           create: uploadImageUrls,
         },
+        totalInvestment: 0,
+        projectedRevenue: 0,
+        minimumInvestmentAmount: 0,
       },
       include: {
         images: true,
