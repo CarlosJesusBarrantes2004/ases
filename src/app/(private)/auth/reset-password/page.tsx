@@ -1,12 +1,14 @@
 import { Suspense } from "react";
-import ResetPasswordForm from "./ResetPasswordForm";
+import ResetPasswordForm from "./components/form/ResetPasswordForm";
 
 export const dynamic = "force-dynamic";
 
 export default function ResetPasswordPage() {
   return (
     <Suspense fallback={<div>Cargando...</div>}>
-      <ResetPasswordForm />
+      <div className="flex min-h-screen items-center justify-center">
+        <ResetPasswordForm></ResetPasswordForm>
+      </div>
     </Suspense>
   );
 }

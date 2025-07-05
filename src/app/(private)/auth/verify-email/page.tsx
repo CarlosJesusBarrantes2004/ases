@@ -1,12 +1,14 @@
 import { Suspense } from "react";
-import VerifyEmailForm from "./VerifyEmailForm";
+import VerifyEmailForm from "./components/form/VerifyEmailForm";
 
 export const dynamic = "force-dynamic";
 
 export default function ResetPasswordPage() {
   return (
     <Suspense fallback={<div>Cargando...</div>}>
-      <VerifyEmailForm></VerifyEmailForm>
+      <div className="flex min-h-screen items-center justify-center">
+        <VerifyEmailForm></VerifyEmailForm>
+      </div>
     </Suspense>
   );
 }

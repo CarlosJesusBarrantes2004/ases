@@ -32,9 +32,7 @@ export async function POST(req: Request) {
         },
         { status: 429 }
       );
-  } else {
-    console.warn("Could not determine client IP for login attempt.");
-  }
+  } else console.warn("Could not determine client IP for login attempt.");
 
   try {
     const { email, password } = await req.json();
@@ -92,8 +90,6 @@ export async function POST(req: Request) {
       .setIssuedAt()
       .setExpirationTime("1d")
       .sign(secret);
-
-    console.log(config.JWT_SECRET);
 
     const response = NextResponse.json(
       {
