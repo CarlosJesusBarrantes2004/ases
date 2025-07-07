@@ -1,5 +1,6 @@
 import { Inter } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
+import { ThemeProvider } from "./components/ThemeProvider";
 import "../globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -10,10 +11,17 @@ interface PrivateLayoutProps {
 
 function PrivateLayout({ children }: PrivateLayoutProps) {
   return (
-    <html lang="es">
+    <html lang="es" suppressHydrationWarning>
       <body className={inter.className}>
-        {children}
-        <Toaster position="bottom-right"></Toaster>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+          <Toaster position="bottom-right" />
+        </ThemeProvider>
       </body>
     </html>
   );
